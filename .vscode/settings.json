@@ -1,0 +1,8 @@
+{
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#8000ff",
+    "statusBar.foreground": "#000000",
+    "statusBarItem.hoverBackground": "#7200e4",
+    "statusBarItem.activeBackground": "#8000ff"
+  }
+}
