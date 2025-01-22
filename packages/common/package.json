@@ -1,0 +1,29 @@
+{
+  "name": "@ur-apps/common",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {},
+  "files": [
+    "lib",
+    "prettier.config.mjs"
+  ],
+  "exports": {
+    ".": "./lib/index.js",
+    "./prettier": "./prettier.config.mjs"
+  },
+  "license": "ISC",
+  "author": "Garry Freeman <garryfreeman09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ur-apps/common.git"
+  },
+  "homepage": "https://github.com/ur-apps/common#readme",
+  "bugs": {
+    "url": "https://github.com/ur-apps/common/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {}
+}
