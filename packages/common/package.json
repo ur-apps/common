@@ -13,6 +13,10 @@
     ".": "./lib/index.js",
     "./prettier": "./prettier.config.mjs"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "license": "ISC",
   "author": "Garry Freeman <garryfreeman09@gmail.com>",
   "repository": {
@@ -22,8 +26,5 @@
   "homepage": "https://github.com/ur-apps/common#readme",
   "bugs": {
     "url": "https://github.com/ur-apps/common/issues"
-  },
-  "dependencies": {},
-  "devDependencies": {},
-  "peerDependencies": {}
+  }
 }
