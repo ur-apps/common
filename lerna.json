@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "packages": ["packages/*"],
+  "version": "independent",
+  "npmClient": "npm",
+  "command": {
+    "version": {
+      "allowBranch": "master",
+      "changelog": false,
+      "message": "chore(release): release"
+    }
+  }
+}
