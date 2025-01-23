@@ -7,6 +7,10 @@ on:
       - '@ur-apps/common-be@[0-9]+.[0-9]+.[0-9]+*'
       - '@ur-apps/common-fe@[0-9]+.[0-9]+.[0-9]+*'
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest

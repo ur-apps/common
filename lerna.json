@@ -7,7 +7,7 @@
     "version": {
       "allowBranch": "master",
       "changelog": false,
-      "message": "chore(release): publish"
+      "message": "chore: release"
     }
   }
 }
