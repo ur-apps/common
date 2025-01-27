@@ -28,6 +28,6 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "peerDependencies": {
-    "@ur-apps/common": "^0.0.1"
+    "@ur-apps/common": "*"
   }
 }
