@@ -7,10 +7,12 @@
   "scripts": {},
   "files": [
     "lib",
+    "eslint.config.mjs",
     "prettier.config.mjs"
   ],
   "exports": {
     ".": "./lib/index.js",
+    "./eslint": "./eslint.config.mjs",
     "./prettier": "./prettier.config.mjs"
   },
   "publishConfig": {
@@ -26,5 +28,14 @@
   "homepage": "https://github.com/ur-apps/common#readme",
   "bugs": {
     "url": "https://github.com/ur-apps/common/issues"
+  },
+  "peerDependencies": {
+    "@eslint/js": "^9.18.0",
+    "prettier": "^3.4.2",
+    "typescript-eslint": "^8.21.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.18.0",
+    "typescript": "^5.7.3"
   }
 }
