@@ -4,13 +4,18 @@
   "description": "ur apps frontend common library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint ./src --fix"
+  },
   "files": [
     "lib",
+    "eslint.config.mjs",
     "prettier.config.mjs"
   ],
   "exports": {
     ".": "./lib/index.js",
+    "./eslint": "./eslint.config.mjs",
     "./prettier": "./prettier.config.mjs"
   },
   "publishConfig": {
