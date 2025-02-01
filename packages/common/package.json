@@ -4,7 +4,10 @@
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint ./src --fix"
+  },
   "files": [
     "lib",
     "eslint.config.mjs",
