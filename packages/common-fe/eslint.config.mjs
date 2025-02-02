@@ -1,10 +1,10 @@
-import { baseConfigs } from '@ur-apps/common/eslint';
 import jseslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import { baseConfigs } from '@ur-apps/common/eslint';
 import reacteslint from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   jseslint.configs.recommended,

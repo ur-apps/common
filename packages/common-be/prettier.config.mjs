@@ -11,7 +11,7 @@ const config = {
     '<BUILTIN_MODULES>',
     '<THIRD_PARTY_MODULES>',
     '',
-    '^(constants|database|db|decorators|dto|exceptions|filters|guards|helpers|interceptors|interfaces|modules|pipes|types)/?',
+    '^(constants|database|db|decorators|dto|exceptions|filters|guards|helpers|interceptors|interfaces|modules|pipes|types)(/.*)?$',
     '',
     '^\\.\\./',
     '',

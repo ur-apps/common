@@ -14,7 +14,7 @@ const config = {
     '<BUILTIN_MODULES>',
     '<THIRD_PARTY_MODULES>',
     '',
-    '^(api|assets|components|constants|contexts|data|DI|fonts|hooks|icons|images|layouts|modules|pages|routes|services|store|styles|types|utils)/?',
+    '^(api|assets|components|constants|contexts|data|DI|fonts|hooks|icons|images|layouts|modules|pages|routes|services|store|styles|types|utils)(/.*)?$',
     '',
     '^\\.\\./',
     '',
