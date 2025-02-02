@@ -6,7 +6,9 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "files": [
     "lib",
@@ -34,6 +36,7 @@
   },
   "peerDependencies": {
     "@eslint/js": "^9.18.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@ur-apps/common": "*",
     "globals": "^15.14.0",
     "typescript-eslint": "^8.21.0"

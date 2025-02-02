@@ -13,6 +13,19 @@ const config = {
   quoteProps: 'preserve',
   trailingComma: 'es5',
   arrowParens: 'always',
+  plugins: ['@ianvs/prettier-plugin-sort-imports'],
+  importOrderCaseSensitive: false,
+  importOrder: [
+    '',
+    '<BUILTIN_MODULES>',
+    '<THIRD_PARTY_MODULES>',
+    '',
+    '^(constants|helpers|types|utils)/?',
+    '',
+    '^\\.\\./',
+    '',
+    '^\\./',
+  ],
 };
 
 export default config;
