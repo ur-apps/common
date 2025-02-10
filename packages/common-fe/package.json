@@ -13,12 +13,14 @@
   "files": [
     "lib",
     "eslint.config.mjs",
-    "prettier.config.mjs"
+    "prettier.config.mjs",
+    "tsconfig.json"
   ],
   "exports": {
     ".": "./lib/index.js",
     "./eslint": "./eslint.config.mjs",
-    "./prettier": "./prettier.config.mjs"
+    "./prettier": "./prettier.config.mjs",
+    "./tsconfig": "./tsconfig.json"
   },
   "publishConfig": {
     "access": "public",
