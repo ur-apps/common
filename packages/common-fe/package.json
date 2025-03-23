@@ -6,6 +6,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "build": "rollup -c",
+    "build:pack": "npm run build:lib && npm pack",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
     "lint": "eslint .",
     "lint:fix": "eslint ./src --fix",
@@ -49,10 +51,18 @@
     "typescript-eslint": "^8.21.0"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",
     "eslint": "^9.18.0",
     "jest": "^29.7.0",
     "prettier": "^3.4.2",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-delete": "^3.0.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-tsc-alias": "^1.1.4",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
