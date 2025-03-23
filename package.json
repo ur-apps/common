@@ -2,6 +2,7 @@
   "name": "@ur-apps/common",
   "private": true,
   "scripts": {
+    "build": "lerna run build",
     "release:major": "lerna version major",
     "release:minor": "lerna version minor",
     "release:patch": "lerna version patch",
