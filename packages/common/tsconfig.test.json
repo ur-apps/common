@@ -1,0 +1,11 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Modules
+    "baseUrl": "./src",
+    "types": ["node", "jest"]
+  },
+  "include": ["**/*.test.ts", "**/*.test.tsx"],
+  "exclude": ["node_modules", "lib"]
+}
