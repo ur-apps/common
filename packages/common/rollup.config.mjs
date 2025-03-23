@@ -15,13 +15,15 @@ const OUTPUT_DIR = 'lib';
 
 /** @type {(import('rollup').MergedRollupOptions)} */
 export default {
-  input: ['src/index.ts', 'src/utils/index.ts'],
-  output: {
-    dir: OUTPUT_DIR,
-    format: 'es',
-    preserveModules: true,
-    preserveModulesRoot: 'src',
-  },
+  input: ['src/index.ts'],
+  output: [
+    {
+      dir: OUTPUT_DIR,
+      format: 'es',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
+    },
+  ],
   plugins: [
     del({ targets: OUTPUT_DIR }),
     peerDeps(),
