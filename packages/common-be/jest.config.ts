@@ -1,0 +1,35 @@
+import type { Config } from 'jest';
+
+const config: Config = {
+  // A preset that is used as a base for Jest's configuration
+  preset: 'ts-jest',
+  // Options that will be passed to the testEnvironment
+  testEnvironment: 'node',
+  // An array of file extensions your modules use
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  // The root directory that Jest should scan for tests and modules within
+  rootDir: '.',
+  // The regexp pattern or array of patterns that Jest uses to detect test files
+  testRegex: ['.*\\.spec\\.ts$', '.*\\.test\\.ts$'],
+  // An array of glob patterns indicating a set of files for which coverage information should be collected
+  collectCoverageFrom: ['**/*.(t|j)s'],
+  // The directory where Jest should output its coverage files
+  coverageDirectory: 'coverage',
+  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
+  moduleNameMapper: {
+    '^helpers$': '<rootDir>/src/helpers',
+  },
+  // A map from regular expressions to paths to transformers
+  transform: {
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: 'tsconfig.test.json',
+      },
+    ],
+  },
+  extensionsToTreatAsEsm: ['.ts'],
+};
+
+export default config;
