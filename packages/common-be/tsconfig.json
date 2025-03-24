@@ -1,0 +1,29 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  "extends": "@ur-apps/common/tsconfig",
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ES2022",
+    "lib": ["ESNext"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    // Modules
+    "module": "CommonJS",
+    "moduleResolution": "node10",
+    "noUncheckedSideEffectImports": false,
+    "baseUrl": "./src",
+    "paths": {},
+
+    // Emit
+    "noEmit": false,
+    "outDir": "./lib",
+    "sourceMap": true,
+
+    // Projects
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.common-be.tsbuildinfo",
+    "incremental": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "build", "dist", "lib", "**/*.test.ts"]
+}
