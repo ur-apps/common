@@ -21,8 +21,7 @@
     "sourceMap": true,
 
     // Projects
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.common-be.tsbuildinfo",
-    "incremental": true
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.common-be.tsbuildinfo"
   },
   "include": ["src"],
   "exclude": ["node_modules", "build", "dist", "lib", "**/*.test.ts"]
