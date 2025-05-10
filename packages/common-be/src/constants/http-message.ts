@@ -5,6 +5,7 @@ export enum HttpMessage {
   FORBIDDEN = 'Forbidden',
   NOT_FOUND = 'Not found',
   CONFLICT = 'Conflict',
+  TOO_MANY_REQUESTS = 'Too many requests',
   INTERNAL_SERVER_ERROR = 'Internal server error',
   NOT_IMPLEMENTED = 'Not implemented',
   BAD_GATEWAY = 'Bad gateway',
