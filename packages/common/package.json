@@ -9,6 +9,8 @@
     "build": "rollup -c",
     "build:pack": "npm run build:lib && npm pack",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint ./src --fix",
     "format": "prettier --check .",

@@ -34,24 +34,38 @@ export function cloneArray<T extends Array<unknown>>(arr: T, clonedMap = new Wea
   return newArray;
 }
 
-export function cloneSet<T extends Set<unknown>>(value: T): T {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function cloneSet<T extends Set<unknown>>(value: T, clonedMap = new WeakMap<object, any>()): T {
+  if (clonedMap.has(value)) {
+    return clonedMap.get(value);
+  }
+
   const clonedSet = new Set() as T;
 
+  clonedMap.set(value, clonedSet);
+
   for (const item of value) {
-    clonedSet.add(clone(item));
+    clonedSet.add(clone(item, clonedMap));
   }
 
   return clonedSet;
 }
 
-export function cloneMap<T extends Map<unknown, unknown>>(value: T): T {
-  const clonedMap = new Map() as T;
-
-  for (const [key, val] of value) {
-    clonedMap.set(clone(key), clone(val));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function cloneMap<T extends Map<unknown, unknown>>(value: T, clonedMap = new WeakMap<object, any>()): T {
+  if (clonedMap.has(value)) {
+    return clonedMap.get(value);
   }
 
-  return clonedMap;
+  const clonedMapResult = new Map() as T;
+
+  clonedMap.set(value, clonedMapResult);
+
+  for (const [key, val] of value) {
+    clonedMapResult.set(clone(key, clonedMap), clone(val, clonedMap));
+  }
+
+  return clonedMapResult;
 }
 
 export function cloneDate<T extends Date>(value: T): T {
@@ -62,12 +76,12 @@ export function cloneDate<T extends Date>(value: T): T {
 export function clone<T>(value: T, clonedMap = new WeakMap<object, any>()): T {
   if (isArray(value)) {
     return cloneArray(value, clonedMap);
-  } else if (isObject(value)) {
-    return cloneObject(value, clonedMap);
   } else if (value instanceof Set) {
     return cloneSet(value);
   } else if (value instanceof Map) {
     return cloneMap(value);
+  } else if (isObject(value)) {
+    return cloneObject(value, clonedMap);
   } else if (isDate(value)) {
     return cloneDate(value);
   }
