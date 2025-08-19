@@ -34,5 +34,12 @@ export default tseslint.config(
         version: '19',
       },
     },
+  },
+  {
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
   }
 );

@@ -43,12 +43,19 @@
   "peerDependencies": {
     "@eslint/js": "9.x",
     "@ianvs/prettier-plugin-sort-imports": "4.x",
+    "@types/react": "19.x",
     "@ur-apps/common": "*",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "5.x",
     "eslint-plugin-react-refresh": "0.x",
     "globals": "16.x",
+    "react": "19.x",
     "typescript-eslint": "8.x"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@rollup/plugin-alias": "5.x",
@@ -56,6 +63,7 @@
     "@rollup/plugin-node-resolve": "16.x",
     "@rollup/plugin-typescript": "12.x",
     "@types/jest": "30.x",
+    "@types/react": "19.x",
     "eslint": "9.x",
     "jest": "30.x",
     "prettier": "3.x",
