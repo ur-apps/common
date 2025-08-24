@@ -35,8 +35,15 @@ export const baseConfigs = [
       '@typescript-eslint/no-empty-function': ['warn', { allow: ['decoratedFunctions'] }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-this-alias': ['warn', { allowedNames: ['self', 'lastThis'] }],
     },
   },
 ];
 
-export default tseslint.config(jseslint.configs.recommended, tseslint.configs.recommended, baseConfigs);
+export default tseslint.config(jseslint.configs.recommended, tseslint.configs.recommended, baseConfigs, {
+  languageOptions: {
+    parserOptions: {
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+});
