@@ -7,7 +7,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "build:pack": "npm run build:lib && npm pack",
+    "build:pack": "npm run build && npm pack",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
