@@ -1,6 +1,6 @@
 {
   "name": "@ur-apps/common-be",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "ur apps backend common library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
