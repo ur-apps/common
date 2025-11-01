@@ -1,3 +1,3 @@
 export interface Errors {
-  [key: string]: string | string[] | Errors;
+  [key: string]: string | string[] | Errors | undefined;
 }
