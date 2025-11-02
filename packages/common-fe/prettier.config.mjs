@@ -21,6 +21,7 @@ const config = {
     '^(?!.*[.](css|scss|sass|less)$)[./].*$',
     '[.](css|scss|sass|less)$',
   ],
+  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
 };
 
 export default config;
