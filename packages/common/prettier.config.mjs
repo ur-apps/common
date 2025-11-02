@@ -26,6 +26,7 @@ const config = {
     '',
     '^\\./',
   ],
+  importOrderParserPlugins: ['typescript', 'decorators-legacy'],
 };
 
 export default config;
