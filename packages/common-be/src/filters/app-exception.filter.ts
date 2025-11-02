@@ -2,6 +2,7 @@ import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Logge
 import { Response } from 'express';
 
 import { HttpMessage } from 'constants/';
+import { FailedResponseDTO } from 'dto';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
@@ -20,11 +21,10 @@ export class AppExceptionFilter implements ExceptionFilter {
       httpStatus = typeof exception?.status === 'number' ? exception.status : HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    const responseBody = {
-      success: false,
-      message: exception?.message ?? HttpMessage.INTERNAL_SERVER_ERROR,
-      errors: exception?.errors,
-    };
+    const responseBody = new FailedResponseDTO(
+      exception?.message ?? HttpMessage.INTERNAL_SERVER_ERROR,
+      exception?.errors
+    );
 
     response.status(httpStatus).json(responseBody);
   }
