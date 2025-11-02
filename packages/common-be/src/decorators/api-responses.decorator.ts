@@ -48,6 +48,7 @@ function paginatedResponseBuilder<T extends Type<unknown>>(model: T) {
         allOf: [
           { $ref: getSchemaPath(SuccessResponseDTO) },
           {
+            required: ['data'],
             properties: {
               data: {
                 allOf: [
