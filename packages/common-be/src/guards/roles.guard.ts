@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { HttpMessage } from 'constants/';
@@ -25,6 +25,8 @@ import { getRoles, hasRequiredRoles, isPublic } from 'decorators';
  */
 @Injectable()
 export class RolesGuard implements CanActivate {
+  private readonly logger = new Logger(RolesGuard.name);
+
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
@@ -54,6 +56,10 @@ export class RolesGuard implements CanActivate {
 
     // Check if user has at least one of required roles
     if (!hasRequiredRoles(requiredRoles, userRoles)) {
+      this.logger.warn(
+        `User ${user.id} is not allowed to access [${context.getClass().name}] (${context.getHandler().name})`
+      );
+
       throw new ForbiddenException(HttpMessage.FORBIDDEN);
     }
 
