@@ -216,6 +216,7 @@ describe('[utils] throttle', () => {
       expect(throttled.pending()).toBe(false);
 
       throttled(); // leading, no pending yet
+      expect(mockFn).toHaveBeenCalledTimes(1);
       expect(throttled.pending()).toBe(false);
 
       throttled(); // schedule trailing
