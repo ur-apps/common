@@ -1,5 +1,3 @@
-// import debounce from 'lodash.debounce';
-
 import { debounce } from './debounce';
 
 describe('[utils] debounce', () => {
@@ -22,33 +20,47 @@ describe('[utils] debounce', () => {
       debouncedFn();
       debouncedFn();
 
+      jest.advanceTimersByTime(90);
       expect(mockFn).not.toHaveBeenCalled();
 
-      jest.advanceTimersByTime(100);
+      jest.advanceTimersByTime(10);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
     it('should pass arguments correctly', () => {
-      const mockFn = jest.fn() as jest.MockedFunction<(arg1: string, arg2: string, arg3: number) => void>;
+      const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100);
 
       debouncedFn('arg1', 'arg2', 123);
-      jest.advanceTimersByTime(100);
 
+      jest.advanceTimersByTime(90);
+      expect(mockFn).not.toHaveBeenCalled();
+
+      jest.advanceTimersByTime(10);
+      expect(mockFn).toHaveBeenCalledTimes(1);
       expect(mockFn).toHaveBeenCalledWith('arg1', 'arg2', 123);
     });
 
-    it('should preserve context (this)', () => {
-      const obj = {
-        value: 'test',
-        method: jest.fn(),
+    it('should preserve function context (this)', () => {
+      const obj1 = {
+        value: 'unchanged',
+        method: jest.fn(function () {
+          this.value = 'changed';
+        }),
       };
-      const debouncedMethod = debounce(obj.method, 100);
+      const obj2 = {
+        value: 'unchanged',
+      };
 
-      debouncedMethod.call(obj);
+      const debouncedMethod = debounce(obj1.method, 100);
+
+      debouncedMethod.call(obj1);
+      debouncedMethod.call(obj2);
       jest.advanceTimersByTime(100);
 
-      expect(obj.method).toHaveBeenCalledTimes(1);
+      expect(obj1.method).toHaveBeenCalledTimes(1);
+      expect(obj1.value).toBe('unchanged');
+      expect(obj2.value).toBe('changed');
     });
 
     it('should return undefined when not leading', () => {
@@ -56,86 +68,8 @@ describe('[utils] debounce', () => {
       const debouncedFn = debounce(mockFn, 100);
 
       const result = debouncedFn();
+
       expect(result).toBeUndefined();
-    });
-  });
-
-  describe('Leading option', () => {
-    it('should execute immediately when leading is true', () => {
-      const mockFn = jest.fn(() => 'immediate result');
-      const debouncedFn = debounce(mockFn, 100, { leading: true });
-
-      const result = debouncedFn();
-      expect(result).toBe('immediate result');
-      expect(mockFn).toHaveBeenCalledTimes(1);
-    });
-
-    it('should not execute again during wait period with leading=true and trailing=false', () => {
-      const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: false, logging: false });
-
-      debouncedFn(); // Should execute immediately (leading)
-      expect(mockFn).toHaveBeenCalledTimes(1);
-
-      debouncedFn(); // Should not execute (within wait period)
-      jest.advanceTimersByTime(50);
-      debouncedFn(); // Should not execute (within wait period)
-      jest.advanceTimersByTime(50); // Wait period expires
-      expect(mockFn).toHaveBeenCalledTimes(1); // Still 1, no trailing call
-
-      // After wait period, next call should execute immediately again
-      jest.advanceTimersByTime(50);
-      debouncedFn();
-      expect(mockFn).toHaveBeenCalledTimes(2);
-    });
-
-    it('should execute both leading and trailing when both are true', () => {
-      const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: true });
-
-      debouncedFn(); // Leading call
-      debouncedFn(); // Resets timer
-      debouncedFn(); // Resets timer
-
-      expect(mockFn).toHaveBeenCalledTimes(1);
-
-      jest.advanceTimersByTime(1000);
-      expect(mockFn).toHaveBeenCalledTimes(2);
-    });
-
-    it('should execute new leading call after wait period has passed', () => {
-      const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: true, logging: false });
-
-      debouncedFn(0); // First leading call
-      expect(mockFn).toHaveBeenCalledTimes(1);
-
-      debouncedFn();
-      jest.advanceTimersByTime(25);
-      debouncedFn();
-      jest.advanceTimersByTime(25);
-      debouncedFn();
-      jest.advanceTimersByTime(25);
-      debouncedFn();
-      jest.advanceTimersByTime(25);
-      debouncedFn();
-      jest.advanceTimersByTime(25);
-      expect(mockFn).toHaveBeenCalledTimes(1);
-
-      jest.advanceTimersByTime(75);
-      expect(mockFn).toHaveBeenCalledTimes(2);
-      debouncedFn(); // Second leading call after trailing call
-      expect(mockFn).toHaveBeenCalledTimes(3);
-
-      debouncedFn();
-      debouncedFn();
-      expect(mockFn).toHaveBeenCalledTimes(3);
-
-      jest.advanceTimersByTime(100);
-      expect(mockFn).toHaveBeenCalledTimes(4);
-      jest.advanceTimersByTime(200);
-      debouncedFn(); // Second leading call after wait period
-      expect(mockFn).toHaveBeenCalledTimes(5);
     });
   });
 
@@ -147,7 +81,10 @@ describe('[utils] debounce', () => {
       debouncedFn();
       expect(mockFn).not.toHaveBeenCalled();
 
-      jest.advanceTimersByTime(100);
+      jest.advanceTimersByTime(90);
+      expect(mockFn).not.toHaveBeenCalled();
+
+      jest.advanceTimersByTime(10);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
@@ -156,26 +93,115 @@ describe('[utils] debounce', () => {
       const debouncedFn = debounce(mockFn, 100, { trailing: false });
 
       debouncedFn();
-      jest.advanceTimersByTime(100);
+      jest.advanceTimersByTime(1000);
 
       expect(mockFn).not.toHaveBeenCalled();
     });
 
-    it('should not execute when both leading and trailing are false', () => {
+    it('should skip trailing call when leading is enabled and trailing is disabled', () => {
       const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: false, trailing: false });
+      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: false });
 
       debouncedFn();
-      jest.advanceTimersByTime(100);
+      expect(mockFn).toHaveBeenCalledTimes(1);
 
-      expect(mockFn).not.toHaveBeenCalled();
+      jest.advanceTimersByTime(99);
+      debouncedFn();
+      jest.advanceTimersByTime(1000);
+
+      expect(mockFn).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Leading option', () => {
+    it('should execute immediately when leading is true', () => {
+      const mockFn = jest.fn(() => 'immediate result');
+      const debouncedFn = debounce(mockFn, 100, { leading: true });
+
+      const result = debouncedFn();
+
+      expect(result).toBe('immediate result');
+      expect(mockFn).toHaveBeenCalledTimes(1);
+    });
+
+    it('should prevent repeated calls during wait period when trailing is disabled', () => {
+      const mockFn = jest.fn();
+      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: false });
+
+      debouncedFn();
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      debouncedFn();
+      jest.advanceTimersByTime(50);
+      debouncedFn();
+      jest.advanceTimersByTime(50);
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(50);
+      debouncedFn();
+      expect(mockFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should execute both leading and trailing when both are enabled', () => {
+      const mockFn = jest.fn();
+      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: true });
+
+      debouncedFn();
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(25);
+      debouncedFn();
+      jest.advanceTimersByTime(25);
+      debouncedFn();
+      jest.advanceTimersByTime(75);
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(25);
+      expect(mockFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should allow new leading call after trailing execution completes', () => {
+      const mockFn = jest.fn();
+      const debouncedFn = debounce(mockFn, 100, { leading: true, trailing: true });
+
+      debouncedFn(0);
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      debouncedFn();
+      jest.advanceTimersByTime(25);
+      debouncedFn();
+      jest.advanceTimersByTime(25);
+      debouncedFn();
+      jest.advanceTimersByTime(25);
+      debouncedFn();
+      jest.advanceTimersByTime(25);
+      debouncedFn();
+      jest.advanceTimersByTime(25);
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(75);
+      expect(mockFn).toHaveBeenCalledTimes(2);
+
+      debouncedFn();
+      expect(mockFn).toHaveBeenCalledTimes(3);
+
+      debouncedFn();
+      debouncedFn();
+      expect(mockFn).toHaveBeenCalledTimes(3);
+
+      jest.advanceTimersByTime(100);
+      expect(mockFn).toHaveBeenCalledTimes(4);
+
+      jest.advanceTimersByTime(200);
+      debouncedFn();
+      expect(mockFn).toHaveBeenCalledTimes(5);
     });
   });
 
   describe('MaxWait option', () => {
-    it('22220202002020202020 should execute after maxWait period even with continuous calls', () => {
+    it('should execute after maxWait period even with continuous calls', () => {
       const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { maxWait: 200, logging: false });
+      const debouncedFn = debounce(mockFn, 100, { maxWait: 200 });
 
       debouncedFn();
       jest.advanceTimersByTime(50);
@@ -191,96 +217,73 @@ describe('[utils] debounce', () => {
 
       debouncedFn();
       jest.advanceTimersByTime(50);
-      expect(mockFn).toHaveBeenCalledTimes(1); // Called at maxWait
+      expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
-    it('22220202002020202020 should respect maxWait with leading option', () => {
+    it('should respect maxWait with leading option enabled', () => {
       const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150, logging: false });
+      const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
-      debouncedFn(); // Leading call
+      debouncedFn();
       expect(mockFn).toHaveBeenCalledTimes(1);
 
       jest.advanceTimersByTime(75);
-      debouncedFn(); // Reset timer but within maxWait
+      debouncedFn();
 
-      jest.advanceTimersByTime(75); // Total 150ms, should trigger maxWait
+      jest.advanceTimersByTime(75);
       expect(mockFn).toHaveBeenCalledTimes(2);
     });
 
-    // it('should use minimum of wait and remaining maxWait time', () => {
-    //   const mockFn = jest.fn();
-    //   const debouncedFn = debounce(mockFn, 200, { maxWait: 100 });
-
-    //   debouncedFn();
-    //   jest.advanceTimersByTime(100); // Should trigger maxWait, not wait
-
-    //   expect(mockFn).toHaveBeenCalledTimes(1);
-    // });
-
-    it('Сценарий 1: Одиночный вызов', () => {
+    it('should not trigger trailing when only single call is made with leading', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
-      // t=0: вызов
       debouncedFn();
-
-      // Leading срабатывает сразу
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=100: trailing срабатывает
       jest.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
-    it('Сценарий 2: Два вызова с паузой < wait', () => {
+    it('should execute trailing call when multiple invocations occur within wait period', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
-      // t=0: первый вызов → leading invoke
       debouncedFn();
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=50: второй вызов
       jest.advanceTimersByTime(50);
       debouncedFn();
-      expect(mockFn).toHaveBeenCalledTimes(1); // только leading
+      expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=150: trailing срабатывает (100ms после последнего вызова на t=50)
       jest.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(2);
     });
 
-    it('Сценарий 3: Частые вызовы, срабатывает maxWait', () => {
+    it('should trigger maxWait with frequent calls and preserve latest arguments', () => {
       const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150, logging: false });
+      const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
-      // t=0: первый вызов → leading invoke
       debouncedFn('call-1');
       expect(mockFn).toHaveBeenCalledTimes(1);
       expect(mockFn).toHaveBeenLastCalledWith('call-1');
 
-      // t=50: вызов
       jest.advanceTimersByTime(50);
       debouncedFn('call-2');
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=100: вызов
       jest.advanceTimersByTime(50);
       debouncedFn('call-3');
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=140: вызов
       jest.advanceTimersByTime(40);
       debouncedFn('call-4');
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=150: maxWait срабатывает (150ms от первого вызова)
       jest.advanceTimersByTime(10);
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('call-4');
 
-      // t=250: trailing
       debouncedFn('call-5');
       expect(mockFn).toHaveBeenCalledTimes(2);
       jest.advanceTimersByTime(100);
@@ -288,15 +291,13 @@ describe('[utils] debounce', () => {
       expect(mockFn).toHaveBeenLastCalledWith('call-5');
     });
 
-    it('Сценарий 4: Вызовы продолжаются после maxWait', () => {
+    it('should restart maxWait timer after execution', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
-      // t=0: leading invoke
       debouncedFn('call-1');
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // t=50, 100, 140: вызовы
       jest.advanceTimersByTime(50);
       debouncedFn('call-2');
 
@@ -306,83 +307,74 @@ describe('[utils] debounce', () => {
       jest.advanceTimersByTime(40);
       debouncedFn('call-4');
 
-      // t=150: maxWait invoke
       jest.advanceTimersByTime(10);
       expect(mockFn).toHaveBeenCalledTimes(2);
 
-      // t=160: новый вызов ПОСЛЕ maxWait
       jest.advanceTimersByTime(10);
       debouncedFn('call-5');
-      expect(mockFn).toHaveBeenCalledTimes(2); // maxWait таймер заново запустился
+      expect(mockFn).toHaveBeenCalledTimes(2);
 
-      // t=260: trailing invoke (100ms после последнего вызова)
       jest.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(3);
       expect(mockFn).toHaveBeenLastCalledWith('call-5');
     });
 
-    it('Сценарий 5: Новая серия после полной паузы', () => {
+    it('should allow new leading call after complete pause', () => {
       const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150, logging: false });
+      const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
-      // Первая серия
       debouncedFn('series-1');
       expect(mockFn).toHaveBeenCalledTimes(1);
       expect(mockFn).toHaveBeenCalledWith('series-1');
 
-      // Пауза 200ms
       jest.advanceTimersByTime(200);
 
-      // Новая серия - снова leading
       debouncedFn('series-2');
-      expect(mockFn).toHaveBeenCalledTimes(2); // новый leading
+      expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenCalledWith('series-2');
     });
 
-    it('Сценарий 6: maxWait срабатывает точно на границе', () => {
+    it('should enforce maxWait boundary with rapid repeated calls', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
       debouncedFn();
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      // Вызовы каждые 40ms
       for (let i = 0; i < 5; i++) {
         jest.advanceTimersByTime(40);
         debouncedFn(`call-${i}`);
       }
 
-      // t=200: уже прошло 150ms от первого вызова
-      // maxWait должен был сработать на t=150
-      expect(mockFn).toHaveBeenCalledTimes(2); // leading + maxWait
+      expect(mockFn).toHaveBeenCalledTimes(2);
     });
 
-    it('Сценарий 7: cancel отменяет trailing но не влияет на leading', () => {
+    it('should cancel trailing call but preserve leading execution', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
       debouncedFn();
-      expect(mockFn).toHaveBeenCalledTimes(1); // leading
+      expect(mockFn).toHaveBeenCalledTimes(1);
 
       jest.advanceTimersByTime(50);
       debouncedFn.cancel();
 
       jest.advanceTimersByTime(100);
-      expect(mockFn).toHaveBeenCalledTimes(1); // trailing отменён
+      expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
-    it('Сценарий 8: flush вызывает pending trailing немедленно', () => {
+    it('should execute pending trailing call immediately when flushed', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100, { leading: true, maxWait: 150 });
 
       debouncedFn('test');
-      expect(mockFn).toHaveBeenCalledTimes(1); // leading
+      expect(mockFn).toHaveBeenCalledTimes(1);
 
       jest.advanceTimersByTime(50);
       debouncedFn('test2');
 
       debouncedFn.flush();
-      expect(mockFn).toHaveBeenCalledTimes(2); // trailing выполнен досрочно
+      expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('test2');
     });
   });
@@ -408,7 +400,7 @@ describe('[utils] debounce', () => {
 
       debouncedFn();
       debouncedFn.cancel();
-      debouncedFn.cancel(); // Should not throw
+      debouncedFn.cancel();
 
       expect(debouncedFn.pending()).toBe(false);
     });
@@ -416,7 +408,7 @@ describe('[utils] debounce', () => {
 
   describe('Flush method', () => {
     it('should execute pending function immediately', () => {
-      const mockFn = jest.fn() as jest.MockedFunction<(arg1: string, arg2: string) => string>;
+      const mockFn = jest.fn();
       mockFn.mockReturnValue('flushed result');
       const debouncedFn = debounce(mockFn, 100);
 
@@ -446,7 +438,7 @@ describe('[utils] debounce', () => {
       expect(mockFn).toHaveBeenCalledTimes(1);
 
       jest.advanceTimersByTime(100);
-      expect(mockFn).toHaveBeenCalledTimes(1); // Should not be called again
+      expect(mockFn).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -494,7 +486,7 @@ describe('[utils] debounce', () => {
 
     it('should work without signal', () => {
       const mockFn = jest.fn();
-      const debouncedFn = debounce(mockFn, 100); // No signal provided
+      const debouncedFn = debounce(mockFn, 100);
 
       debouncedFn();
       jest.advanceTimersByTime(100);
@@ -505,39 +497,34 @@ describe('[utils] debounce', () => {
 
   describe('Complex scenarios', () => {
     it('should handle rapid successive calls correctly', () => {
-      const mockFn = jest.fn() as jest.MockedFunction<(arg: string) => void>;
+      const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 100);
 
-      // Rapid calls within debounce period
       for (let i = 0; i < 10; i++) {
         debouncedFn(`call-${i}`);
-        jest.advanceTimersByTime(10); // 10ms between calls
+        jest.advanceTimersByTime(10);
       }
 
-      // Only the last call should be pending
       expect(mockFn).not.toHaveBeenCalled();
       expect(debouncedFn.pending()).toBe(true);
 
-      // Complete the debounce
       jest.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1);
-      expect(mockFn).toHaveBeenCalledWith('call-9'); // Last arguments
+      expect(mockFn).toHaveBeenCalledWith('call-9');
     });
 
     it('should handle mixed leading, trailing, and maxWait options', () => {
-      const mockFn = jest.fn() as jest.MockedFunction<(arg: string) => void>;
+      const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 200, {
         leading: true,
         trailing: true,
         maxWait: 300,
       });
 
-      // First call - leading
       debouncedFn('first');
       expect(mockFn).toHaveBeenCalledTimes(1);
       expect(mockFn).toHaveBeenCalledWith('first');
 
-      // Subsequent calls within debounce period
       jest.advanceTimersByTime(50);
       debouncedFn('second');
 
@@ -547,15 +534,14 @@ describe('[utils] debounce', () => {
       jest.advanceTimersByTime(50);
       debouncedFn('fourth');
 
-      // Wait for trailing call
       jest.advanceTimersByTime(200);
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('fourth');
     });
 
     it('should maintain separate state for multiple debounced functions', () => {
-      const mockFn1 = jest.fn() as jest.MockedFunction<(arg: string) => void>;
-      const mockFn2 = jest.fn() as jest.MockedFunction<(arg: string) => void>;
+      const mockFn1 = jest.fn();
+      const mockFn2 = jest.fn();
       const debouncedFn1 = debounce(mockFn1, 100);
       const debouncedFn2 = debounce(mockFn2, 200);
 
@@ -572,13 +558,12 @@ describe('[utils] debounce', () => {
       expect(mockFn2).toHaveBeenCalledTimes(1);
     });
 
-    it('22220202002020202020 should', () => {
+    it('should execute trailing call after multiple invocations within wait period', () => {
       const mockFn = jest.fn();
       const debouncedFn = debounce(mockFn, 500, {
         leading: false,
         trailing: true,
         maxWait: 1000,
-        logging: false,
       });
 
       debouncedFn();
@@ -637,7 +622,6 @@ describe('[utils] debounce', () => {
       debouncedFn();
       expect(debouncedFn.pending()).toBe(true);
 
-      // Advance by less than the wait time
       jest.advanceTimersByTime(50000);
       expect(mockFn).not.toHaveBeenCalled();
       expect(debouncedFn.pending()).toBe(true);
@@ -662,182 +646,290 @@ describe('[utils] debounce', () => {
       const debouncedFn = debounce(falsyFn, 100, { leading: true });
 
       const result = debouncedFn();
+
       expect(result).toBe(0);
     });
   });
 
-  describe.skip('debounce - exact reproduction from logs', () => {
-    test('Полная последовательность', () => {
-      const start = Date.now();
-      const mockFn = jest.fn((str: string) => console.log(str, ':arg | envoked at:', Date.now() - start));
-      const debouncedFn = debounce(mockFn, 1000, {
-        leading: false,
-        trailing: true,
-        maxWait: 1000,
-        logging: false,
-      });
+  describe('Lodash compatibility tests', () => {
+    it('should debounce a function and return results correctly', () => {
+      let callCount = 0;
+      const debounced = debounce(function (value: string) {
+        callCount++;
+        return value;
+      }, 32);
 
-      console.log('1'.repeat(20));
-      jest.advanceTimersByTime(1254);
-      debouncedFn('1254');
-      jest.advanceTimersByTime(1461 - 1254);
-      debouncedFn('1461');
-      expect(mockFn).toHaveBeenCalledTimes(0);
-      jest.advanceTimersByTime(2257 - 1461);
-      expect(mockFn).toHaveBeenCalledTimes(1);
-      expect(mockFn).toHaveBeenLastCalledWith('1461');
+      const results = [debounced('a'), debounced('b'), debounced('c')];
+      expect(results).toEqual([undefined, undefined, undefined]);
+      expect(callCount).toBe(0);
 
-      console.log('2'.repeat(20));
-      jest.advanceTimersByTime(6898 - 2257);
-      debouncedFn('6898');
-      jest.advanceTimersByTime(7079 - 6898);
-      debouncedFn('7079');
-      jest.advanceTimersByTime(7267 - 7079);
-      debouncedFn('7267');
-      jest.advanceTimersByTime(7437 - 7267);
-      debouncedFn('7437');
-      jest.advanceTimersByTime(7613 - 7437);
-      debouncedFn('7613');
-      expect(mockFn).toHaveBeenCalledTimes(1);
-      jest.advanceTimersByTime(7900 - 7613);
-      expect(mockFn).toHaveBeenCalledTimes(2);
-      expect(mockFn).toHaveBeenLastCalledWith('7613');
+      jest.advanceTimersByTime(32);
+      expect(callCount).toBe(1);
 
-      console.log('3'.repeat(20));
-      jest.advanceTimersByTime(10082 - 7900);
-      debouncedFn('10082');
-      jest.advanceTimersByTime(10258 - 10082);
-      debouncedFn('10258');
-      jest.advanceTimersByTime(10416 - 10258);
-      debouncedFn('10416');
-      jest.advanceTimersByTime(10610 - 10416);
-      debouncedFn('10610');
-      jest.advanceTimersByTime(10779 - 10610);
-      debouncedFn('10779');
-      jest.advanceTimersByTime(10954 - 10779);
-      debouncedFn('10954');
-      expect(mockFn).toHaveBeenCalledTimes(2);
-      jest.advanceTimersByTime(11083 - 10954);
-      expect(mockFn).toHaveBeenCalledTimes(3);
-      expect(mockFn).toHaveBeenLastCalledWith('10954');
+      const results2 = [debounced('d'), debounced('e'), debounced('f')];
+      expect(results2).toEqual(['c', 'c', 'c']);
+      expect(callCount).toBe(1);
 
-      console.log('4'.repeat(20));
-      jest.advanceTimersByTime(11113 - 11083);
-      debouncedFn('11113');
-      jest.advanceTimersByTime(11297 - 11113);
-      debouncedFn('11297');
-      jest.advanceTimersByTime(11472 - 11297);
-      debouncedFn('11472');
-      jest.advanceTimersByTime(11720 - 11472);
-      debouncedFn('11720');
-      jest.advanceTimersByTime(11896 - 11720);
-      debouncedFn('11896');
-      jest.advanceTimersByTime(12073 - 11896);
-      debouncedFn('12073');
-      expect(mockFn).toHaveBeenCalledTimes(3);
-      jest.advanceTimersByTime(12115 - 12073);
-      expect(mockFn).toHaveBeenCalledTimes(4);
-      expect(mockFn).toHaveBeenLastCalledWith('12073');
+      jest.advanceTimersByTime(32);
+      expect(callCount).toBe(2);
+    });
 
-      console.log('5'.repeat(20));
-      jest.advanceTimersByTime(12248 - 12115);
-      debouncedFn('12248');
-      jest.advanceTimersByTime(12418 - 12248);
-      debouncedFn('12418');
-      expect(mockFn).toHaveBeenCalledTimes(4);
-      jest.advanceTimersByTime(13250 - 12418);
-      expect(mockFn).toHaveBeenCalledTimes(5);
-      expect(mockFn).toHaveBeenLastCalledWith('12418');
+    it('should return last func result for subsequent debounced calls', () => {
+      const identity = (value: string) => value;
+      const debounced = debounce(identity, 32);
 
-      console.log('6'.repeat(20));
-      jest.advanceTimersByTime(16165 - 13250);
-      debouncedFn('16165');
-      jest.advanceTimersByTime(16331 - 16165);
-      debouncedFn('16331');
-      jest.advanceTimersByTime(16678 - 16331);
-      debouncedFn('16678');
-      expect(mockFn).toHaveBeenCalledTimes(5);
-      jest.advanceTimersByTime(17167 - 16678);
-      expect(mockFn).toHaveBeenCalledTimes(6);
-      expect(mockFn).toHaveBeenLastCalledWith('16678');
+      debounced('a');
 
-      console.log('7'.repeat(20));
-      jest.advanceTimersByTime(18087 - 17167);
-      debouncedFn('18087');
-      jest.advanceTimersByTime(18297 - 18087);
-      debouncedFn('18297');
-      jest.advanceTimersByTime(18456 - 18297);
-      debouncedFn('18456');
-      jest.advanceTimersByTime(18613 - 18456);
-      debouncedFn('18613');
-      jest.advanceTimersByTime(18790 - 18613);
-      debouncedFn('18790');
-      jest.advanceTimersByTime(18978 - 18790);
-      debouncedFn('18978');
-      expect(mockFn).toHaveBeenCalledTimes(6);
-      jest.advanceTimersByTime(19090 - 18978);
-      expect(mockFn).toHaveBeenCalledTimes(7);
-      expect(mockFn).toHaveBeenLastCalledWith('18978');
+      jest.advanceTimersByTime(32);
+      expect(debounced('b')).not.toBe('b');
 
-      console.log('8'.repeat(20));
-      jest.advanceTimersByTime(19129 - 19090);
-      debouncedFn('19129');
-      jest.advanceTimersByTime(19305 - 19129);
-      debouncedFn('19305');
-      jest.advanceTimersByTime(19480 - 19305);
-      debouncedFn('19480');
-      jest.advanceTimersByTime(19648 - 19480);
-      debouncedFn('19648');
-      jest.advanceTimersByTime(19839 - 19648);
-      debouncedFn('19839');
-      jest.advanceTimersByTime(20033 - 19839);
-      debouncedFn('20033');
-      expect(mockFn).toHaveBeenCalledTimes(7);
-      jest.advanceTimersByTime(20131 - 20033);
-      expect(mockFn).toHaveBeenCalledTimes(8);
-      expect(mockFn).toHaveBeenLastCalledWith('20033');
+      jest.advanceTimersByTime(32);
+      expect(debounced('c')).not.toBe('c');
+    });
 
-      console.log('9'.repeat(20));
-      jest.advanceTimersByTime(20225 - 20131);
-      debouncedFn('20225');
-      jest.advanceTimersByTime(20410 - 20225);
-      debouncedFn('20410');
-      jest.advanceTimersByTime(20591 - 20410);
-      debouncedFn('20591');
-      jest.advanceTimersByTime(20786 - 20591);
-      debouncedFn('20786');
-      jest.advanceTimersByTime(20968 - 20786);
-      debouncedFn('20968');
-      jest.advanceTimersByTime(21162 - 20968);
-      debouncedFn('21162');
-      expect(mockFn).toHaveBeenCalledTimes(9);
-      jest.advanceTimersByTime(21162 - 21162);
-      expect(mockFn).toHaveBeenCalledTimes(9);
-      expect(mockFn).toHaveBeenLastCalledWith('21162');
+    it('should not immediately call func when wait is 0', () => {
+      let callCount = 0;
+      const debounced = debounce(function () {
+        callCount++;
+      }, 0);
 
-      console.log('10_'.repeat(10));
-      jest.advanceTimersByTime(21344 - 21162);
-      debouncedFn('21344');
-      jest.advanceTimersByTime(21532 - 21344);
-      debouncedFn('21532');
-      jest.advanceTimersByTime(21708 - 21532);
-      debouncedFn('21708');
-      jest.advanceTimersByTime(21891 - 21708);
-      debouncedFn('21891');
-      jest.advanceTimersByTime(22077 - 21891);
-      debouncedFn('22077');
-      expect(mockFn).toHaveBeenCalledTimes(9);
-      jest.advanceTimersByTime(22164 - 22077);
-      expect(mockFn).toHaveBeenCalledTimes(10);
-      expect(mockFn).toHaveBeenLastCalledWith('22077');
+      debounced();
+      debounced();
+      expect(callCount).toBe(0);
 
-      console.log('11_'.repeat(10));
-      jest.advanceTimersByTime(22266 - 22164);
-      debouncedFn('22266');
-      expect(mockFn).toHaveBeenCalledTimes(10);
-      jest.advanceTimersByTime(23268 - 22266);
-      expect(mockFn).toHaveBeenCalledTimes(11);
-      expect(mockFn).toHaveBeenLastCalledWith('22266');
+      jest.advanceTimersByTime(0);
+      expect(callCount).toBe(1);
+    });
+
+    it('should apply default options correctly', () => {
+      let callCount = 0;
+      const debounced = debounce(
+        function () {
+          callCount++;
+        },
+        32,
+        {}
+      );
+
+      debounced();
+      expect(callCount).toBe(0);
+
+      jest.advanceTimersByTime(32);
+      expect(callCount).toBe(1);
+    });
+
+    it('should support leading option with single and multiple calls', () => {
+      const callCounts = [0, 0];
+
+      const withLeading = debounce(
+        function () {
+          callCounts[0]++;
+        },
+        32,
+        { leading: true }
+      );
+
+      const withLeadingAndTrailing = debounce(
+        function () {
+          callCounts[1]++;
+        },
+        32,
+        { leading: true }
+      );
+
+      withLeading();
+      expect(callCounts[0]).toBe(1);
+
+      withLeadingAndTrailing();
+      withLeadingAndTrailing();
+      expect(callCounts[1]).toBe(1);
+
+      jest.advanceTimersByTime(32);
+      expect(callCounts).toEqual([1, 2]);
+
+      withLeading();
+      expect(callCounts[0]).toBe(2);
+    });
+
+    it('should return last func result for subsequent leading calls', () => {
+      const identity = (value: string) => value;
+      const debounced = debounce(identity, 32, { leading: true, trailing: false });
+
+      const results = [debounced('a'), debounced('b')];
+      expect(results).toEqual(['a', 'a']);
+
+      jest.advanceTimersByTime(32);
+
+      const results2 = [debounced('c'), debounced('d')];
+      expect(results2).toEqual(['c', 'c']);
+    });
+
+    it('should support trailing option correctly', () => {
+      let withCount = 0;
+      let withoutCount = 0;
+
+      const withTrailing = debounce(
+        function () {
+          withCount++;
+        },
+        32,
+        { trailing: true }
+      );
+
+      const withoutTrailing = debounce(
+        function () {
+          withoutCount++;
+        },
+        32,
+        { trailing: false }
+      );
+
+      withTrailing();
+      expect(withCount).toBe(0);
+
+      withoutTrailing();
+      expect(withoutCount).toBe(0);
+
+      jest.advanceTimersByTime(32);
+      expect(withCount).toBe(1);
+      expect(withoutCount).toBe(0);
+    });
+
+    it('should support maxWait option with delayed calls', () => {
+      let callCount = 0;
+      const debounced = debounce(
+        function (value?: string) {
+          callCount++;
+          return value;
+        },
+        32,
+        { maxWait: 64 }
+      );
+
+      debounced();
+      debounced();
+      expect(callCount).toBe(0);
+
+      jest.advanceTimersByTime(64);
+      expect(callCount).toBe(1);
+
+      debounced();
+      debounced();
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(64);
+      expect(callCount).toBe(2);
+
+      jest.advanceTimersByTime(1000);
+      expect(callCount).toBe(2);
+    });
+
+    it('should support maxWait in rapid succession', () => {
+      let withCount = 0;
+      let withoutCount = 0;
+
+      const withMaxWait = debounce(
+        function () {
+          withCount++;
+        },
+        64,
+        { maxWait: 128 }
+      );
+
+      const withoutMaxWait = debounce(function () {
+        withoutCount++;
+      }, 96);
+
+      for (let i = 0; i < 10; i++) {
+        withMaxWait();
+        withoutMaxWait();
+        jest.advanceTimersByTime(30);
+      }
+
+      expect(withoutCount).toBe(0);
+      expect(withCount).toBeGreaterThan(0);
+    });
+
+    it('should queue trailing call for subsequent calls after maxWait', () => {
+      let callCount = 0;
+      const debounced = debounce(
+        function () {
+          callCount++;
+        },
+        200,
+        { maxWait: 200 }
+      );
+
+      debounced();
+
+      jest.advanceTimersByTime(190);
+      debounced();
+
+      jest.advanceTimersByTime(10);
+      expect(callCount).toBe(1);
+      debounced();
+
+      jest.advanceTimersByTime(10);
+      debounced();
+
+      jest.advanceTimersByTime(185);
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(5);
+      expect(callCount).toBe(2);
+
+      jest.advanceTimersByTime(1000);
+      expect(callCount).toBe(2);
+    });
+
+    it('should cancel maxWait timer when delayed is invoked', () => {
+      let callCount = 0;
+      const debounced = debounce(
+        function () {
+          callCount++;
+        },
+        32,
+        { maxWait: 64 }
+      );
+
+      debounced();
+
+      jest.advanceTimersByTime(64);
+      debounced();
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(32);
+      expect(callCount).toBe(2);
+    });
+
+    it('should invoke trailing call with correct arguments and context', () => {
+      let actual: [unknown, string] | undefined;
+      let callCount = 0;
+      const object = {};
+
+      const debounced = debounce(
+        function (this: unknown, value: string) {
+          actual = [this, value];
+          callCount++;
+          return callCount < 2;
+        },
+        32,
+        { leading: true, maxWait: 64 }
+      );
+
+      debounced.call(object, 'a');
+      expect(callCount).toBe(1);
+
+      while (true) {
+        jest.advanceTimersByTime(10);
+
+        if (!debounced.call(object, 'a')) {
+          break;
+        }
+      }
+
+      expect(callCount).toBe(2);
+      expect(actual).toEqual([object, 'a']);
     });
   });
 });
