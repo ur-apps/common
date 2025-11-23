@@ -15,7 +15,7 @@ A React hook that creates a throttled version of a callback function using the `
 ### Basic Usage
 
 ```tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useThrottle } from '@ur-apps/common-fe';
 
 function ScrollComponent() {
@@ -77,7 +77,7 @@ function ResponsiveComponent() {
 ### Advanced Usage with Options
 
 ```tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useThrottle } from '@ur-apps/common-fe';
 
 function MouseTrackerComponent() {

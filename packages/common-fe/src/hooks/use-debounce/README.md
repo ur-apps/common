@@ -97,7 +97,7 @@ function AdvancedComponent() {
 - `leading?: boolean` - Call on the leading edge (first call immediately). Default: `false`
 - `trailing?: boolean` - Call on the trailing edge. Default: `true`
 - `maxWait?: number` - Ensure call is not less than maxWait ms (gives throttle behavior)
-- `signal?: AbortSignal` - AbortSignal to cancel the throttled function
+- `signal?: AbortSignal` - AbortSignal to cancel the debounced function
 
 ### Returns
 
@@ -106,6 +106,40 @@ A debounced function with the following methods:
 - `cancel()` - Cancel any pending debounced calls
 - `flush()` - Immediately execute any pending debounced call
 - `pending()` - Returns `true` if there is a pending call, `false` otherwise
+
+## Debounce vs Throttle
+
+### When to use Debounce (useDebounce)
+
+Use debounce when you want to **delay execution** until after the user stops performing an action:
+
+- **Search input** - Wait for user to finish typing
+- **Form validation** - Validate after user stops editing
+- **Auto-save** - Save after user stops making changes
+- **Text input** - Process input after typing pauses
+
+**Behavior**: If you call a debounced function 10 times within 300ms, it will execute **only once, 300ms after the last call**.
+
+### When to use Throttle (useThrottle)
+
+Use throttle when you want to **limit the rate** at which a function executes, ensuring it runs at most once per specified time period:
+
+- **Scroll events** - Track scroll position without overwhelming performance
+- **Mouse movement** - Track cursor position at a controlled rate
+- **Window resize** - Update layout calculations periodically
+- **Button clicks** - Prevent excessive API calls from rapid clicking
+- **Animation updates** - Limit frame updates to a specific rate
+
+**Behavior**: If you call a throttled function 10 times within 300ms, it will execute **immediately on the first call**, then **at most once more** after 300ms.
+
+### Quick Comparison
+
+| Feature                 | Throttle                  | Debounce                  |
+| ----------------------- | ------------------------- | ------------------------- |
+| **Execution frequency** | At most once per interval | Only after activity stops |
+| **First call**          | Can execute immediately   | Usually waits             |
+| **Use case**            | Rate limiting             | Delay until idle          |
+| **Example**             | Scroll tracking           | Search input              |
 
 ## Implementation Details
 
