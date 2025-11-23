@@ -64,7 +64,7 @@ export function debounce<F extends AnyFn>(fn: F, wait: number, options: Debounce
     }
 
     const timeSinceLastCall = isNullish(lastCallTime) ? null : now - lastCallTime;
-    const timeSinceLastInvoke = isNullish(lastInvokeTime) ? 0 : now - lastInvokeTime;
+    const timeSinceLastInvoke = now - lastInvokeTime;
 
     const shouldInvokeLeading = leading && (isNullish(timeSinceLastCall) || timeSinceLastCall >= wait);
     const shouldInvokeMaxWait = maxWait && timeSinceLastInvoke >= maxWait;
