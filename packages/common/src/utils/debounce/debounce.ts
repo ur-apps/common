@@ -13,23 +13,24 @@ import { DebouncedFn, DebounceOptions } from './types';
  * @returns A debounced version of the original function.
  */
 export function debounce<F extends AnyFn>(fn: F, wait: number, options: DebounceOptions = {}): DebouncedFn<F> {
-  const { leading = false, trailing = true, maxWait, signal } = options;
+  const { leading = false, trailing = true, signal } = options;
+  const maxWait = !isNullish(options.maxWait) && options.maxWait < wait ? wait : options.maxWait;
+
+  let lastContext: unknown;
+  let lastArgs: Parameters<F> | null = null;
+  let lastResult: ReturnType<F>;
 
   let timeoutId: NodeJS.Timeout | undefined;
-  let lastThis: unknown;
-  let lastArgs: Parameters<F> | null = null;
   let lastCallTime: number | null = null;
   let lastInvokeTime: number | null = null;
 
   const invoke = (): ReturnType<F> => {
-    const result: ReturnType<F> = fn.apply(lastThis, lastArgs!);
-
-    // Clean up state after invocation
-    lastThis = null;
-    lastArgs = null;
     lastInvokeTime = Date.now();
+    lastResult = fn.apply(lastContext, lastArgs!);
 
-    return result;
+    resetCallState();
+
+    return lastResult;
   };
 
   const resetTimeout = () => {
@@ -41,53 +42,63 @@ export function debounce<F extends AnyFn>(fn: F, wait: number, options: Debounce
   };
 
   const updateCallState = (context: unknown, args: Parameters<F>, now: number): void => {
-    lastThis = context;
+    lastContext = context;
     lastArgs = args;
     lastCallTime = now;
   };
 
+  const resetCallState = (full = false): void => {
+    lastContext = null;
+    lastArgs = null;
+
+    if (full) {
+      lastResult = undefined as ReturnType<F>;
+    }
+  };
+
   const debounced: DebouncedFn<F> = function (this: unknown, ...args) {
     const now = Date.now();
-    const isFirstCall = isNullish(lastCallTime);
-    const hasInvoked = !isNullish(lastInvokeTime);
 
-    // Initialize invoke time on first call
-    if (isFirstCall) {
+    if (isNullish(lastInvokeTime) || now - lastInvokeTime > Math.max(wait, maxWait || 0)) {
       lastInvokeTime = now;
     }
 
-    const timeSinceLastInvoke = now - lastInvokeTime!;
-    const shouldInvokeLeading = leading && (!hasInvoked || (!trailing && timeSinceLastInvoke! >= wait));
-    const shouldInvokeMaxWait = Boolean(maxWait && !isFirstCall && timeSinceLastInvoke! >= maxWait);
-    const shouldSkipExecution = !trailing && !isNullish(timeSinceLastInvoke) && timeSinceLastInvoke < wait;
+    const timeSinceLastCall = isNullish(lastCallTime) ? null : now - lastCallTime;
+    const timeSinceLastInvoke = isNullish(lastInvokeTime) ? 0 : now - lastInvokeTime;
+
+    const shouldInvokeLeading = leading && (isNullish(timeSinceLastCall) || timeSinceLastCall >= wait);
+    const shouldInvokeMaxWait = maxWait && timeSinceLastInvoke >= maxWait;
+
+    const waitTime = maxWait ? Math.min(wait, maxWait - timeSinceLastInvoke) : wait;
 
     updateCallState(this, args, now);
 
-    // Execute immediately on leading edge or if maxWait time has been exceeded
     if (shouldInvokeLeading || shouldInvokeMaxWait) {
       resetTimeout();
 
       return invoke();
     }
 
-    // Skip execution if conditions are met
-    if (shouldSkipExecution) {
-      return;
+    if (!trailing) {
+      return lastResult;
     }
 
     resetTimeout();
-
-    // Schedule execution
-    const waitTime = maxWait ? Math.min(wait, maxWait - timeSinceLastInvoke) : wait;
 
     timeoutId = setTimeout(() => {
       invoke();
       resetTimeout();
     }, waitTime);
+
+    return lastResult;
   };
 
   debounced.cancel = () => {
     resetTimeout();
+    resetCallState(true);
+
+    lastCallTime = null;
+    lastInvokeTime = null;
   };
 
   debounced.flush = () => {
