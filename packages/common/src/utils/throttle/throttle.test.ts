@@ -216,6 +216,7 @@ describe('[utils] throttle', () => {
       expect(throttled.pending()).toBe(false);
 
       throttled(); // leading, no pending yet
+      expect(mockFn).toHaveBeenCalledTimes(1);
       expect(throttled.pending()).toBe(false);
 
       throttled(); // schedule trailing
@@ -348,6 +349,209 @@ describe('[utils] throttle', () => {
       jest.advanceTimersByTime(10);
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('call-9');
+    });
+  });
+
+  describe('Lodash compatibility tests', () => {
+    it('should throttle a function with multiple calls', () => {
+      let callCount = 0;
+      const throttled = throttle(function () {
+        callCount++;
+      }, 32);
+
+      throttled();
+      throttled();
+      throttled();
+
+      const lastCount = callCount;
+      expect(callCount).toBeGreaterThan(0);
+
+      jest.advanceTimersByTime(64);
+      expect(callCount).toBeGreaterThan(lastCount);
+    });
+
+    it('should return result of first call for subsequent calls', () => {
+      const identity = (value: string) => value;
+      const throttled = throttle(identity, 32);
+
+      const results = [throttled('a'), throttled('b')];
+      expect(results).toEqual(['a', 'a']);
+
+      jest.advanceTimersByTime(64);
+
+      const results2 = [throttled('c'), throttled('d')];
+      expect(results2[0]).not.toBe('a');
+      expect(results2[0]).not.toBeUndefined();
+
+      expect(results2[1]).not.toBe('d');
+      expect(results2[1]).not.toBeUndefined();
+    });
+
+    it('should not trigger trailing call when invoked once', () => {
+      let callCount = 0;
+      const throttled = throttle(function () {
+        callCount++;
+      }, 32);
+
+      throttled();
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(64);
+      expect(callCount).toBe(1);
+    });
+
+    it('should trigger call when invoked repeatedly', () => {
+      let callCount = 0;
+      const throttled = throttle(function () {
+        callCount++;
+      }, 32);
+
+      for (let i = 0; i < 100; i++) {
+        throttled();
+        jest.advanceTimersByTime(3);
+      }
+
+      const actual = callCount > 1;
+      expect(actual).toBe(true);
+    });
+
+    it('should trigger call when invoked repeatedly with leading false', () => {
+      let callCount = 0;
+      const throttled = throttle(
+        function () {
+          callCount++;
+        },
+        32,
+        { leading: false }
+      );
+
+      for (let i = 0; i < 100; i++) {
+        throttled();
+        jest.advanceTimersByTime(3);
+      }
+
+      const actual = callCount > 1;
+      expect(actual).toBe(true);
+    });
+
+    it('should trigger second throttled call as soon as possible', () => {
+      let callCount = 0;
+      const throttled = throttle(
+        function () {
+          callCount++;
+        },
+        128,
+        { leading: false }
+      );
+
+      throttled();
+
+      jest.advanceTimersByTime(128);
+      expect(callCount).toBe(1);
+
+      throttled();
+      jest.advanceTimersByTime(62);
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(130);
+      expect(callCount).toBe(2);
+    });
+
+    it('should apply default options correctly', () => {
+      let callCount = 0;
+      const throttled = throttle(
+        function () {
+          callCount++;
+        },
+        32,
+        {}
+      );
+
+      throttled();
+      throttled();
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(128);
+      expect(callCount).toBe(2);
+    });
+
+    it('should support leading option with immediate return', () => {
+      const identity = (value: string) => value;
+
+      const withLeading = throttle(identity, 32, { leading: true });
+      expect(withLeading('a')).toBe('a');
+
+      const withoutLeading = throttle(identity, 32, { leading: false });
+      expect(withoutLeading('a')).toBeUndefined();
+    });
+
+    it('should support trailing option behavior', () => {
+      let withCount = 0;
+      let withoutCount = 0;
+
+      const withTrailing = throttle(
+        function (value: string) {
+          withCount++;
+          return value;
+        },
+        64,
+        { trailing: true }
+      );
+
+      const withoutTrailing = throttle(
+        function (value: string) {
+          withoutCount++;
+          return value;
+        },
+        64,
+        { trailing: false }
+      );
+
+      expect(withTrailing('a')).toBe('a');
+      expect(withTrailing('b')).toBe('a');
+
+      expect(withoutTrailing('a')).toBe('a');
+      expect(withoutTrailing('b')).toBe('a');
+
+      jest.advanceTimersByTime(256);
+      expect(withCount).toBe(2);
+      expect(withoutCount).toBe(1);
+    });
+
+    it('should not update last called at end of timeout when trailing is false', () => {
+      let callCount = 0;
+      const throttled = throttle(
+        function () {
+          callCount++;
+        },
+        64,
+        { trailing: false }
+      );
+
+      throttled();
+      throttled();
+
+      jest.advanceTimersByTime(96);
+      throttled();
+      throttled();
+
+      jest.advanceTimersByTime(96);
+      expect(callCount).toBeGreaterThan(1);
+    });
+
+    it('should handle system time edge cases', () => {
+      let callCount = 0;
+      const throttled = throttle(function (value: string) {
+        callCount++;
+        return value;
+      }, 32);
+
+      const results = [throttled('a'), throttled('b'), throttled('c')];
+      expect(results).toEqual(['a', 'a', 'a']);
+      expect(callCount).toBe(1);
+
+      jest.advanceTimersByTime(64);
+      expect(callCount).toBe(2);
     });
   });
 });
