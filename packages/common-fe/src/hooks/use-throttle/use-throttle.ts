@@ -29,7 +29,7 @@ import { useLatest } from '../use-latest';
  */
 export function useThrottle<F extends AnyFn>(fn: F, wait: number, options?: ThrottleOptions) {
   const latestCallback = useLatest(fn);
-  const throttledRef = useRef<ThrottledFn<F>>(undefined);
+  const throttledRef = useRef<ThrottledFn<F> | null>(null);
 
   const throttledFn = useMemo(() => {
     if (throttledRef.current) {

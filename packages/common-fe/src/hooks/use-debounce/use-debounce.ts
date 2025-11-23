@@ -29,7 +29,7 @@ import { useLatest } from '../use-latest';
  */
 export function useDebounce<F extends AnyFn>(fn: F, wait: number, options?: DebounceOptions) {
   const latestCallback = useLatest(fn);
-  const debouncedRef = useRef<DebouncedFn<F>>(undefined);
+  const debouncedRef = useRef<DebouncedFn<F> | null>(null);
 
   const debouncedFn = useMemo(() => {
     if (debouncedRef.current) {
