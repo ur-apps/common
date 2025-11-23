@@ -377,6 +377,68 @@ describe('[utils] debounce', () => {
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('test2');
     });
+
+    it('should invoke on maxWait boundary with continuous calls when trailing is false', () => {
+      const mockFn = jest.fn();
+      const debouncedFn = debounce(mockFn, 1000, {
+        leading: true,
+        trailing: false,
+        maxWait: 1500,
+      });
+
+      debouncedFn('t0');
+      expect(mockFn).toHaveBeenCalledTimes(1);
+      expect(mockFn).toHaveBeenLastCalledWith('t0');
+
+      jest.advanceTimersByTime(176);
+      debouncedFn('t176');
+      jest.advanceTimersByTime(170);
+      debouncedFn('t346');
+      jest.advanceTimersByTime(171);
+      debouncedFn('t517');
+      jest.advanceTimersByTime(167);
+      debouncedFn('t684');
+      jest.advanceTimersByTime(176);
+      debouncedFn('t860');
+      jest.advanceTimersByTime(161);
+      debouncedFn('t1021');
+      jest.advanceTimersByTime(181);
+      debouncedFn('t1202');
+      jest.advanceTimersByTime(186);
+      debouncedFn('t1388');
+      jest.advanceTimersByTime(111);
+      debouncedFn('t1499');
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(2);
+      expect(mockFn).toHaveBeenCalledTimes(1);
+
+      debouncedFn('t1501');
+      expect(mockFn).toHaveBeenCalledTimes(2);
+      expect(mockFn).toHaveBeenLastCalledWith('t1501');
+
+      jest.advanceTimersByTime(72);
+      debouncedFn('t1573');
+      jest.advanceTimersByTime(182);
+      debouncedFn('t1755');
+      jest.advanceTimersByTime(194);
+      debouncedFn('t1949');
+      jest.advanceTimersByTime(183);
+      debouncedFn('t2132');
+      jest.advanceTimersByTime(185);
+      debouncedFn('t2317');
+      jest.advanceTimersByTime(175);
+      debouncedFn('t2492');
+      jest.advanceTimersByTime(191);
+      debouncedFn('t2683');
+      jest.advanceTimersByTime(188);
+      debouncedFn('t2871');
+      jest.advanceTimersByTime(182);
+      expect(mockFn).toHaveBeenCalledTimes(2);
+      debouncedFn('t3053');
+      expect(mockFn).toHaveBeenCalledTimes(3);
+      expect(mockFn).toHaveBeenLastCalledWith('t3053');
+    });
   });
 
   describe('Cancel method', () => {

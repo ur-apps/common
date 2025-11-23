@@ -59,7 +59,7 @@ export function debounce<F extends AnyFn>(fn: F, wait: number, options: Debounce
   const debounced: DebouncedFn<F> = function (this: unknown, ...args) {
     const now = Date.now();
 
-    if (isNullish(lastInvokeTime) || now - lastInvokeTime > Math.max(wait, maxWait || 0)) {
+    if (isNullish(lastInvokeTime) || (trailing && now - lastInvokeTime > Math.max(wait, maxWait || 0))) {
       lastInvokeTime = now;
     }
 
