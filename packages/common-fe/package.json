@@ -1,6 +1,6 @@
 {
   "name": "@ur-apps/common-fe",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "ur apps frontend common library",
   "type": "module",
   "main": "lib/index.js",
