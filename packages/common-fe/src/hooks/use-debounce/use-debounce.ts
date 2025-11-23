@@ -47,7 +47,7 @@ export function useDebounce<F extends AnyFn>(fn: F, wait: number, options?: Debo
     return debounced;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wait, options]);
+  }, [wait, options?.leading, options?.trailing, options?.maxWait, options?.signal]);
 
   useEffect(() => {
     // Cleanup function to cancel any pending debounced calls on unmount
