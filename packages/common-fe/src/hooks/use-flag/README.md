@@ -129,7 +129,7 @@ function LazyInitExample() {
 ### Parameters
 
 ```typescript
-useFlag(initialState?: boolean | (() => boolean)): readonly [boolean, Dispatch<SetStateAction<boolean>>, () => void]
+useFlag(initialState?: boolean | (() => boolean)): [boolean, Dispatch<SetStateAction<boolean>>, () => void]
 ```
 
 - `initialState?: boolean | (() => boolean)` - The initial state of the flag. Can be:
