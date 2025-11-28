@@ -245,7 +245,7 @@ The hook internally:
 
 - Uses React's `useState` for state management
 - Uses `useCallback` to memoize the toggle function with an empty dependency array
-- Returns a readonly tuple using `as const` for proper type inference
+- Returns a tuple for proper type inference
 - Supports lazy initialization via function initializer
 
 ## Performance Considerations
