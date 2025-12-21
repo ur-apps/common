@@ -5,7 +5,7 @@ import { useLatest } from '../use-latest';
 import { BLUR_EVENT, DEFAULT_POINTER_TYPES, ENTER_EVENT, FOCUS_EVENT, LEAVE_EVENT } from './constants';
 import { PointerType, UseHoverOptions } from './types';
 
-export function useHover<T extends HTMLElement = HTMLElement>(
+export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   targetRef: RefObject<T | null>,
   options: UseHoverOptions = {}
 ): boolean {
@@ -43,7 +43,7 @@ export function useHover<T extends HTMLElement = HTMLElement>(
       return;
     }
 
-    const matchesPointer = (evt: PointerEvent | MouseEvent) => {
+    const matchesPointer = (evt: Event) => {
       const { pointerTypes } = optionsRef.current;
 
       if (pointerTypes.length && evt instanceof PointerEvent) {
@@ -53,7 +53,7 @@ export function useHover<T extends HTMLElement = HTMLElement>(
       return true;
     };
 
-    const handleEnter = (evt: PointerEvent | MouseEvent) => {
+    const handleEnter = (evt: Event) => {
       if (!matchesPointer(evt)) return;
 
       const { enterDelay, onChange } = optionsRef.current;
@@ -72,7 +72,7 @@ export function useHover<T extends HTMLElement = HTMLElement>(
       }
     };
 
-    const handleLeave = (evt: PointerEvent | MouseEvent) => {
+    const handleLeave = (evt: Event) => {
       if (!matchesPointer(evt)) return;
 
       const { leaveDelay, onChange } = optionsRef.current;
