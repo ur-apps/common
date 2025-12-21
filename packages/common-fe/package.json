@@ -58,8 +58,8 @@
     }
   },
   "devDependencies": {
-    "@rollup/plugin-alias": "5.x",
-    "@rollup/plugin-commonjs": "28.x",
+    "@rollup/plugin-alias": "6.x",
+    "@rollup/plugin-commonjs": "29.x",
     "@rollup/plugin-node-resolve": "16.x",
     "@rollup/plugin-typescript": "12.x",
     "@types/jest": "30.x",

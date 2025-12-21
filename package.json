@@ -19,7 +19,7 @@
     "eslint": "9.x",
     "globals": "16.x",
     "jest": "30.x",
-    "lerna": "8.1.2",
+    "lerna": "9.0.3",
     "prettier": "3.x",
     "ts-jest": "29.x",
     "ts-node": "10.x",
