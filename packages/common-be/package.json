@@ -58,6 +58,20 @@
     "rxjs": "7.x",
     "typescript-eslint": "8.x"
   },
+  "peerDependenciesMeta": {
+    "@eslint/js": {
+      "optional": true
+    },
+    "@ianvs/prettier-plugin-sort-imports": {
+      "optional": true
+    },
+    "globals": {
+      "optional": true
+    },
+    "typescript-eslint": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@nestjs/cli": "11.x",
     "@nestjs/schematics": "11.x",
