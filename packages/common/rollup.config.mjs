@@ -37,8 +37,8 @@ export default {
     }),
     nodeResolve(),
     commonjs(),
-    typescript({ tsconfig: 'tsconfig.json' }),
-    tscAlias(),
+    typescript({ tsconfig: 'tsconfig.build.json' }),
+    tscAlias({ configFile: 'tsconfig.build.json' }),
     analyze({ 'summaryOnly': true }),
   ],
 };

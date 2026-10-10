@@ -1,0 +1,37 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "moduleDetection": "auto",
+    "useDefineForClassFields": true,
+
+    // JavaScript Support
+    "allowJs": true,
+
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "noUncheckedSideEffectImports": true,
+
+    // Emit
+    "noEmit": true,
+
+    // Type Checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    // Completeness
+    "skipLibCheck": true
+  }
+}

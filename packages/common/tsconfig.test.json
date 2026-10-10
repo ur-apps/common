@@ -1,11 +1,14 @@
 {
   /* Visit https://aka.ms/tsconfig to read more about this file */
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     // Modules
-    "baseUrl": "./src",
-    "types": ["node", "jest"]
+    "rootDir": ".",
+    "types": ["node", "jest"],
+
+    // Projects
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.common.test.tsbuildinfo"
   },
-  "include": ["**/*.test.ts", "**/*.test.tsx"],
-  "exclude": ["node_modules", "lib"]
+  "include": ["src/**/*.spec.ts", "src/**/*.test.ts", "tests/**/*.spec.ts", "tests/**/*.test.ts"],
+  "exclude": ["node_modules", "build", "dist", "lib"]
 }
