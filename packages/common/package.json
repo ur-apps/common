@@ -62,6 +62,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "12.x",
     "@types/jest": "30.x",
+    "@types/node": "24.x",
     "eslint": "10.x",
     "jest": "30.x",
     "prettier": "3.x",
