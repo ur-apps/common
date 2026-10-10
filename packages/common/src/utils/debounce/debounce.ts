@@ -1,5 +1,4 @@
-import { AnyFn } from 'types';
-
+import { AnyFn } from '../../types';
 import { isNullish } from '../get-type';
 
 import { DebouncedFn, DebounceOptions } from './types';

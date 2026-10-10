@@ -1,5 +1,4 @@
-import { AnyFn } from 'types';
-
+import { AnyFn } from '../../types';
 import { debounce } from '../debounce';
 
 import { ThrottledFn, ThrottleOptions } from './types';

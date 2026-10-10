@@ -1,4 +1,4 @@
-import { AnyFn } from 'types';
+import { AnyFn } from '../../types';
 
 export type DebounceOptions = {
   /**
