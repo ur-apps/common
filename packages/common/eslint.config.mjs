@@ -1,4 +1,5 @@
 import jseslint from '@eslint/js';
+import eslint from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -40,7 +41,7 @@ export const baseConfigs = [
   },
 ];
 
-export default tseslint.config(jseslint.configs.recommended, tseslint.configs.recommended, baseConfigs, {
+export default eslint.defineConfig(jseslint.configs.recommended, tseslint.configs.recommended, baseConfigs, {
   languageOptions: {
     parserOptions: {
       tsconfigRootDir: import.meta.dirname,
