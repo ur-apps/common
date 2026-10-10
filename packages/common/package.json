@@ -43,7 +43,7 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "peerDependencies": {
-    "@eslint/js": "9.x",
+    "@eslint/js": "10.x",
     "@ianvs/prettier-plugin-sort-imports": "4.x",
     "typescript-eslint": "8.x"
   },
@@ -64,7 +64,7 @@
     "@rollup/plugin-node-resolve": "16.x",
     "@rollup/plugin-typescript": "12.x",
     "@types/jest": "30.x",
-    "eslint": "9.x",
+    "eslint": "10.x",
     "jest": "30.x",
     "prettier": "3.x",
     "rollup": "4.x",
@@ -73,6 +73,6 @@
     "rollup-plugin-peer-deps-external": "2.x",
     "rollup-plugin-tsc-alias": "1.x",
     "ts-jest": "29.x",
-    "typescript": "5.x"
+    "typescript": "6.x"
   }
 }

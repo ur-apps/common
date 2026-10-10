@@ -43,17 +43,17 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "peerDependencies": {
-    "@eslint/js": "9.x",
+    "@eslint/js": "10.x",
     "@ianvs/prettier-plugin-sort-imports": "4.x",
-    "@nestjs/common": "11.x",
-    "@nestjs/core": "11.x",
-    "@nestjs/microservices": "11.x",
-    "@nestjs/platform-express": "11.x",
-    "@nestjs/swagger": "11.x",
+    "@nestjs/common": "12.x",
+    "@nestjs/core": "12.x",
+    "@nestjs/microservices": "12.x",
+    "@nestjs/platform-express": "12.x",
+    "@nestjs/swagger": "12.x",
     "@ur-apps/common": "*",
     "class-transformer": "0.x",
     "class-validator": "0.x",
-    "globals": "16.x",
+    "globals": "17.x",
     "reflect-metadata": "0.x",
     "rxjs": "7.x",
     "typescript-eslint": "8.x"
@@ -73,23 +73,21 @@
     }
   },
   "devDependencies": {
-    "@nestjs/cli": "11.x",
-    "@nestjs/schematics": "11.x",
-    "@nestjs/testing": "11.x",
+    "@nestjs/cli": "12.x",
+    "@nestjs/schematics": "12.x",
+    "@nestjs/testing": "12.x",
     "@swc/cli": "0.x",
     "@swc/core": "1.x",
     "@types/express": "5.x",
     "@types/jest": "30.x",
-    "@types/supertest": "6.x",
-    "eslint": "9.x",
+    "eslint": "10.x",
     "jest": "30.x",
     "prettier": "3.x",
     "source-map-support": "0.x",
-    "supertest": "7.x",
     "ts-jest": "29.x",
     "ts-loader": "9.x",
     "ts-node": "10.x",
     "tsconfig-paths": "4.x",
-    "typescript": "5.x"
+    "typescript": "6.x"
   }
 }

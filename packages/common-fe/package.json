@@ -41,18 +41,21 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "peerDependencies": {
-    "@eslint/js": "9.x",
+    "@eslint-react/eslint-plugin": "5.x",
+    "@eslint/js": "10.x",
     "@ianvs/prettier-plugin-sort-imports": "4.x",
     "@types/react": "19.x",
     "@ur-apps/common": "*",
-    "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "5.x",
+    "eslint-plugin-react-hooks": "7.x",
     "eslint-plugin-react-refresh": "0.x",
-    "globals": "16.x",
+    "globals": "17.x",
     "react": "19.x",
     "typescript-eslint": "8.x"
   },
   "peerDependenciesMeta": {
+    "@eslint-react/eslint-plugin": {
+      "optional": true
+    },
     "@eslint/js": {
       "optional": true
     },
@@ -60,9 +63,6 @@
       "optional": true
     },
     "@types/react": {
-      "optional": true
-    },
-    "eslint-plugin-react": {
       "optional": true
     },
     "eslint-plugin-react-hooks": {
@@ -79,15 +79,15 @@
     }
   },
   "devDependencies": {
+    "@eslint-react/eslint-plugin": "5.x",
     "@rollup/plugin-alias": "6.x",
     "@rollup/plugin-commonjs": "29.x",
     "@rollup/plugin-node-resolve": "16.x",
     "@rollup/plugin-typescript": "12.x",
     "@types/jest": "30.x",
     "@types/react": "19.x",
-    "eslint": "9.x",
-    "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "5.x",
+    "eslint": "10.x",
+    "eslint-plugin-react-hooks": "7.x",
     "eslint-plugin-react-refresh": "0.x",
     "jest": "30.x",
     "prettier": "3.x",
@@ -97,6 +97,6 @@
     "rollup-plugin-tsc-alias": "1.x",
     "ts-jest": "29.x",
     "ts-node": "10.x",
-    "typescript": "5.x"
+    "typescript": "6.x"
   }
 }
