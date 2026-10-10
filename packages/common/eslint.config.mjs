@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 /** @type {import('eslint').Linter.Config[]} */
 export const baseConfigs = [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
-  { ignores: ['node_modules', 'dist', 'build', 'lib'] },
+  { ignores: ['node_modules', 'dist', 'build', 'lib', 'coverage'] },
   {
     name: 'urapps-eslint/base',
     rules: {
