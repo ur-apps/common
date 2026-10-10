@@ -68,7 +68,6 @@
     "prettier": "3.x",
     "rollup": "4.x",
     "rollup-plugin-analyzer": "4.x",
-    "rollup-plugin-delete": "3.x",
     "rollup-plugin-peer-deps-external": "2.x",
     "ts-jest": "29.x",
     "typescript": "6.x"
