@@ -4,6 +4,7 @@
   "scripts": {
     "build": "lerna run build",
     "test": "lerna run test",
+    "typecheck": "lerna run typecheck",
     "release:major": "lerna version major",
     "release:minor": "lerna version minor",
     "release:patch": "lerna version patch",
