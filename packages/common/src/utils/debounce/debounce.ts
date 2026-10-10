@@ -19,7 +19,7 @@ export function debounce<F extends AnyFn>(fn: F, wait: number, options: Debounce
   let lastArgs: Parameters<F> | null = null;
   let lastResult: ReturnType<F>;
 
-  let timeoutId: NodeJS.Timeout | undefined;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
   let lastCallTime: number | null = null;
   let lastInvokeTime: number | null = null;
 

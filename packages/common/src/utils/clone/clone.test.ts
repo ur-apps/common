@@ -54,7 +54,7 @@ describe('[utils] clone', () => {
     expect(clonedArray).toEqual(nestedArray);
     expect(clonedArray).not.toBe(nestedArray);
     expect(clonedArray[1]).not.toBe(nestedArray[1]);
-    expect(clonedArray[1][1]).not.toBe(nestedArray[1][1]);
+    expect((clonedArray[1] as unknown[])[1]).not.toBe((nestedArray[1] as unknown[])[1]);
   });
 
   it('should clone objects correctly', () => {
