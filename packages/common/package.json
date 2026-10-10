@@ -60,8 +60,6 @@
     }
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "29.x",
-    "@rollup/plugin-node-resolve": "16.x",
     "@rollup/plugin-typescript": "12.x",
     "@types/jest": "30.x",
     "eslint": "10.x",
@@ -69,7 +67,6 @@
     "prettier": "3.x",
     "rollup": "4.x",
     "rollup-plugin-analyzer": "4.x",
-    "rollup-plugin-peer-deps-external": "2.x",
     "ts-jest": "29.x",
     "typescript": "6.x"
   }
