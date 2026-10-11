@@ -15,8 +15,9 @@ import {
   ApiTooManyRequestsResponse,
   ApiUnauthorizedResponse,
   getSchemaPath,
+  ReferenceObject,
+  SchemaObject,
 } from '@nestjs/swagger';
-import { ReferenceObject, SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 import { HttpMessage } from 'constants/';
 import { FailedResponseDTO, PaginatedDTO, SuccessResponseDTO } from 'dto';

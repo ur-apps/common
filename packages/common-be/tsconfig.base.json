@@ -1,0 +1,23 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  /*
+   * Shared base for NestJS projects, published as `@ur-apps/common-be/tsconfig`.
+   * It sets the language level for Node.js 24 and the decorator options NestJS needs, and emits nothing.
+   * A consuming project adds on its own side:
+   * - `types`: global type packages it relies on (e.g. `["node"]`); TypeScript 6 defaults to none;
+   * - `declaration`, `outDir` and `noEmit: false`, if it emits;
+   * - `paths`, if it uses path aliases.
+   */
+  "extends": "@ur-apps/common/tsconfig",
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ES2024",
+    "lib": ["ES2024"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    // Modules
+    "module": "CommonJS",
+    "noUncheckedSideEffectImports": false
+  }
+}

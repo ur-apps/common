@@ -11,8 +11,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
-    "lint:fix": "eslint ./src --fix",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
@@ -20,13 +21,13 @@
     "lib",
     "eslint.config.mjs",
     "prettier.config.mjs",
-    "tsconfig.json"
+    "tsconfig.base.json"
   ],
   "exports": {
     ".": "./lib/index.js",
     "./eslint": "./eslint.config.mjs",
     "./prettier": "./prettier.config.mjs",
-    "./tsconfig": "./tsconfig.json"
+    "./tsconfig": "./tsconfig.base.json"
   },
   "publishConfig": {
     "access": "public",
