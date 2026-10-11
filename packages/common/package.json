@@ -7,7 +7,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "rollup -c",
+    "build": "vite build",
     "build:pack": "npm run build && npm pack",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -65,13 +65,10 @@
     }
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "12.x",
     "@types/node": "24.x",
     "@vitest/coverage-v8": "5.x",
     "eslint": "10.x",
     "prettier": "3.x",
-    "rollup": "4.x",
-    "rollup-plugin-analyzer": "4.x",
     "typescript": "6.x",
     "vite": "8.x",
     "vitest": "5.x"
