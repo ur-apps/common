@@ -80,7 +80,6 @@
   },
   "devDependencies": {
     "@eslint-react/eslint-plugin": "5.x",
-    "@rollup/plugin-alias": "6.x",
     "@rollup/plugin-commonjs": "29.x",
     "@rollup/plugin-node-resolve": "16.x",
     "@rollup/plugin-typescript": "12.x",
@@ -94,7 +93,6 @@
     "rollup-plugin-analyzer": "4.x",
     "rollup-plugin-delete": "3.x",
     "rollup-plugin-peer-deps-external": "2.x",
-    "rollup-plugin-tsc-alias": "1.x",
     "ts-jest": "29.x",
     "ts-node": "10.x",
     "typescript": "6.x"
