@@ -63,14 +63,5 @@
     "typescript-eslint": {
       "optional": true
     }
-  },
-  "devDependencies": {
-    "@types/node": "24.x",
-    "@vitest/coverage-v8": "5.x",
-    "eslint": "10.x",
-    "prettier": "3.x",
-    "typescript": "6.x",
-    "vite": "8.x",
-    "vitest": "5.x"
   }
 }
