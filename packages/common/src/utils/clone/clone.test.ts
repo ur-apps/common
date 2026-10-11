@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { clone, cloneArray, cloneDate, cloneMap, cloneObject, cloneSet } from './clone';
+import { clone, cloneArray, cloneDate, cloneMap, cloneObject, cloneSet } from './clone.ts';
 
 describe('[utils] clone', () => {
   it('should clone primitive types without modification', () => {

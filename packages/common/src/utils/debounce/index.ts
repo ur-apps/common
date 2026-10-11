@@ -1,2 +1,2 @@
-export * from './debounce';
-export * from './types';
+export * from './debounce.ts';
+export * from './types.ts';

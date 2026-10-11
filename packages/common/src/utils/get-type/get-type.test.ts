@@ -14,7 +14,7 @@ import {
   isString,
   isSymbol,
   isUndefined,
-} from './get-type';
+} from './get-type.ts';
 
 describe('[utils] getType', () => {
   it('should identify strings', () => {

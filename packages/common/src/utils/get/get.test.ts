@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { get } from './get';
+import { get } from './get.ts';
 
 describe('[utils] get', () => {
   const testObject = {

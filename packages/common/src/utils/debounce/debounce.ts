@@ -1,7 +1,7 @@
-import { AnyFn } from '../../types';
-import { isNullish } from '../get-type';
+import { AnyFn } from '../../types/index.ts';
+import { isNullish } from '../get-type/index.ts';
 
-import { DebouncedFn, DebounceOptions } from './types';
+import { DebouncedFn, DebounceOptions } from './types.ts';
 
 /**
  * Creates a debounced version of the provided function.
