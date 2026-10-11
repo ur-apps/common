@@ -53,6 +53,7 @@
     "@ur-apps/common": "*",
     "class-transformer": "0.x",
     "class-validator": "0.x",
+    "eslint": "10.x",
     "globals": "17.x",
     "reflect-metadata": "0.x",
     "rxjs": "7.x",
@@ -63,6 +64,9 @@
       "optional": true
     },
     "@ianvs/prettier-plugin-sort-imports": {
+      "optional": true
+    },
+    "eslint": {
       "optional": true
     },
     "globals": {
