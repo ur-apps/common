@@ -3,7 +3,7 @@ import { getErrorMessage } from '@ur-apps/common';
 import { Request, Response } from 'express';
 
 import { HttpMessage } from 'constants/';
-import { FailedResponseDTO } from 'dto';
+import { FailedResponseDTO } from 'dtos';
 import { Errors } from 'interfaces';
 
 @Catch()

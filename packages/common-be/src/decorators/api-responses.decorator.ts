@@ -20,7 +20,7 @@ import {
 } from '@nestjs/swagger';
 
 import { HttpMessage } from 'constants/';
-import { FailedResponseDTO, PaginatedDTO, SuccessResponseDTO } from 'dto';
+import { FailedResponseDTO, PaginatedDTO, SuccessResponseDTO } from 'dtos';
 import { Errors } from 'interfaces';
 
 function successResponseBuilder<T extends Type<unknown>>(

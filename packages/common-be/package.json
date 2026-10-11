@@ -2,6 +2,7 @@
   "name": "@ur-apps/common-be",
   "version": "0.1.0",
   "description": "ur apps backend common library",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

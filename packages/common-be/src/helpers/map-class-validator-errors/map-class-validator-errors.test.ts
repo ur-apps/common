@@ -1,6 +1,5 @@
-import { mapClassValidatorErrors } from '..';
-
-import { classValidatorErrors, mappedErrors } from './map-class-validator-errors.test.data';
+import { classValidatorErrors, mappedErrors } from './map-class-validator-errors.test.data.ts';
+import { mapClassValidatorErrors } from './map-class-validator-errors.ts';
 
 describe('Testing hellper: mapClassValidatorErrors', () => {
   it('should correctly map dataset 1', () => {

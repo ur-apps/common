@@ -4,13 +4,14 @@
   "compilerOptions": {
     // Modules
     "rootDir": "./src",
+    "rewriteRelativeImportExtensions": true,
     "paths": {
-      "constants/": ["./src/constants"],
-      "decorators": ["./src/decorators"],
-      "dto": ["./src/dto"],
-      "exceptions": ["./src/exceptions"],
-      "helpers": ["./src/helpers"],
-      "interfaces": ["./src/interfaces"]
+      "constants/": ["./src/constants/index.ts"],
+      "decorators": ["./src/decorators/index.ts"],
+      "dtos": ["./src/dtos/index.ts"],
+      "exceptions": ["./src/exceptions/index.ts"],
+      "helpers": ["./src/helpers/index.ts"],
+      "interfaces": ["./src/interfaces/index.ts"]
     },
 
     // Emit

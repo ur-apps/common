@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SuccessResponseDTO } from 'dto';
+import { SuccessResponseDTO } from 'dtos';
 
 /**
  * Options for TransformInterceptor

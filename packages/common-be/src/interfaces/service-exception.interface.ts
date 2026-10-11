@@ -1,4 +1,4 @@
-import { Errors } from './errors.interface';
+import { Errors } from './errors.interface.ts';
 
 export interface ServiceException {
   status: number;

@@ -17,7 +17,8 @@
     "experimentalDecorators": true,
 
     // Modules
-    "module": "CommonJS",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noUncheckedSideEffectImports": false
   }
 }

@@ -1,2 +1,2 @@
-export * from './errors.interface';
-export * from './service-exception.interface';
+export * from './errors.interface.ts';
+export * from './service-exception.interface.ts';
