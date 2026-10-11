@@ -1,4 +1,4 @@
-import { PointerType } from './types';
+import { PointerType } from './types.ts';
 
 export const SUPPORTS_POINTER = typeof PointerEvent !== 'undefined';
 export const ENTER_EVENT = SUPPORTS_POINTER ? 'pointerenter' : 'mouseenter';

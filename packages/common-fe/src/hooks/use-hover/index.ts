@@ -1,2 +1,2 @@
-export * from './use-hover';
-export * from './types';
+export * from './use-hover.ts';
+export * from './types.ts';

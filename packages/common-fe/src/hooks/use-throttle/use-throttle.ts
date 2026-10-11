@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { AnyFn, throttle, ThrottledFn, ThrottleOptions } from '@ur-apps/common';
 
-import { useLatest } from '../use-latest';
+import { useLatest } from '../use-latest.ts';
 
 /**
  * A custom React hook that creates a throttled version of the provided callback function.

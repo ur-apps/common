@@ -1,9 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
-import { useLatest } from '../use-latest';
+import { useLatest } from '../use-latest.ts';
 
-import { BLUR_EVENT, DEFAULT_POINTER_TYPES, ENTER_EVENT, FOCUS_EVENT, LEAVE_EVENT } from './constants';
-import { PointerType, UseHoverOptions } from './types';
+import { BLUR_EVENT, DEFAULT_POINTER_TYPES, ENTER_EVENT, FOCUS_EVENT, LEAVE_EVENT } from './constants.ts';
+import { PointerType, UseHoverOptions } from './types.ts';
 
 export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   targetRef: RefObject<T | null>,

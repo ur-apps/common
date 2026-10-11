@@ -1,1 +1,1 @@
-export * from './use-flag';
+export * from './use-flag.ts';

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect.ts';
 
 /**
  * A custom React hook that returns a mutable ref object containing the latest value.

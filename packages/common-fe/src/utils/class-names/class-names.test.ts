@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { classNames } from './class-names';
+import { classNames } from './class-names.ts';
 
 describe('classNames function', () => {
   it('string classes', () => {
