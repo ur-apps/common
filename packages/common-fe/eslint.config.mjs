@@ -3,28 +3,35 @@ import jseslint from '@eslint/js';
 import { baseConfigs } from '@ur-apps/common/eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+/** Turns off the @eslint-react rules that duplicate the eslint-plugin-react-hooks ones. */
+const eslintReactHooksDuplicatesOff = Object.fromEntries(
+  Object.keys(eslintReact.configs['disable-conflict-eslint-plugin-react-hooks'].rules).map((rule) => [
+    rule.replace('react-hooks/', '@eslint-react/'),
+    'off',
+  ])
+);
+
+export default defineConfig(
   jseslint.configs.recommended,
   tseslint.configs.recommended,
   eslintReact.configs['recommended-typescript'],
+  { rules: eslintReactHooksDuplicatesOff },
+  reactHooks.configs.flat.recommended,
   baseConfigs,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
       globals: globals.browser,
     },
     plugins: {
-      'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
     rules: {
       'no-alert': 'error',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
