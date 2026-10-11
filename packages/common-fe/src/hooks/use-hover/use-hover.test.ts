@@ -26,7 +26,7 @@ function advance(ms: number) {
   });
 }
 
-describe('useHover hook', () => {
+describe('[hooks] useHover', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -207,18 +207,20 @@ describe('useHover hook', () => {
       const { target } = setup({ enterDelay: 500, leaveDelay: 300, onChange });
 
       pointerEnter(target);
+      advance(499);
 
       expect(onChange).not.toHaveBeenCalled();
 
-      advance(500);
+      advance(1);
 
       expect(onChange).toHaveBeenLastCalledWith(true);
 
       pointerLeave(target);
+      advance(299);
 
       expect(onChange).toHaveBeenCalledTimes(1);
 
-      advance(300);
+      advance(1);
 
       expect(onChange).toHaveBeenLastCalledWith(false);
     });
@@ -233,6 +235,24 @@ describe('useHover hook', () => {
 
       expect(first).not.toHaveBeenCalled();
       expect(second).toHaveBeenCalledWith(true);
+    });
+
+    it('calls the latest callback when a delay ends', () => {
+      const first = vi.fn();
+      const second = vi.fn();
+      const third = vi.fn();
+      const { target, rerender } = setup({ enterDelay: 500, leaveDelay: 300, onChange: first });
+
+      pointerEnter(target);
+      rerender({ enterDelay: 500, leaveDelay: 300, onChange: second });
+      advance(500);
+      pointerLeave(target);
+      rerender({ enterDelay: 500, leaveDelay: 300, onChange: third });
+      advance(300);
+
+      expect(first).not.toHaveBeenCalled();
+      expect(second.mock.calls).toEqual([[true]]);
+      expect(third.mock.calls).toEqual([[false]]);
     });
   });
 

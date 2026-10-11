@@ -64,7 +64,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
       if (enterDelay > 0) {
         enterTimer.current = setTimeout(() => {
           setHovered(true);
-          onChange?.(true);
+          optionsRef.current.onChange?.(true);
         }, enterDelay);
       } else {
         setHovered(true);
@@ -83,7 +83,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
       if (leaveDelay > 0) {
         leaveTimer.current = setTimeout(() => {
           setHovered(false);
-          onChange?.(false);
+          optionsRef.current.onChange?.(false);
         }, leaveDelay);
       } else {
         setHovered(false);
