@@ -1,19 +1,21 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { throttle } from './throttle';
 
 describe('[utils] throttle', () => {
   beforeEach(() => {
-    jest.clearAllTimers();
-    jest.useFakeTimers();
+    vi.clearAllTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
   });
 
   describe('Basic functionality', () => {
     it('should throttle function calls (default leading=true, trailing=true)', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled('a'); // immediate (leading)
@@ -23,7 +25,7 @@ describe('[utils] throttle', () => {
       expect(mockFn).toHaveBeenCalledTimes(1);
       expect(mockFn).toHaveBeenLastCalledWith('a');
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('c');
     });
@@ -32,7 +34,7 @@ describe('[utils] throttle', () => {
       type Ctx = { value: string };
       const obj = {
         value: 'ctx',
-        method: jest.fn(function (this: Ctx, a: number, b: number) {
+        method: vi.fn(function (this: Ctx, a: number, b: number) {
           return { thisValue: this.value, sum: a + b };
         }),
       };
@@ -44,14 +46,14 @@ describe('[utils] throttle', () => {
       expect(obj.method).toHaveBeenLastCalledWith(1, 2);
 
       throttled.call(obj, 5, 7); // trailing should use these args
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
 
       expect(obj.method).toHaveBeenCalledTimes(2);
       expect(obj.method).toHaveBeenLastCalledWith(5, 7);
     });
 
     it('should return result for leading call', () => {
-      const mockFn = jest.fn(() => 'immediate');
+      const mockFn = vi.fn(() => 'immediate');
       const throttled = throttle(mockFn, 100);
 
       const result = throttled();
@@ -61,18 +63,18 @@ describe('[utils] throttle', () => {
 
   describe('Leading option', () => {
     it('should not execute immediately when leading=false', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100, { leading: false });
 
       throttled();
       expect(mockFn).not.toHaveBeenCalled();
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
     it('should execute only once per window when leading=true and trailing=false', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100, { leading: true, trailing: false });
 
       throttled(); // immediate
@@ -81,7 +83,7 @@ describe('[utils] throttle', () => {
 
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1);
 
       throttled(); // next window immediate
@@ -89,7 +91,7 @@ describe('[utils] throttle', () => {
     });
 
     it('should execute both leading and trailing when both are true', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100, { leading: true, trailing: true });
 
       throttled(); // immediate
@@ -98,20 +100,20 @@ describe('[utils] throttle', () => {
 
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(2);
     });
   });
 
   describe('Trailing option', () => {
     it('should execute trailing by default if additional calls happen', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled('first'); // leading
       throttled('second'); // trailing scheduled with last args
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
 
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenNthCalledWith(1, 'first');
@@ -119,33 +121,33 @@ describe('[utils] throttle', () => {
     });
 
     it('should not execute trailing if there was only a single leading call', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled('only'); // leading
-      jest.advanceTimersByTime(150);
+      vi.advanceTimersByTime(150);
 
       expect(mockFn).toHaveBeenCalledTimes(1);
       expect(mockFn).toHaveBeenLastCalledWith('only');
     });
 
     it('should not execute on trailing edge when trailing=false', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100, { trailing: false });
 
       throttled(); // leading
       throttled(); // ignored
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
     it('should not execute when both leading and trailing are false (single call)', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100, { leading: false, trailing: false });
 
       throttled();
-      jest.advanceTimersByTime(150);
+      vi.advanceTimersByTime(150);
 
       expect(mockFn).not.toHaveBeenCalled();
     });
@@ -153,7 +155,7 @@ describe('[utils] throttle', () => {
 
   describe('Cancel method', () => {
     it('should cancel pending trailing execution', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled(); // leading
@@ -163,12 +165,12 @@ describe('[utils] throttle', () => {
       throttled.cancel();
       expect(throttled.pending()).toBe(false);
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1); // no trailing call
     });
 
     it('should handle multiple cancel calls gracefully', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled();
@@ -182,7 +184,7 @@ describe('[utils] throttle', () => {
 
   describe('Flush method', () => {
     it('should execute pending trailing immediately', () => {
-      const mockFn = jest.fn().mockReturnValue('flushed');
+      const mockFn = vi.fn().mockReturnValue('flushed');
       const throttled = throttle(mockFn, 100);
 
       throttled('a'); // leading
@@ -194,12 +196,12 @@ describe('[utils] throttle', () => {
       expect(mockFn).toHaveBeenLastCalledWith('b');
       expect(throttled.pending()).toBe(false);
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(2); // no extra call
     });
 
     it('should return undefined when no pending execution', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled(); // leading only, no pending trailing
@@ -210,7 +212,7 @@ describe('[utils] throttle', () => {
 
   describe('Pending method', () => {
     it('should reflect pending state correctly', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       expect(throttled.pending()).toBe(false);
@@ -222,7 +224,7 @@ describe('[utils] throttle', () => {
       throttled(); // schedule trailing
       expect(throttled.pending()).toBe(true);
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(throttled.pending()).toBe(false);
     });
   });
@@ -230,7 +232,7 @@ describe('[utils] throttle', () => {
   describe('AbortSignal integration', () => {
     it('should cancel trailing when signal is aborted', () => {
       const controller = new AbortController();
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100, { signal: controller.signal });
 
       throttled(); // leading
@@ -240,16 +242,16 @@ describe('[utils] throttle', () => {
       controller.abort();
       expect(throttled.pending()).toBe(false);
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
     it('should work without signal', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled();
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
 
       // No trailing expected because there was only single call
       expect(mockFn).toHaveBeenCalledTimes(1);
@@ -258,30 +260,30 @@ describe('[utils] throttle', () => {
 
   describe('Edge cases', () => {
     it('should handle zero wait time', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 0);
 
       throttled(); // immediate
       expect(mockFn).toHaveBeenCalledTimes(1);
 
-      jest.advanceTimersByTime(0);
+      vi.advanceTimersByTime(0);
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
     it('should handle function that throws on trailing call', () => {
-      const errorFn = jest.fn(() => {
+      const errorFn = vi.fn(() => {
         throw new Error('Test error');
       });
       const throttled = throttle(errorFn, 100, { leading: false });
 
       throttled();
       expect(() => {
-        jest.advanceTimersByTime(100);
+        vi.advanceTimersByTime(100);
       }).toThrow('Test error');
     });
 
     it('should handle functions that return falsy values on leading', () => {
-      const falsyFn = jest.fn(() => 0);
+      const falsyFn = vi.fn(() => 0);
       const throttled = throttle(falsyFn, 100);
 
       const result = throttled();
@@ -289,8 +291,8 @@ describe('[utils] throttle', () => {
     });
 
     it('should maintain separate state for multiple throttled functions', () => {
-      const fn1 = jest.fn();
-      const fn2 = jest.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
       const t1 = throttle(fn1, 100);
       const t2 = throttle(fn2, 200);
 
@@ -300,20 +302,20 @@ describe('[utils] throttle', () => {
       expect(fn1).toHaveBeenCalledWith('a1');
       expect(fn2).toHaveBeenCalledWith('a2');
 
-      jest.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
       expect(fn1).toHaveBeenCalledTimes(1);
       expect(fn2).toHaveBeenCalledTimes(1);
 
-      jest.advanceTimersByTime(200);
+      vi.advanceTimersByTime(200);
       expect(fn1).toHaveBeenCalledTimes(1);
       expect(fn2).toHaveBeenCalledTimes(1);
     });
 
     it('should limit calls when triggered more often than wait', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
-      const tick = (ms: number) => jest.advanceTimersByTime(ms);
+      const tick = (ms: number) => vi.advanceTimersByTime(ms);
 
       throttled('t0'); // immediate
       for (let i = 1; i <= 9; i++) {
@@ -333,12 +335,12 @@ describe('[utils] throttle', () => {
 
   describe('Complex scenarios', () => {
     it('should use last arguments for trailing call with rapid successive calls', () => {
-      const mockFn = jest.fn();
+      const mockFn = vi.fn();
       const throttled = throttle(mockFn, 100);
 
       throttled('call-0');
       for (let i = 1; i < 10; i++) {
-        jest.advanceTimersByTime(10);
+        vi.advanceTimersByTime(10);
         throttled(`call-${i}`);
       }
 
@@ -346,7 +348,7 @@ describe('[utils] throttle', () => {
       expect(mockFn).toHaveBeenCalledTimes(1);
 
       // Complete the throttle window
-      jest.advanceTimersByTime(10);
+      vi.advanceTimersByTime(10);
       expect(mockFn).toHaveBeenCalledTimes(2);
       expect(mockFn).toHaveBeenLastCalledWith('call-9');
     });
@@ -366,7 +368,7 @@ describe('[utils] throttle', () => {
       const lastCount = callCount;
       expect(callCount).toBeGreaterThan(0);
 
-      jest.advanceTimersByTime(64);
+      vi.advanceTimersByTime(64);
       expect(callCount).toBeGreaterThan(lastCount);
     });
 
@@ -377,7 +379,7 @@ describe('[utils] throttle', () => {
       const results = [throttled('a'), throttled('b')];
       expect(results).toEqual(['a', 'a']);
 
-      jest.advanceTimersByTime(64);
+      vi.advanceTimersByTime(64);
 
       const results2 = [throttled('c'), throttled('d')];
       expect(results2[0]).not.toBe('a');
@@ -396,7 +398,7 @@ describe('[utils] throttle', () => {
       throttled();
       expect(callCount).toBe(1);
 
-      jest.advanceTimersByTime(64);
+      vi.advanceTimersByTime(64);
       expect(callCount).toBe(1);
     });
 
@@ -408,7 +410,7 @@ describe('[utils] throttle', () => {
 
       for (let i = 0; i < 100; i++) {
         throttled();
-        jest.advanceTimersByTime(3);
+        vi.advanceTimersByTime(3);
       }
 
       const actual = callCount > 1;
@@ -427,7 +429,7 @@ describe('[utils] throttle', () => {
 
       for (let i = 0; i < 100; i++) {
         throttled();
-        jest.advanceTimersByTime(3);
+        vi.advanceTimersByTime(3);
       }
 
       const actual = callCount > 1;
@@ -446,14 +448,14 @@ describe('[utils] throttle', () => {
 
       throttled();
 
-      jest.advanceTimersByTime(128);
+      vi.advanceTimersByTime(128);
       expect(callCount).toBe(1);
 
       throttled();
-      jest.advanceTimersByTime(62);
+      vi.advanceTimersByTime(62);
       expect(callCount).toBe(1);
 
-      jest.advanceTimersByTime(130);
+      vi.advanceTimersByTime(130);
       expect(callCount).toBe(2);
     });
 
@@ -471,7 +473,7 @@ describe('[utils] throttle', () => {
       throttled();
       expect(callCount).toBe(1);
 
-      jest.advanceTimersByTime(128);
+      vi.advanceTimersByTime(128);
       expect(callCount).toBe(2);
     });
 
@@ -513,7 +515,7 @@ describe('[utils] throttle', () => {
       expect(withoutTrailing('a')).toBe('a');
       expect(withoutTrailing('b')).toBe('a');
 
-      jest.advanceTimersByTime(256);
+      vi.advanceTimersByTime(256);
       expect(withCount).toBe(2);
       expect(withoutCount).toBe(1);
     });
@@ -531,11 +533,11 @@ describe('[utils] throttle', () => {
       throttled();
       throttled();
 
-      jest.advanceTimersByTime(96);
+      vi.advanceTimersByTime(96);
       throttled();
       throttled();
 
-      jest.advanceTimersByTime(96);
+      vi.advanceTimersByTime(96);
       expect(callCount).toBeGreaterThan(1);
     });
 
@@ -550,7 +552,7 @@ describe('[utils] throttle', () => {
       expect(results).toEqual(['a', 'a', 'a']);
       expect(callCount).toBe(1);
 
-      jest.advanceTimersByTime(64);
+      vi.advanceTimersByTime(64);
       expect(callCount).toBe(2);
     });
   });

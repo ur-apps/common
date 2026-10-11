@@ -9,9 +9,9 @@
   "scripts": {
     "build": "rollup -c",
     "build:pack": "npm run build && npm pack",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -66,14 +66,14 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "12.x",
-    "@types/jest": "30.x",
     "@types/node": "24.x",
+    "@vitest/coverage-v8": "5.x",
     "eslint": "10.x",
-    "jest": "30.x",
     "prettier": "3.x",
     "rollup": "4.x",
     "rollup-plugin-analyzer": "4.x",
-    "ts-jest": "29.x",
-    "typescript": "6.x"
+    "typescript": "6.x",
+    "vite": "8.x",
+    "vitest": "5.x"
   }
 }

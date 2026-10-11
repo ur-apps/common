@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { clone, cloneArray, cloneDate, cloneMap, cloneObject, cloneSet } from './clone';
 
 describe('[utils] clone', () => {
