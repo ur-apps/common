@@ -1,0 +1,17 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // Modules
+    "rootDir": "./src",
+
+    // Emit
+    "outDir": "./lib",
+    "declaration": true,
+
+    // Projects
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.common-fe.tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "build", "dist", "lib", "**/*.test.ts", "**/*.test.tsx"]
+}

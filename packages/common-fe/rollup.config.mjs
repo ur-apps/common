@@ -23,7 +23,7 @@ export default {
     peerDeps(),
     nodeResolve(),
     commonjs(),
-    typescript({ tsconfig: 'tsconfig.json' }),
+    typescript({ tsconfig: 'tsconfig.build.json' }),
     analyze({ 'summaryOnly': true }),
   ],
 };

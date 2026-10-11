@@ -9,6 +9,7 @@
     "build": "rollup -c",
     "build:pack": "npm run build:lib && npm pack",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
+    "typecheck": "tsc -b",
     "lint": "eslint .",
     "lint:fix": "eslint ./src --fix",
     "format": "prettier --check .",
@@ -18,13 +19,13 @@
     "lib",
     "eslint.config.mjs",
     "prettier.config.mjs",
-    "tsconfig.json"
+    "tsconfig.base.json"
   ],
   "exports": {
     ".": "./lib/index.js",
     "./eslint": "./eslint.config.mjs",
     "./prettier": "./prettier.config.mjs",
-    "./tsconfig": "./tsconfig.json"
+    "./tsconfig": "./tsconfig.base.json"
   },
   "publishConfig": {
     "access": "public",
