@@ -19,14 +19,10 @@
   "devDependencies": {
     "@eslint/js": "10.x",
     "@ianvs/prettier-plugin-sort-imports": "4.x",
-    "@types/jest": "30.x",
     "eslint": "10.x",
     "globals": "17.x",
-    "jest": "30.x",
     "lerna": "10.1.0",
     "prettier": "3.x",
-    "ts-jest": "29.x",
-    "ts-node": "10.x",
     "typescript": "6.x",
     "typescript-eslint": "8.x"
   }
