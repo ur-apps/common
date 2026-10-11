@@ -8,10 +8,10 @@
   "scripts": {
     "build": "nest build",
     "build:dev": "nest build --watch",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:debug": "vitest --inspect-brk --no-file-parallelism",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -85,15 +85,14 @@
     "@swc/cli": "0.x",
     "@swc/core": "1.x",
     "@types/express": "5.x",
-    "@types/jest": "30.x",
+    "@types/node": "24.x",
+    "@vitest/coverage-v8": "5.x",
     "eslint": "10.x",
-    "jest": "30.x",
     "prettier": "3.x",
     "source-map-support": "0.x",
-    "ts-jest": "29.x",
     "ts-loader": "9.x",
-    "ts-node": "10.x",
-    "tsconfig-paths": "4.x",
-    "typescript": "6.x"
+    "typescript": "6.x",
+    "vite": "8.x",
+    "vitest": "5.x"
   }
 }

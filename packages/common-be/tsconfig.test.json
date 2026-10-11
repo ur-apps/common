@@ -4,7 +4,7 @@
   "compilerOptions": {
     // Modules
     "rootDir": ".",
-    "types": ["node", "jest"],
+    "types": ["node"],
 
     // Emit
     "noEmit": true,

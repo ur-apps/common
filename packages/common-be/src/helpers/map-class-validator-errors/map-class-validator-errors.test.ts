@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { classValidatorErrors, mappedErrors } from './map-class-validator-errors.test.data.ts';
 import { mapClassValidatorErrors } from './map-class-validator-errors.ts';
 
