@@ -17,7 +17,8 @@
     "src/**/*.spec.tsx",
     "src/**/*.test.tsx",
     "tests/**/*.spec.tsx",
-    "tests/**/*.test.tsx"
+    "tests/**/*.test.tsx",
+    "vitest.setup.ts"
   ],
   "exclude": ["node_modules", "build", "dist", "lib"]
 }
