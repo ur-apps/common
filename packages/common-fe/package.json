@@ -50,6 +50,7 @@
     "@ianvs/prettier-plugin-sort-imports": "4.x",
     "@types/react": "19.x",
     "@ur-apps/common": "*",
+    "eslint": "10.x",
     "eslint-plugin-react-hooks": "7.x",
     "eslint-plugin-react-refresh": "0.x",
     "globals": "17.x",
@@ -67,6 +68,9 @@
       "optional": true
     },
     "@types/react": {
+      "optional": true
+    },
+    "eslint": {
       "optional": true
     },
     "eslint-plugin-react-hooks": {
