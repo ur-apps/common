@@ -16,7 +16,7 @@ A React hook that creates a throttled version of a callback function using the `
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useThrottle } from '@urapps/common-fe';
+import { useThrottle } from '@urapps/react';
 
 function ScrollComponent() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -46,7 +46,7 @@ function ScrollComponent() {
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useThrottle } from '@urapps/common-fe';
+import { useThrottle } from '@urapps/react';
 
 function ResponsiveComponent() {
   const [windowSize, setWindowSize] = useState({
@@ -78,7 +78,7 @@ function ResponsiveComponent() {
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useThrottle } from '@urapps/common-fe';
+import { useThrottle } from '@urapps/react';
 
 function MouseTrackerComponent() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -120,7 +120,7 @@ function MouseTrackerComponent() {
 
 ```tsx
 import React, { useState } from 'react';
-import { useThrottle } from '@urapps/common-fe';
+import { useThrottle } from '@urapps/react';
 
 function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState('');

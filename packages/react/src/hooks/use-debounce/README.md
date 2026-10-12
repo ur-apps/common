@@ -16,7 +16,7 @@ A React hook that creates a debounced version of a callback function using the `
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useDebounce } from '@urapps/common-fe';
+import { useDebounce } from '@urapps/react';
 
 function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,7 +49,7 @@ function SearchComponent() {
 
 ```tsx
 import React, { useState } from 'react';
-import { useDebounce } from '@urapps/common-fe';
+import { useDebounce } from '@urapps/react';
 
 function AdvancedComponent() {
   const [value, setValue] = useState('');

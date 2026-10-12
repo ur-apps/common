@@ -1,7 +1,7 @@
 {
   "name": "@urapps/prettier-config",
   "version": "1.0.0-rc.0",
-  "description": "ur apps shared Prettier configs",
+  "description": "UR Apps shared Prettier configs",
   "type": "module",
   "scripts": {
     "lint": "eslint .",

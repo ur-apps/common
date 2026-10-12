@@ -1,7 +1,7 @@
 {
   "name": "@urapps/eslint-config",
   "version": "1.0.0-rc.0",
-  "description": "ur apps shared ESLint configs",
+  "description": "UR Apps shared ESLint configs",
   "type": "module",
   "scripts": {
     "lint": "eslint .",

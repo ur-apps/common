@@ -20,7 +20,7 @@
     "declaration": true,
 
     // Projects
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.common-be.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.nest.tsbuildinfo"
   },
   "include": ["src"],
   "exclude": ["node_modules", "build", "dist", "lib", "**/*.test.ts", "**/*.spec.ts", "**/*.test.data.ts"]

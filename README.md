@@ -8,11 +8,11 @@ This repository contains common libraries and configurations for the UR Apps pro
 
 This package contains shared configurations and utilities used across both frontend and backend projects.
 
-### @urapps/common-fe
+### @urapps/react
 
 This package contains common configurations and utilities for frontend projects.
 
-### @urapps/common-be
+### @urapps/nest
 
 This package contains common configurations and utilities for backend projects.
 

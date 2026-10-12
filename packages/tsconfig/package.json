@@ -1,7 +1,7 @@
 {
   "name": "@urapps/tsconfig",
   "version": "1.0.0-rc.0",
-  "description": "ur apps shared TypeScript configs",
+  "description": "UR Apps shared TypeScript configs",
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write ."

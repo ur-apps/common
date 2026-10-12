@@ -1,7 +1,7 @@
 {
-  "name": "@urapps/common-be",
+  "name": "@urapps/nest",
   "version": "1.0.0-rc.0",
-  "description": "ur apps backend common library",
+  "description": "UR Apps NestJS utilities",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

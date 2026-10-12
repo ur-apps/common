@@ -1,7 +1,7 @@
 {
-  "name": "@urapps/common-fe",
+  "name": "@urapps/react",
   "version": "1.0.0-rc.0",
-  "description": "ur apps frontend common library",
+  "description": "UR Apps React utilities",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

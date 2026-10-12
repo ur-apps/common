@@ -16,7 +16,7 @@ A React hook that tracks the hover state of an element with advanced customizati
 
 ```tsx
 import React, { useRef } from 'react';
-import { useHover } from '@urapps/common-fe';
+import { useHover } from '@urapps/react';
 
 function BasicHoverComponent() {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -40,7 +40,7 @@ function BasicHoverComponent() {
 
 ```tsx
 import React, { useRef } from 'react';
-import { useHover } from '@urapps/common-fe';
+import { useHover } from '@urapps/react';
 
 function TooltipComponent() {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -77,7 +77,7 @@ function TooltipComponent() {
 
 ```tsx
 import React, { useRef, useState } from 'react';
-import { useHover } from '@urapps/common-fe';
+import { useHover } from '@urapps/react';
 
 function ImagePreviewComponent() {
   const imageRef = useRef<HTMLImageElement>(null);
@@ -113,7 +113,7 @@ function ImagePreviewComponent() {
 
 ```tsx
 import React, { useRef } from 'react';
-import { useHover } from '@urapps/common-fe';
+import { useHover } from '@urapps/react';
 
 function TouchExcludedComponent() {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -160,7 +160,7 @@ function TouchIncludedComponent() {
 
 ```tsx
 import React, { useRef, useState } from 'react';
-import { useHover } from '@urapps/common-fe';
+import { useHover } from '@urapps/react';
 
 function ConditionalHoverComponent() {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -197,7 +197,7 @@ function ConditionalHoverComponent() {
 
 ```tsx
 import React, { useRef, useState } from 'react';
-import { useHover } from '@urapps/common-fe';
+import { useHover } from '@urapps/react';
 
 function DropdownMenu() {
   const triggerRef = useRef<HTMLButtonElement>(null);
