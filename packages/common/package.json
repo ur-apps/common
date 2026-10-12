@@ -1,7 +1,7 @@
 {
   "name": "@urapps/common",
   "version": "1.0.0-rc.0",
-  "description": "",
+  "description": "UR Apps platform-agnostic utilities",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -33,9 +33,10 @@
   "author": "Garry Freeman <garryfreeman09@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ur-apps/common.git"
+    "url": "git+https://github.com/ur-apps/common.git",
+    "directory": "packages/common"
   },
-  "homepage": "https://github.com/ur-apps/common#readme",
+  "homepage": "https://github.com/ur-apps/common/tree/master/packages/common#readme",
   "bugs": {
     "url": "https://github.com/ur-apps/common/issues"
   },

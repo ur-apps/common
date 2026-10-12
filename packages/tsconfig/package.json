@@ -26,9 +26,10 @@
   "author": "Garry Freeman <garryfreeman09@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ur-apps/common.git"
+    "url": "git+https://github.com/ur-apps/common.git",
+    "directory": "packages/tsconfig"
   },
-  "homepage": "https://github.com/ur-apps/common#readme",
+  "homepage": "https://github.com/ur-apps/common/tree/master/packages/tsconfig#readme",
   "bugs": {
     "url": "https://github.com/ur-apps/common/issues"
   },
