@@ -9,6 +9,7 @@
     "lint:fix": "lerna run lint:fix",
     "format": "lerna run format",
     "format:fix": "lerna run format:fix",
+    "prepare": "simple-git-hooks",
     "release:major": "lerna version major",
     "release:minor": "lerna version minor",
     "release:patch": "lerna version patch",
@@ -20,6 +21,9 @@
   "engines": {
     "node": ">=24"
   },
+  "simple-git-hooks": {
+    "pre-push": "npm run build && npm run typecheck && npm run lint && npm run format && npm test"
+  },
   "devDependencies": {
     "@eslint/js": "10.x",
     "@ianvs/prettier-plugin-sort-imports": "4.x",
@@ -29,6 +33,7 @@
     "globals": "17.x",
     "lerna": "10.1.0",
     "prettier": "3.x",
+    "simple-git-hooks": "2.x",
     "typescript": "6.x",
     "typescript-eslint": "8.x",
     "vite": "8.x",
