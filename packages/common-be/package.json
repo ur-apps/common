@@ -50,7 +50,6 @@
     "@nestjs/common": "12.x",
     "@nestjs/core": "12.x",
     "@nestjs/microservices": "12.x",
-    "@nestjs/platform-express": "12.x",
     "@nestjs/swagger": "12.x",
     "@ur-apps/common": "*",
     "class-transformer": "0.x",
