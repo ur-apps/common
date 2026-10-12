@@ -20,6 +20,19 @@ function ConditionalTarget({ visible, onChange }: { visible: boolean; onChange: 
   return visible ? <div ref={ref} data-testid="target" /> : null;
 }
 
+function SwitchingTarget({ target, onChange }: { target: 'a' | 'b'; onChange: (hovered: boolean) => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useHover(ref, { onChange });
+
+  return (
+    <>
+      <div ref={target === 'a' ? ref : undefined} data-testid="a" />
+      <div ref={target === 'b' ? ref : undefined} data-testid="b" />
+    </>
+  );
+}
+
 function pointerEnter(target: Element, pointerType: PointerType = 'mouse') {
   fireEvent.pointerEnter(target, { pointerType });
 }
@@ -94,6 +107,21 @@ describe('[hooks] useHover', () => {
       rerender(<ConditionalTarget visible={false} onChange={onChange} />);
 
       expect(onChange.mock.calls).toEqual([[true], [false]]);
+    });
+
+    it('resets and tracks the new element when the ref switches while hovered', () => {
+      const onChange = vi.fn();
+      const { rerender } = render(<SwitchingTarget target="a" onChange={onChange} />);
+
+      pointerEnter(screen.getByTestId('a'));
+      rerender(<SwitchingTarget target="b" onChange={onChange} />);
+      pointerEnter(screen.getByTestId('a'));
+
+      expect(onChange.mock.calls).toEqual([[true], [false]]);
+
+      pointerEnter(screen.getByTestId('b'));
+
+      expect(onChange.mock.calls).toEqual([[true], [false], [true]]);
     });
   });
 
@@ -389,6 +417,16 @@ describe('[hooks] useHover', () => {
       pointerEnter(target);
 
       expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onChange when unmounted while hovered', () => {
+      const onChange = vi.fn();
+      const { target, unmount } = setup({ onChange });
+
+      pointerEnter(target);
+      unmount();
+
+      expect(onChange.mock.calls).toEqual([[true]]);
     });
   });
 });

@@ -294,7 +294,7 @@ type PointerType = 'mouse' | 'pen' | 'touch';
   - `['mouse']` - Mouse only
   - `[]` - Any pointer type
 
-- **`onChange`** - Callback function called whenever hover state changes. Receives the new hover state as argument.
+- **`onChange`** - Callback function called whenever hover state changes. Receives the new hover state as argument. Not called on unmount.
 
 ### Returns
 
