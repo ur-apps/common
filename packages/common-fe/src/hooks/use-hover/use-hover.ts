@@ -2,21 +2,14 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { useLatest } from '../use-latest.ts';
 
-import { BLUR_EVENT, DEFAULT_POINTER_TYPES, ENTER_EVENT, FOCUS_EVENT, LEAVE_EVENT } from './constants.ts';
+import { DEFAULT_POINTER_TYPES, ENTER_EVENT, LEAVE_EVENT } from './constants.ts';
 import { PointerType, UseHoverOptions } from './types.ts';
 
 export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   targetRef: RefObject<T | null>,
   options: UseHoverOptions = {}
 ): boolean {
-  const {
-    enterDelay = 0,
-    leaveDelay = 0,
-    disabled = false,
-    includeFocus = false,
-    pointerTypes = DEFAULT_POINTER_TYPES,
-    onChange,
-  } = options;
+  const { enterDelay = 0, leaveDelay = 0, disabled = false, pointerTypes = DEFAULT_POINTER_TYPES, onChange } = options;
   const optionsRef = useLatest({ enterDelay, leaveDelay, pointerTypes, onChange });
 
   const [hovered, setHovered] = useState(false);
@@ -96,33 +89,8 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
       }
     };
 
-    const handleFocus = () => {
-      const { onChange } = optionsRef.current;
-
-      clearTimer(enterTimer);
-      clearTimer(leaveTimer);
-
-      setHovered(true);
-      onChange?.(true);
-    };
-
-    const handleBlur = () => {
-      const { onChange } = optionsRef.current;
-
-      clearTimer(enterTimer);
-      clearTimer(leaveTimer);
-
-      setHovered(false);
-      onChange?.(false);
-    };
-
     element.addEventListener(ENTER_EVENT, handleEnter);
     element.addEventListener(LEAVE_EVENT, handleLeave);
-
-    if (includeFocus) {
-      element.addEventListener(FOCUS_EVENT, handleFocus);
-      element.addEventListener(BLUR_EVENT, handleBlur);
-    }
 
     return () => {
       clearTimer(enterTimer);
@@ -130,15 +98,10 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
       element.removeEventListener(ENTER_EVENT, handleEnter);
       element.removeEventListener(LEAVE_EVENT, handleLeave);
-
-      if (includeFocus) {
-        element.removeEventListener(FOCUS_EVENT, handleFocus);
-        element.removeEventListener(BLUR_EVENT, handleBlur);
-      }
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetRef.current, optionsRef, disabled, includeFocus]);
+  }, [targetRef.current, optionsRef, disabled]);
 
   return hovered;
 }

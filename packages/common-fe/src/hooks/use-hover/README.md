@@ -1,16 +1,14 @@
 # useHover Hook
 
-A React hook that tracks the hover state of an element with advanced customization options including delays, pointer type filtering, and keyboard accessibility support.
+A React hook that tracks the hover state of an element with advanced customization options including delays and pointer type filtering.
 
 ## Features
 
 - 🎯 Tracks hover state with ref-based element targeting
 - ⏱️ Configurable enter/leave delays for better UX
 - 🖱️ Pointer type filtering (mouse, pen, touch)
-- ⌨️ Optional keyboard accessibility (focus/blur)
 - 🔄 Automatic cleanup on unmount
 - 📝 Full TypeScript support
-- ♿ Accessibility-friendly with `includeFocus` option
 
 ## Usage
 
@@ -106,38 +104,6 @@ function ImagePreviewComponent() {
         }}
       />
       <p>Hover count: {hoverCount}</p>
-    </div>
-  );
-}
-```
-
-### With Keyboard Accessibility
-
-```tsx
-import React, { useRef } from 'react';
-import { useHover } from '@ur-apps/common-fe';
-
-function AccessibleCardComponent() {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isHovered = useHover(cardRef, {
-    includeFocus: true, // Also activate on keyboard focus
-  });
-
-  return (
-    <div
-      ref={cardRef}
-      tabIndex={0} // Make focusable for keyboard navigation
-      style={{
-        padding: '20px',
-        border: '2px solid',
-        borderColor: isHovered ? 'blue' : 'gray',
-        backgroundColor: isHovered ? '#f0f8ff' : 'white',
-        cursor: 'pointer',
-        outline: 'none',
-      }}>
-      <h3>Accessible Card</h3>
-      <p>Hover with mouse or focus with keyboard (Tab key)</p>
-      {isHovered && <p>✓ Currently active</p>}
     </div>
   );
 }
@@ -308,7 +274,6 @@ type UseHoverOptions = {
   enterDelay?: number; // Default: 0
   leaveDelay?: number; // Default: 0
   disabled?: boolean; // Default: false
-  includeFocus?: boolean; // Default: false
   pointerTypes?: PointerType[]; // Default: ['mouse', 'pen']
   onChange?: (hovered: boolean) => void;
 };
@@ -322,8 +287,6 @@ type PointerType = 'mouse' | 'pen' | 'touch';
 - **`leaveDelay`** - Delay in milliseconds before setting hovered to `false`. Prevents flickering when mouse briefly leaves element.
 
 - **`disabled`** - When `true`, disables hover tracking, removes event listeners, and sets hovered to `false`.
-
-- **`includeFocus`** - When `true`, also tracks focus/blur events for keyboard accessibility. Essential for accessible interactive elements.
 
 - **`pointerTypes`** - Array of pointer types to respond to:
   - `['mouse', 'pen']` (default) - Desktop/stylus only
@@ -368,15 +331,7 @@ const isHovered = useHover(ref, {
 });
 ```
 
-#### 3. Keyboard Accessible Elements
-
-```tsx
-const isActive = useHover(ref, {
-  includeFocus: true, // Activate on Tab key focus
-});
-```
-
-#### 4. Touch-Friendly (Mobile)
+#### 3. Touch-Friendly (Mobile)
 
 ```tsx
 const isHovered = useHover(ref, {
@@ -384,7 +339,7 @@ const isHovered = useHover(ref, {
 });
 ```
 
-#### 5. Analytics Tracking
+#### 4. Analytics Tracking
 
 ```tsx
 const isHovered = useHover(ref, {
@@ -415,7 +370,7 @@ The hook internally:
 
 ## Accessibility Notes
 
-- Use `includeFocus: true` for interactive elements to support keyboard navigation
+- The hook does not track keyboard focus; combine it with `useFocus` (`hovered || focused`) to support keyboard navigation
 - Ensure focused elements have visible focus indicators (outline)
 - Add `tabIndex={0}` to make non-interactive elements keyboard-focusable
 - Consider ARIA attributes (`aria-haspopup`, `aria-expanded`) for dropdowns
@@ -426,4 +381,3 @@ The hook internally:
 - **Modern browsers**: Full support with `PointerEvent` API
 - **Legacy browsers**: Automatic fallback to `MouseEvent` API
 - **Touch devices**: Configurable via `pointerTypes` option
-- **Keyboard navigation**: Supported via `includeFocus` option

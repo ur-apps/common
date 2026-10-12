@@ -17,11 +17,6 @@ export type UseHoverOptions = {
    */
   disabled?: boolean;
   /**
-   * Also trigger on focus/blur (for keyboard accessibility)
-   * @default false
-   */
-  includeFocus?: boolean;
-  /**
    * Limit pointer types considered as hover
    * @default ['mouse', 'pen']
    */

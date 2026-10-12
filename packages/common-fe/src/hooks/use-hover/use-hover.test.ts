@@ -256,48 +256,11 @@ describe('[hooks] useHover', () => {
     });
   });
 
-  describe('includeFocus', () => {
-    it('ignores focus by default', () => {
-      const { target, result } = setup();
-
-      fireEvent.focus(target);
-
-      expect(result.current).toBe(false);
-    });
-
-    it('becomes hovered on focus and unhovered on blur', () => {
-      const onChange = vi.fn();
-      const { target, result } = setup({ includeFocus: true, onChange });
-
-      fireEvent.focus(target);
-
-      expect(result.current).toBe(true);
-
-      fireEvent.blur(target);
-
-      expect(result.current).toBe(false);
-      expect(onChange.mock.calls).toEqual([[true], [false]]);
-    });
-
-    it('ignores the delays on focus and blur', () => {
-      const { target, result } = setup({ includeFocus: true, enterDelay: 500, leaveDelay: 300 });
-
-      fireEvent.focus(target);
-
-      expect(result.current).toBe(true);
-
-      fireEvent.blur(target);
-
-      expect(result.current).toBe(false);
-    });
-  });
-
   describe('disabled', () => {
-    it('ignores pointer and focus events', () => {
-      const { target, result } = setup({ disabled: true, includeFocus: true });
+    it('ignores pointer events', () => {
+      const { target, result } = setup({ disabled: true });
 
       pointerEnter(target);
-      fireEvent.focus(target);
 
       expect(result.current).toBe(false);
     });
@@ -367,11 +330,10 @@ describe('[hooks] useHover', () => {
 
     it('stops listening to the element', () => {
       const onChange = vi.fn();
-      const { target, unmount } = setup({ includeFocus: true, onChange });
+      const { target, unmount } = setup({ onChange });
 
       unmount();
       pointerEnter(target);
-      fireEvent.focus(target);
 
       expect(onChange).not.toHaveBeenCalled();
     });
