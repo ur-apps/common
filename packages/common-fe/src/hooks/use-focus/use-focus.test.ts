@@ -64,6 +64,41 @@ describe('[hooks] useFocus', () => {
     });
   });
 
+  describe('visibleOnly', () => {
+    it('tracks focus that is not focus-visible by default', () => {
+      const { target, result } = setup();
+
+      vi.spyOn(target, 'matches').mockReturnValue(false);
+      fireEvent.focus(target);
+
+      expect(result.current).toBe(true);
+    });
+
+    it('ignores focus that is not focus-visible', () => {
+      const onChange = vi.fn();
+      const { target, result } = setup({ visibleOnly: true, onChange });
+
+      vi.spyOn(target, 'matches').mockReturnValue(false);
+      fireEvent.focus(target);
+
+      expect(result.current).toBe(false);
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('tracks focus-visible focus', () => {
+      const { target, result } = setup({ visibleOnly: true });
+
+      vi.spyOn(target, 'matches').mockImplementation((selector) => selector === ':focus-visible');
+      fireEvent.focus(target);
+
+      expect(result.current).toBe(true);
+
+      fireEvent.blur(target);
+
+      expect(result.current).toBe(false);
+    });
+  });
+
   describe('disabled', () => {
     it('ignores focus', () => {
       const { target, result } = setup({ disabled: true });

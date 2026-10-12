@@ -8,7 +8,7 @@ export function useFocus<T extends HTMLElement | SVGElement = HTMLElement>(
   targetRef: RefObject<T | null>,
   options: UseFocusOptions = {}
 ): boolean {
-  const { disabled = false, onChange } = options;
+  const { disabled = false, visibleOnly = false, onChange } = options;
   const onChangeRef = useLatest(onChange);
 
   const [focused, setFocused] = useState(false);
@@ -31,7 +31,11 @@ export function useFocus<T extends HTMLElement | SVGElement = HTMLElement>(
       return;
     }
 
-    const handleFocus = () => update(true);
+    const handleFocus = () => {
+      if (visibleOnly && !element.matches(':focus-visible')) return;
+
+      update(true);
+    };
     const handleBlur = () => update(false);
 
     element.addEventListener('focus', handleFocus);
@@ -41,7 +45,7 @@ export function useFocus<T extends HTMLElement | SVGElement = HTMLElement>(
       element.removeEventListener('focus', handleFocus);
       element.removeEventListener('blur', handleBlur);
     };
-  }, [targetRef, onChangeRef, disabled]);
+  }, [targetRef, onChangeRef, disabled, visibleOnly]);
 
   return focused;
 }
