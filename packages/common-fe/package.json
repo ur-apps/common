@@ -19,12 +19,10 @@
     "format:fix": "prettier --write ."
   },
   "files": [
-    "lib",
-    "eslint.config.mjs"
+    "lib"
   ],
   "exports": {
-    ".": "./lib/index.js",
-    "./eslint": "./eslint.config.mjs"
+    ".": "./lib/index.js"
   },
   "prettier": "@urapps/prettier-config/react",
   "publishConfig": {
@@ -42,40 +40,12 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "peerDependencies": {
-    "@eslint-react/eslint-plugin": "5.x",
-    "@eslint/js": "10.x",
     "@types/react": "19.x",
     "@urapps/common": "^1.0.0-rc.0",
-    "eslint": "10.x",
-    "eslint-plugin-react-hooks": "7.x",
-    "eslint-plugin-react-refresh": "0.x",
-    "globals": "17.x",
-    "react": "19.x",
-    "typescript-eslint": "8.x"
+    "react": "19.x"
   },
   "peerDependenciesMeta": {
-    "@eslint-react/eslint-plugin": {
-      "optional": true
-    },
-    "@eslint/js": {
-      "optional": true
-    },
     "@types/react": {
-      "optional": true
-    },
-    "eslint": {
-      "optional": true
-    },
-    "eslint-plugin-react-hooks": {
-      "optional": true
-    },
-    "eslint-plugin-react-refresh": {
-      "optional": true
-    },
-    "globals": {
-      "optional": true
-    },
-    "typescript-eslint": {
       "optional": true
     }
   },
@@ -85,6 +55,7 @@
     "@testing-library/react": "16.x",
     "@types/react": "19.x",
     "@types/react-dom": "^19.x",
+    "@urapps/eslint-config": "^1.0.0-rc.0",
     "@urapps/prettier-config": "^1.0.0-rc.0",
     "@urapps/tsconfig": "^1.0.0-rc.0",
     "eslint-plugin-react-hooks": "7.x",

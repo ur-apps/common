@@ -4,6 +4,8 @@
   "description": "ur apps shared Prettier configs",
   "type": "module",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
@@ -36,5 +38,8 @@
   "peerDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.x",
     "prettier": "3.x"
+  },
+  "devDependencies": {
+    "@urapps/eslint-config": "^1.0.0-rc.0"
   }
 }

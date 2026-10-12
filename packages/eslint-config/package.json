@@ -1,0 +1,61 @@
+{
+  "name": "@urapps/eslint-config",
+  "version": "1.0.0-rc.0",
+  "description": "ur apps shared ESLint configs",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "files": [
+    "base.mjs",
+    "react.mjs",
+    "nest.mjs"
+  ],
+  "exports": {
+    ".": "./base.mjs",
+    "./base": "./base.mjs",
+    "./react": "./react.mjs",
+    "./nest": "./nest.mjs"
+  },
+  "prettier": "@urapps/prettier-config",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "ISC",
+  "author": "Garry Freeman <garryfreeman09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ur-apps/common.git"
+  },
+  "homepage": "https://github.com/ur-apps/common#readme",
+  "bugs": {
+    "url": "https://github.com/ur-apps/common/issues"
+  },
+  "peerDependencies": {
+    "@eslint-react/eslint-plugin": "5.x",
+    "@eslint/js": "10.x",
+    "eslint": "10.x",
+    "eslint-plugin-react-hooks": "7.x",
+    "eslint-plugin-react-refresh": "0.x",
+    "globals": "17.x",
+    "typescript-eslint": "8.x"
+  },
+  "peerDependenciesMeta": {
+    "@eslint-react/eslint-plugin": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    },
+    "eslint-plugin-react-refresh": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@urapps/prettier-config": "^1.0.0-rc.0"
+  }
+}

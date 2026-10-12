@@ -1,12 +1,8 @@
-import jseslint from '@eslint/js';
-import { baseConfigs } from '@urapps/common/eslint';
+import config from '@urapps/eslint-config/nest';
 import { defineConfig } from 'eslint/config';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
 
-export default defineConfig(jseslint.configs.recommended, tseslint.configs.recommended, baseConfigs, {
+export default defineConfig(config, {
   languageOptions: {
-    globals: globals.node,
     parserOptions: {
       tsconfigRootDir: import.meta.dirname,
     },
