@@ -12,21 +12,22 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   const { enterDelay = 0, leaveDelay = 0, disabled = false, pointerTypes = DEFAULT_POINTER_TYPES, onChange } = options;
   const optionsRef = useLatest({ enterDelay, leaveDelay, pointerTypes, onChange });
 
+  const [element, setElement] = useState<GlobalEventHandlers | null>(null);
   const [hovered, setHovered] = useState(false);
   const hoveredRef = useLatest(hovered);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- runs after every commit to pick up the element React attached to the ref
   useEffect(() => {
-    const element: GlobalEventHandlers | null = targetRef.current;
+    setElement(targetRef.current);
+  });
 
-    if (!element || disabled) {
-      setHovered(false);
-
-      if (hoveredRef.current) {
-        optionsRef.current.onChange?.(false);
-      }
-
-      return;
+  useEffect(() => {
+    // The previous run's cleanup has reset `hovered`.
+    if (hoveredRef.current) {
+      optionsRef.current.onChange?.(false);
     }
+
+    if (!element || disabled) return;
 
     let enterTimer: number | undefined;
     let leaveTimer: number | undefined;
@@ -88,10 +89,10 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
       element.removeEventListener(ENTER_EVENT, handleEnter);
       element.removeEventListener(LEAVE_EVENT, handleLeave);
-    };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetRef.current, optionsRef, disabled]);
+      setHovered(false);
+    };
+  }, [element, optionsRef, hoveredRef, disabled]);
 
   return hovered;
 }

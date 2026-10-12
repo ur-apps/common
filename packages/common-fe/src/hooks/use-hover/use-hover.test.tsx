@@ -1,5 +1,5 @@
-import { RefObject } from 'react';
-import { act, fireEvent, renderHook } from '@testing-library/react';
+import { RefObject, useRef } from 'react';
+import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { PointerType, UseHoverOptions } from './types.ts';
@@ -10,6 +10,14 @@ function setup(options?: UseHoverOptions, target: HTMLElement | SVGElement = doc
   const hook = renderHook((props?: UseHoverOptions) => useHover(ref, props), { initialProps: options });
 
   return { target, ...hook };
+}
+
+function ConditionalTarget({ visible, onChange }: { visible: boolean; onChange: (hovered: boolean) => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useHover(ref, { onChange });
+
+  return visible ? <div ref={ref} data-testid="target" /> : null;
 }
 
 function pointerEnter(target: Element, pointerType: PointerType = 'mouse') {
@@ -66,6 +74,26 @@ describe('[hooks] useHover', () => {
       const { result } = renderHook(() => useHover({ current: null }));
 
       expect(result.current).toBe(false);
+    });
+
+    it('tracks an element rendered after mount', () => {
+      const onChange = vi.fn();
+      const { rerender } = render(<ConditionalTarget visible={false} onChange={onChange} />);
+
+      rerender(<ConditionalTarget visible onChange={onChange} />);
+      pointerEnter(screen.getByTestId('target'));
+
+      expect(onChange.mock.calls).toEqual([[true]]);
+    });
+
+    it('becomes unhovered when the hovered element is removed', () => {
+      const onChange = vi.fn();
+      const { rerender } = render(<ConditionalTarget visible onChange={onChange} />);
+
+      pointerEnter(screen.getByTestId('target'));
+      rerender(<ConditionalTarget visible={false} onChange={onChange} />);
+
+      expect(onChange.mock.calls).toEqual([[true], [false]]);
     });
   });
 
