@@ -306,9 +306,31 @@ describe('[hooks] useHover', () => {
       const { target, result, rerender } = setup();
 
       pointerEnter(target);
+
+      expect(result.current).toBe(true);
+
       rerender({ disabled: true });
 
       expect(result.current).toBe(false);
+    });
+
+    it('calls onChange with false when disabled while hovered', () => {
+      const onChange = vi.fn();
+      const { target, rerender } = setup({ onChange });
+
+      pointerEnter(target);
+      rerender({ onChange, disabled: true });
+
+      expect(onChange.mock.calls).toEqual([[true], [false]]);
+    });
+
+    it('does not call onChange when disabled while not hovered', () => {
+      const onChange = vi.fn();
+      const { rerender } = setup({ onChange });
+
+      rerender({ onChange, disabled: true });
+
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it('cancels a pending enter when disabled', () => {

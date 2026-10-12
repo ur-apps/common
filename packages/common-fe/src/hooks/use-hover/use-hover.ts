@@ -20,6 +20,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   const optionsRef = useLatest({ enterDelay, leaveDelay, pointerTypes, onChange });
 
   const [hovered, setHovered] = useState(false);
+  const hoveredRef = useLatest(hovered);
 
   const enterTimer = useRef<number | null>(null);
   const leaveTimer = useRef<number | null>(null);
@@ -39,6 +40,10 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
       clearTimer(leaveTimer);
 
       setHovered(false);
+
+      if (hoveredRef.current) {
+        optionsRef.current.onChange?.(false);
+      }
 
       return;
     }
