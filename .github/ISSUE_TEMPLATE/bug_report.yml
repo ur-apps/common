@@ -1,0 +1,52 @@
+name: Bug report
+description: Something in a package does not work as documented
+labels:
+  - bug
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - '@urapps/common'
+        - '@urapps/react'
+        - '@urapps/nest'
+        - '@urapps/eslint-config'
+        - '@urapps/prettier-config'
+        - '@urapps/tsconfig'
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happens
+      description: Describe the actual behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to reproduce
+      description: A minimal code snippet or steps.
+      render: ts
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Versions that matter for the bug.
+      placeholder: Node.js 24, React 19.2, NestJS 12.1, TypeScript 6.0
