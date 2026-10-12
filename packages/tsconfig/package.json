@@ -1,0 +1,30 @@
+{
+  "name": "@urapps/tsconfig",
+  "version": "1.0.0-rc.0",
+  "description": "ur apps shared TypeScript configs",
+  "files": [
+    "tsconfig.base.json",
+    "tsconfig.react.json",
+    "tsconfig.nest.json"
+  ],
+  "exports": {
+    ".": "./tsconfig.base.json",
+    "./base": "./tsconfig.base.json",
+    "./react": "./tsconfig.react.json",
+    "./nest": "./tsconfig.nest.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "ISC",
+  "author": "Garry Freeman <garryfreeman09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ur-apps/common.git"
+  },
+  "homepage": "https://github.com/ur-apps/common#readme",
+  "bugs": {
+    "url": "https://github.com/ur-apps/common/issues"
+  }
+}

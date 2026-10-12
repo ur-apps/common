@@ -21,14 +21,12 @@
   "files": [
     "lib",
     "eslint.config.mjs",
-    "prettier.config.mjs",
-    "tsconfig.base.json"
+    "prettier.config.mjs"
   ],
   "exports": {
     ".": "./lib/index.js",
     "./eslint": "./eslint.config.mjs",
-    "./prettier": "./prettier.config.mjs",
-    "./tsconfig": "./tsconfig.base.json"
+    "./prettier": "./prettier.config.mjs"
   },
   "publishConfig": {
     "access": "public",
@@ -81,6 +79,7 @@
     "@nestjs/cli": "12.x",
     "@nestjs/schematics": "12.x",
     "@nestjs/testing": "12.x",
-    "@types/express": "5.x"
+    "@types/express": "5.x",
+    "@urapps/tsconfig": "^1.0.0-rc.0"
   }
 }

@@ -21,14 +21,12 @@
   "files": [
     "lib",
     "eslint.config.mjs",
-    "prettier.config.mjs",
-    "tsconfig.base.json"
+    "prettier.config.mjs"
   ],
   "exports": {
     ".": "./lib/index.js",
     "./eslint": "./eslint.config.mjs",
-    "./prettier": "./prettier.config.mjs",
-    "./tsconfig": "./tsconfig.base.json"
+    "./prettier": "./prettier.config.mjs"
   },
   "publishConfig": {
     "access": "public",
@@ -92,6 +90,7 @@
     "@testing-library/react": "16.x",
     "@types/react": "19.x",
     "@types/react-dom": "^19.x",
+    "@urapps/tsconfig": "^1.0.0-rc.0",
     "eslint-plugin-react-hooks": "7.x",
     "eslint-plugin-react-refresh": "0.x",
     "jsdom": "30.x",
