@@ -1,4 +1,4 @@
-import baseConfig from '@urapps/common/prettier';
+import baseConfig from './base.mjs';
 
 /**
  * @see https://prettier.io/docs/en/configuration.html
@@ -14,7 +14,7 @@ const config = {
     '<BUILTIN_MODULES>',
     '<THIRD_PARTY_MODULES>',
     '',
-    '^(api|assets|components|constants|contexts|data|DI|fonts|hooks|i18n|icons|images|layouts|modules|pages|routes|services|store|styles|types|utils)(/.*)?$',
+    '^(@/.*|(actions|api|app|assets|components|config|configs|constants|contexts|data|DI|entities|features|fonts|helpers|hooks|i18n|icons|images|layouts|lib|locales|modules|pages|providers|queries|routes|schemas|services|shared|store|stores|styles|theme|types|ui|utils|widgets)(/.*)?)$',
     '',
     '^\\.\\./',
     '',

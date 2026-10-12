@@ -1,0 +1,40 @@
+{
+  "name": "@urapps/prettier-config",
+  "version": "1.0.0-rc.0",
+  "description": "ur apps shared Prettier configs",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "files": [
+    "base.mjs",
+    "react.mjs",
+    "nest.mjs"
+  ],
+  "exports": {
+    ".": "./base.mjs",
+    "./base": "./base.mjs",
+    "./react": "./react.mjs",
+    "./nest": "./nest.mjs"
+  },
+  "prettier": "./base.mjs",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "ISC",
+  "author": "Garry Freeman <garryfreeman09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ur-apps/common.git"
+  },
+  "homepage": "https://github.com/ur-apps/common#readme",
+  "bugs": {
+    "url": "https://github.com/ur-apps/common/issues"
+  },
+  "peerDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.x",
+    "prettier": "3.x"
+  }
+}

@@ -20,7 +20,7 @@ const config = {
     '<BUILTIN_MODULES>',
     '<THIRD_PARTY_MODULES>',
     '',
-    '^(constants|helpers|types|utils)(/.*)?$',
+    '^(config|configs|constants|enums|helpers|interfaces|lib|models|schemas|services|shared|types|utils)(/.*)?$',
     '',
     '^\\.\\./',
     '',

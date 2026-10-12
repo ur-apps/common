@@ -20,14 +20,13 @@
   },
   "files": [
     "lib",
-    "eslint.config.mjs",
-    "prettier.config.mjs"
+    "eslint.config.mjs"
   ],
   "exports": {
     ".": "./lib/index.js",
-    "./eslint": "./eslint.config.mjs",
-    "./prettier": "./prettier.config.mjs"
+    "./eslint": "./eslint.config.mjs"
   },
+  "prettier": "@urapps/prettier-config/nest",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -44,7 +43,6 @@
   },
   "peerDependencies": {
     "@eslint/js": "10.x",
-    "@ianvs/prettier-plugin-sort-imports": "4.x",
     "@nestjs/common": "12.x",
     "@nestjs/core": "12.x",
     "@nestjs/microservices": "12.x",
@@ -62,9 +60,6 @@
     "@eslint/js": {
       "optional": true
     },
-    "@ianvs/prettier-plugin-sort-imports": {
-      "optional": true
-    },
     "eslint": {
       "optional": true
     },
@@ -80,6 +75,7 @@
     "@nestjs/schematics": "12.x",
     "@nestjs/testing": "12.x",
     "@types/express": "5.x",
+    "@urapps/prettier-config": "^1.0.0-rc.0",
     "@urapps/tsconfig": "^1.0.0-rc.0"
   }
 }

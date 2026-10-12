@@ -20,14 +20,13 @@
   },
   "files": [
     "lib",
-    "eslint.config.mjs",
-    "prettier.config.mjs"
+    "eslint.config.mjs"
   ],
   "exports": {
     ".": "./lib/index.js",
-    "./eslint": "./eslint.config.mjs",
-    "./prettier": "./prettier.config.mjs"
+    "./eslint": "./eslint.config.mjs"
   },
+  "prettier": "@urapps/prettier-config",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -44,15 +43,11 @@
   },
   "peerDependencies": {
     "@eslint/js": "10.x",
-    "@ianvs/prettier-plugin-sort-imports": "4.x",
     "eslint": "10.x",
     "typescript-eslint": "8.x"
   },
   "peerDependenciesMeta": {
     "@eslint/js": {
-      "optional": true
-    },
-    "@ianvs/prettier-plugin-sort-imports": {
       "optional": true
     },
     "eslint": {
@@ -63,6 +58,7 @@
     }
   },
   "devDependencies": {
+    "@urapps/prettier-config": "^1.0.0-rc.0",
     "@urapps/tsconfig": "^1.0.0-rc.0"
   }
 }

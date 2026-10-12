@@ -2,6 +2,10 @@
   "name": "@urapps/tsconfig",
   "version": "1.0.0-rc.0",
   "description": "ur apps shared TypeScript configs",
+  "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
   "files": [
     "tsconfig.base.json",
     "tsconfig.react.json",
@@ -13,6 +17,7 @@
     "./react": "./tsconfig.react.json",
     "./nest": "./tsconfig.nest.json"
   },
+  "prettier": "@urapps/prettier-config",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -26,5 +31,8 @@
   "homepage": "https://github.com/ur-apps/common#readme",
   "bugs": {
     "url": "https://github.com/ur-apps/common/issues"
+  },
+  "devDependencies": {
+    "@urapps/prettier-config": "^1.0.0-rc.0"
   }
 }
