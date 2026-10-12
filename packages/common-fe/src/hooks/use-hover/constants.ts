@@ -1,6 +1,5 @@
 import { PointerType } from './types.ts';
 
-export const SUPPORTS_POINTER = typeof PointerEvent !== 'undefined';
-export const ENTER_EVENT = SUPPORTS_POINTER ? 'pointerenter' : 'mouseenter';
-export const LEAVE_EVENT = SUPPORTS_POINTER ? 'pointerleave' : 'mouseleave';
+export const ENTER_EVENT = 'pointerenter' as const;
+export const LEAVE_EVENT = 'pointerleave' as const;
 export const DEFAULT_POINTER_TYPES: PointerType[] = ['mouse', 'pen'];

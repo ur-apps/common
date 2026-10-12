@@ -26,7 +26,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   };
 
   useEffect(() => {
-    const element = targetRef.current;
+    const element: GlobalEventHandlers | null = targetRef.current;
 
     if (!element || disabled) {
       clearTimer(enterTimer);
@@ -41,17 +41,17 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
       return;
     }
 
-    const matchesPointer = (evt: Event) => {
+    const matchesPointer = (evt: PointerEvent) => {
       const { pointerTypes } = optionsRef.current;
 
-      if (pointerTypes.length && evt instanceof PointerEvent) {
+      if (pointerTypes.length) {
         return pointerTypes.includes(evt.pointerType as PointerType);
       }
 
       return true;
     };
 
-    const handleEnter = (evt: Event) => {
+    const handleEnter = (evt: PointerEvent) => {
       if (!matchesPointer(evt)) return;
 
       const { enterDelay, onChange } = optionsRef.current;
@@ -70,7 +70,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
       }
     };
 
-    const handleLeave = (evt: Event) => {
+    const handleLeave = (evt: PointerEvent) => {
       if (!matchesPointer(evt)) return;
 
       const { leaveDelay, onChange } = optionsRef.current;

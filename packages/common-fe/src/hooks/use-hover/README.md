@@ -356,10 +356,9 @@ const isHovered = useHover(ref, {
 The hook internally:
 
 - Uses `useLatest` to ensure options always use the most recent values without recreating event handlers
-- Automatically detects `PointerEvent` support and falls back to `MouseEvent`
 - Manages enter/leave timers with automatic cleanup
 - Clears all timers when element becomes disabled or unmounted
-- Filters events based on `pointerType` when using `PointerEvent` API
+- Filters events based on `pointerType`
 
 ## Performance Considerations
 
@@ -379,5 +378,4 @@ The hook internally:
 ## Browser Compatibility
 
 - **Modern browsers**: Full support with `PointerEvent` API
-- **Legacy browsers**: Automatic fallback to `MouseEvent` API
 - **Touch devices**: Configurable via `pointerTypes` option
