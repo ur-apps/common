@@ -258,7 +258,7 @@ function DropdownMenu() {
 ### Parameters
 
 ```typescript
-useHover<T extends HTMLElement = HTMLElement>(
+useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   targetRef: RefObject<T | null>,
   options?: UseHoverOptions
 ): boolean
@@ -286,12 +286,13 @@ type PointerType = 'mouse' | 'pen' | 'touch';
 - **`enterDelay`** - Delay in milliseconds before setting hovered to `true`. Useful for tooltips that shouldn't appear instantly.
 - **`leaveDelay`** - Delay in milliseconds before setting hovered to `false`. Prevents flickering when mouse briefly leaves element.
 
-- **`disabled`** - When `true`, disables hover tracking, removes event listeners, and sets hovered to `false`.
+- **`disabled`** - When `true`, disables hover tracking, removes event listeners, and sets hovered to `false` (calling `onChange(false)` if it was `true`).
 
 - **`pointerTypes`** - Array of pointer types to respond to:
   - `['mouse', 'pen']` (default) - Desktop/stylus only
   - `['mouse', 'pen', 'touch']` - Include touch devices
   - `['mouse']` - Mouse only
+  - `[]` - Any pointer type
 
 - **`onChange`** - Callback function called whenever hover state changes. Receives the new hover state as argument.
 

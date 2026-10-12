@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { useLatest } from '../use-latest.ts';
 
@@ -14,7 +14,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
   const [element, setElement] = useState<GlobalEventHandlers | null>(null);
   const [hovered, setHovered] = useState(false);
-  const hoveredRef = useLatest(hovered);
+  const hoveredRef = useRef(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps -- runs after every commit to pick up the element React attached to the ref
   useEffect(() => {
@@ -24,6 +24,7 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   useEffect(() => {
     // The previous run's cleanup has reset `hovered`.
     if (hoveredRef.current) {
+      hoveredRef.current = false;
       optionsRef.current.onChange?.(false);
     }
 
@@ -31,6 +32,14 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
     let enterTimer: number | undefined;
     let leaveTimer: number | undefined;
+
+    const update = (value: boolean) => {
+      if (value === hoveredRef.current) return;
+
+      hoveredRef.current = value;
+      setHovered(value);
+      optionsRef.current.onChange?.(value);
+    };
 
     const matchesPointer = (evt: PointerEvent) => {
       const { pointerTypes } = optionsRef.current;
@@ -45,38 +54,30 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
     const handleEnter = (evt: PointerEvent) => {
       if (!matchesPointer(evt)) return;
 
-      const { enterDelay, onChange } = optionsRef.current;
+      const { enterDelay } = optionsRef.current;
 
       clearTimeout(enterTimer);
       clearTimeout(leaveTimer);
 
       if (enterDelay > 0) {
-        enterTimer = setTimeout(() => {
-          setHovered(true);
-          optionsRef.current.onChange?.(true);
-        }, enterDelay);
+        enterTimer = setTimeout(() => update(true), enterDelay);
       } else {
-        setHovered(true);
-        onChange?.(true);
+        update(true);
       }
     };
 
     const handleLeave = (evt: PointerEvent) => {
       if (!matchesPointer(evt)) return;
 
-      const { leaveDelay, onChange } = optionsRef.current;
+      const { leaveDelay } = optionsRef.current;
 
       clearTimeout(enterTimer);
       clearTimeout(leaveTimer);
 
       if (leaveDelay > 0) {
-        leaveTimer = setTimeout(() => {
-          setHovered(false);
-          optionsRef.current.onChange?.(false);
-        }, leaveDelay);
+        leaveTimer = setTimeout(() => update(false), leaveDelay);
       } else {
-        setHovered(false);
-        onChange?.(false);
+        update(false);
       }
     };
 

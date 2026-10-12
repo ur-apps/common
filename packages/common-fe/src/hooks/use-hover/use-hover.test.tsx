@@ -282,6 +282,31 @@ describe('[hooks] useHover', () => {
       expect(second.mock.calls).toEqual([[true]]);
       expect(third.mock.calls).toEqual([[false]]);
     });
+
+    it('is not called when the pointer leaves before the enter delay ends', () => {
+      const onChange = vi.fn();
+      const { target } = setup({ enterDelay: 500, onChange });
+
+      pointerEnter(target);
+      advance(200);
+      pointerLeave(target);
+      advance(500);
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('is not called again when the pointer re-enters during the leave delay', () => {
+      const onChange = vi.fn();
+      const { target } = setup({ leaveDelay: 300, onChange });
+
+      pointerEnter(target);
+      pointerLeave(target);
+      advance(200);
+      pointerEnter(target);
+      advance(300);
+
+      expect(onChange.mock.calls).toEqual([[true]]);
+    });
   });
 
   describe('disabled', () => {
