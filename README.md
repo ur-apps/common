@@ -1,77 +1,64 @@
-# @urapps/common
+# UR Apps common
 
-This repository contains common libraries and configurations for the UR Apps project. It is structured as a monorepo managed by Lerna, with separate packages for frontend, backend, and shared configurations.
+Shared libraries and tooling configs for UR Apps projects, published to npm under the `@urapps` scope. The repository is an npm workspaces monorepo managed by Lerna; every package is versioned and released independently.
 
 ## Packages
 
-### @urapps/common
+| Package                                                 | Description                                                      |
+| ------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`@urapps/common`](./packages/common)                   | Platform-agnostic utilities and types                            |
+| [`@urapps/react`](./packages/react)                     | React hooks and utilities                                        |
+| [`@urapps/nest`](./packages/nest)                       | NestJS building blocks: responses, validation, exceptions, roles |
+| [`@urapps/eslint-config`](./packages/eslint-config)     | Shared ESLint configs: base, React, NestJS                       |
+| [`@urapps/prettier-config`](./packages/prettier-config) | Shared Prettier configs: base, React, NestJS                     |
+| [`@urapps/tsconfig`](./packages/tsconfig)               | Shared TypeScript configs: base, React, NestJS                   |
 
-This package contains shared configurations and utilities used across both frontend and backend projects.
+Each package has its own README with installation and usage.
 
-### @urapps/react
+## Development
 
-This package contains common configurations and utilities for frontend projects.
-
-### @urapps/nest
-
-This package contains common configurations and utilities for backend projects.
-
-## Installation
-
-To install dependencies, run:
+Requirements: Node.js 24 and npm.
 
 ```bash
 npm ci
 ```
 
-## Scripts
+`npm ci` also installs a `pre-push` Git hook that runs the same checks as CI.
 
-### Linting
+### Scripts
 
-To lint the code:
+All scripts run across every package that defines them.
 
-```bash
-npm run lint
-```
+| Script                                  | What it does                                  |
+| --------------------------------------- | --------------------------------------------- |
+| `npm run build`                         | Builds the packages into their `lib` folders  |
+| `npm run typecheck`                     | Type-checks sources and tests                 |
+| `npm run lint` / `npm run lint:fix`     | Runs ESLint / fixes what it can               |
+| `npm run format` / `npm run format:fix` | Checks formatting with Prettier / rewrites it |
+| `npm test`                              | Runs the tests with Vitest                    |
 
-To fix linting issues:
+`@urapps/react` and `@urapps/nest` type-check and test against the built `lib` of `@urapps/common`, so run `npm run build` first.
 
-```bash
-npm run lint:fix
-```
+## Releasing
 
-### Formatting
-
-To check code formatting:
-
-```bash
-npm run format
-```
-
-To fix code formatting:
+Versions are bumped locally with Lerna on `master`:
 
 ```bash
-npm run format:fix
-```
-
-### Releasing
-
-To release a new version, use one of the following commands:
-
-```bash
-npm run release:major
-npm run release:minor
+npm run release:prerelease   # 1.0.0-rc.0 → 1.0.0-rc.1
 npm run release:patch
-npm run release:prerelease
+npm run release:minor
+npm run release:major
 ```
+
+Lerna bumps the packages changed since their last release, commits `chore: release`, tags each package (`@urapps/<name>@<version>`) and pushes. The push to `master` triggers the [publish workflow](./.github/workflows/npm-publish.yml): it runs the CI checks and publishes every package whose version is not on npm yet.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
 This project is licensed under the ISC License. See the [LICENSE](./LICENSE) file for more details.
-
-## Contributing
-
-Please read the [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
 ## Authors
 
@@ -81,5 +68,3 @@ Please read the [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of 
 
 - Thanks to all contributors and maintainers of the dependencies used in this project.
 - Special thanks to the UR Apps team for their support and contributions.
-
-For more information, visit the [repository](https://github.com/ur-apps/common).
