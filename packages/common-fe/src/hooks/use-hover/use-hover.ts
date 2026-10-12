@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 import { useLatest } from '../use-latest.ts';
 
@@ -15,23 +15,10 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
   const [hovered, setHovered] = useState(false);
   const hoveredRef = useLatest(hovered);
 
-  const enterTimer = useRef<number | null>(null);
-  const leaveTimer = useRef<number | null>(null);
-
-  const clearTimer = (timerRef: RefObject<number | null>) => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  };
-
   useEffect(() => {
     const element: GlobalEventHandlers | null = targetRef.current;
 
     if (!element || disabled) {
-      clearTimer(enterTimer);
-      clearTimer(leaveTimer);
-
       setHovered(false);
 
       if (hoveredRef.current) {
@@ -40,6 +27,9 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
       return;
     }
+
+    let enterTimer: number | undefined;
+    let leaveTimer: number | undefined;
 
     const matchesPointer = (evt: PointerEvent) => {
       const { pointerTypes } = optionsRef.current;
@@ -56,11 +46,11 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
       const { enterDelay, onChange } = optionsRef.current;
 
-      clearTimer(enterTimer);
-      clearTimer(leaveTimer);
+      clearTimeout(enterTimer);
+      clearTimeout(leaveTimer);
 
       if (enterDelay > 0) {
-        enterTimer.current = setTimeout(() => {
+        enterTimer = setTimeout(() => {
           setHovered(true);
           optionsRef.current.onChange?.(true);
         }, enterDelay);
@@ -75,11 +65,11 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
 
       const { leaveDelay, onChange } = optionsRef.current;
 
-      clearTimer(enterTimer);
-      clearTimer(leaveTimer);
+      clearTimeout(enterTimer);
+      clearTimeout(leaveTimer);
 
       if (leaveDelay > 0) {
-        leaveTimer.current = setTimeout(() => {
+        leaveTimer = setTimeout(() => {
           setHovered(false);
           optionsRef.current.onChange?.(false);
         }, leaveDelay);
@@ -93,8 +83,8 @@ export function useHover<T extends HTMLElement | SVGElement = HTMLElement>(
     element.addEventListener(LEAVE_EVENT, handleLeave);
 
     return () => {
-      clearTimer(enterTimer);
-      clearTimer(leaveTimer);
+      clearTimeout(enterTimer);
+      clearTimeout(leaveTimer);
 
       element.removeEventListener(ENTER_EVENT, handleEnter);
       element.removeEventListener(LEAVE_EVENT, handleLeave);
