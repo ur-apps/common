@@ -13,6 +13,8 @@ lib
 
 # misc
 .DS_Store
+.tmp
+.temp
 
 # logs
 npm-debug.log*

@@ -27,12 +27,14 @@ import { useLatest } from '../use-latest.ts';
  * }, [searchTerm, throttledSearch]);
  * ```
  */
-export function useThrottle<F extends AnyFn>(fn: F, wait: number, options?: ThrottleOptions) {
-  const latestCallback = useLatest(fn);
+export function useThrottle<F extends AnyFn>(callback: F, delay: number, options?: ThrottleOptions) {
+  const latestCallback = useLatest(callback);
   const throttledRef = useRef<ThrottledFn<F> | null>(null);
 
   const throttledFn = useMemo(() => {
+    // eslint-disable-next-line react-hooks/refs
     if (throttledRef.current) {
+      // eslint-disable-next-line react-hooks/refs
       throttledRef.current.cancel();
     }
 
@@ -40,14 +42,15 @@ export function useThrottle<F extends AnyFn>(fn: F, wait: number, options?: Thro
       return latestCallback.current(...args);
     };
 
-    const throttled = throttle(wrappedCallback as F, wait, options);
+    const throttled = throttle(wrappedCallback as F, delay, options);
 
+    // eslint-disable-next-line react-hooks/refs
     throttledRef.current = throttled;
 
     return throttled;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wait, options?.leading, options?.trailing, options?.signal]);
+  }, [delay, options?.leading, options?.trailing, options?.signal]);
 
   useEffect(() => {
     // Cleanup function to cancel any pending throttled calls on unmount

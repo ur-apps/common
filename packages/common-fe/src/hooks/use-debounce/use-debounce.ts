@@ -27,27 +27,30 @@ import { useLatest } from '../use-latest.ts';
  * }, [searchTerm, debouncedSearch]);
  * ```
  */
-export function useDebounce<F extends AnyFn>(fn: F, wait: number, options?: DebounceOptions) {
-  const latestCallback = useLatest(fn);
+export function useDebounce<F extends AnyFn>(callback: F, delay: number, options?: DebounceOptions) {
+  const latestCallback = useLatest(callback);
   const debouncedRef = useRef<DebouncedFn<F> | null>(null);
 
   const debouncedFn = useMemo(() => {
+    // eslint-disable-next-line react-hooks/refs
     if (debouncedRef.current) {
-      debouncedRef.current.cancel();
+      // eslint-disable-next-line react-hooks/refs
+      debouncedRef.current?.cancel();
     }
 
     const wrappedCallback = (...args: Parameters<F>) => {
       return latestCallback.current(...args);
     };
 
-    const debounced = debounce(wrappedCallback as F, wait, options);
+    const debounced = debounce(wrappedCallback as F, delay, options);
 
+    // eslint-disable-next-line react-hooks/refs
     debouncedRef.current = debounced;
 
     return debounced;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wait, options?.leading, options?.trailing, options?.maxWait, options?.signal]);
+  }, [delay, options?.leading, options?.trailing, options?.maxWait, options?.signal]);
 
   useEffect(() => {
     // Cleanup function to cancel any pending debounced calls on unmount
