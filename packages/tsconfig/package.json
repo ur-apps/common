@@ -1,6 +1,6 @@
 {
   "name": "@urapps/tsconfig",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "UR Apps shared TypeScript configs",
   "scripts": {
     "format": "prettier --check .",
@@ -34,6 +34,6 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "devDependencies": {
-    "@urapps/prettier-config": "^1.0.0-rc.0"
+    "@urapps/prettier-config": "^1.0.0-rc.1"
   }
 }

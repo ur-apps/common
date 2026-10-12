@@ -1,6 +1,6 @@
 {
   "name": "@urapps/nest",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "UR Apps NestJS utilities",
   "type": "module",
   "main": "lib/index.js",
@@ -56,8 +56,8 @@
     "@nestjs/schematics": "12.x",
     "@nestjs/testing": "12.x",
     "@types/express": "5.x",
-    "@urapps/eslint-config": "^1.0.0-rc.0",
-    "@urapps/prettier-config": "^1.0.0-rc.0",
-    "@urapps/tsconfig": "^1.0.0-rc.0"
+    "@urapps/eslint-config": "^1.0.0-rc.1",
+    "@urapps/prettier-config": "^1.0.0-rc.1",
+    "@urapps/tsconfig": "^1.0.0-rc.1"
   }
 }

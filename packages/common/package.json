@@ -1,6 +1,6 @@
 {
   "name": "@urapps/common",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "UR Apps platform-agnostic utilities",
   "type": "module",
   "main": "lib/index.js",
@@ -41,8 +41,8 @@
     "url": "https://github.com/ur-apps/common/issues"
   },
   "devDependencies": {
-    "@urapps/eslint-config": "^1.0.0-rc.0",
-    "@urapps/prettier-config": "^1.0.0-rc.0",
-    "@urapps/tsconfig": "^1.0.0-rc.0"
+    "@urapps/eslint-config": "^1.0.0-rc.1",
+    "@urapps/prettier-config": "^1.0.0-rc.1",
+    "@urapps/tsconfig": "^1.0.0-rc.1"
   }
 }
