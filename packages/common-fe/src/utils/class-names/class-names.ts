@@ -1,4 +1,4 @@
-import { isArray, isObject, isString } from '@ur-apps/common';
+import { isArray, isObject, isString } from '@urapps/common';
 
 export type TClasses = Array<string | TClasses | Record<string, boolean> | null | undefined>;
 

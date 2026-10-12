@@ -1,6 +1,6 @@
 import eslintReact from '@eslint-react/eslint-plugin';
 import jseslint from '@eslint/js';
-import { baseConfigs } from '@ur-apps/common/eslint';
+import { baseConfigs } from '@urapps/common/eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig } from 'eslint/config';

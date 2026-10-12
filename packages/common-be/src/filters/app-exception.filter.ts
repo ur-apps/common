@@ -1,5 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { getErrorMessage } from '@ur-apps/common';
+import { getErrorMessage } from '@urapps/common';
 import { Request, Response } from 'express';
 
 import { HttpMessage } from 'constants/';

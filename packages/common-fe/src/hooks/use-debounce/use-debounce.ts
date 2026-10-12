@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { AnyFn, debounce, DebouncedFn, DebounceOptions } from '@ur-apps/common';
+import { AnyFn, debounce, DebouncedFn, DebounceOptions } from '@urapps/common';
 
 import { useLatest } from '../use-latest.ts';
 

@@ -1,18 +1,18 @@
-# @ur-apps/common
+# @urapps/common
 
 This repository contains common libraries and configurations for the UR Apps project. It is structured as a monorepo managed by Lerna, with separate packages for frontend, backend, and shared configurations.
 
 ## Packages
 
-### @ur-apps/common
+### @urapps/common
 
 This package contains shared configurations and utilities used across both frontend and backend projects.
 
-### @ur-apps/common-fe
+### @urapps/common-fe
 
 This package contains common configurations and utilities for frontend projects.
 
-### @ur-apps/common-be
+### @urapps/common-be
 
 This package contains common configurations and utilities for backend projects.
 

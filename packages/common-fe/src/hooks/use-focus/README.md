@@ -15,7 +15,7 @@ A React hook that tracks whether an element has focus, with an option to count o
 
 ```tsx
 import React, { useRef } from 'react';
-import { useFocus } from '@ur-apps/common-fe';
+import { useFocus } from '@urapps/common-fe';
 
 function FocusableInput() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +29,7 @@ function FocusableInput() {
 
 ```tsx
 import React, { useRef } from 'react';
-import { useFocus } from '@ur-apps/common-fe';
+import { useFocus } from '@urapps/common-fe';
 
 function SaveButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -48,7 +48,7 @@ function SaveButton() {
 
 ```tsx
 import React, { useRef } from 'react';
-import { useFocus, useHover } from '@ur-apps/common-fe';
+import { useFocus, useHover } from '@urapps/common-fe';
 
 function InfoButton() {
   const triggerRef = useRef<HTMLButtonElement>(null);

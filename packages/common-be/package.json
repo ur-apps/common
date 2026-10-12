@@ -1,6 +1,6 @@
 {
-  "name": "@ur-apps/common-be",
-  "version": "0.1.0",
+  "name": "@urapps/common-be",
+  "version": "1.0.0-rc.0",
   "description": "ur apps backend common library",
   "type": "module",
   "main": "lib/index.js",
@@ -51,7 +51,7 @@
     "@nestjs/core": "12.x",
     "@nestjs/microservices": "12.x",
     "@nestjs/swagger": "12.x",
-    "@ur-apps/common": "*",
+    "@urapps/common": "^1.0.0-rc.0",
     "class-transformer": "0.x",
     "class-validator": "0.x",
     "eslint": "10.x",

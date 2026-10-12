@@ -1,5 +1,5 @@
 import jseslint from '@eslint/js';
-import { baseConfigs } from '@ur-apps/common/eslint';
+import { baseConfigs } from '@urapps/common/eslint';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';

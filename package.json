@@ -1,5 +1,5 @@
 {
-  "name": "@ur-apps/common",
+  "name": "@urapps/common-monorepo",
   "private": true,
   "scripts": {
     "build": "lerna run build",

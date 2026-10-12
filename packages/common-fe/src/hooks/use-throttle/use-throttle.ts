@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { AnyFn, throttle, ThrottledFn, ThrottleOptions } from '@ur-apps/common';
+import { AnyFn, throttle, ThrottledFn, ThrottleOptions } from '@urapps/common';
 
 import { useLatest } from '../use-latest.ts';
 

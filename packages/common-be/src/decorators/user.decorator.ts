@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { pick } from '@ur-apps/common';
+import { pick } from '@urapps/common';
 
 /**
  * Extracts user or user properties from the request context

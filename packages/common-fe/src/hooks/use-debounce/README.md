@@ -1,10 +1,10 @@
 # useDebounce Hook
 
-A React hook that creates a debounced version of a callback function using the `debounce` utility from the `@ur-apps/common` package.
+A React hook that creates a debounced version of a callback function using the `debounce` utility from the `@urapps/common` package.
 
 ## Features
 
-- 🚀 Uses the robust `debounce` function from `@ur-apps/common`
+- 🚀 Uses the robust `debounce` function from `@urapps/common`
 - 🔄 Automatically uses the latest callback without recreating the debounced function
 - 🧹 Automatically cancels pending calls on unmount
 - 📝 Full TypeScript support
@@ -16,7 +16,7 @@ A React hook that creates a debounced version of a callback function using the `
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useDebounce } from '@ur-apps/common-fe';
+import { useDebounce } from '@urapps/common-fe';
 
 function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,7 +49,7 @@ function SearchComponent() {
 
 ```tsx
 import React, { useState } from 'react';
-import { useDebounce } from '@ur-apps/common-fe';
+import { useDebounce } from '@urapps/common-fe';
 
 function AdvancedComponent() {
   const [value, setValue] = useState('');
@@ -148,4 +148,4 @@ The hook internally uses:
 - `useMemo` to create a stable debounced function
 - `useLatest` to ensure the callback always uses the most recent version
 - `useEffect` cleanup to cancel pending calls on unmount
-- The `debounce` function from `@ur-apps/common` for the core debouncing logic
+- The `debounce` function from `@urapps/common` for the core debouncing logic

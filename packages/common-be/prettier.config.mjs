@@ -1,4 +1,4 @@
-import baseConfig from '@ur-apps/common/prettier';
+import baseConfig from '@urapps/common/prettier';
 
 /**
  * @see https://prettier.io/docs/en/configuration.html

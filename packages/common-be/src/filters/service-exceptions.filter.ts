@@ -1,6 +1,6 @@
 import { Catch, HttpStatus, Logger } from '@nestjs/common';
 import { BaseRpcExceptionFilter, RpcException } from '@nestjs/microservices';
-import { getErrorMessage } from '@ur-apps/common';
+import { getErrorMessage } from '@urapps/common';
 import { Observable, throwError } from 'rxjs';
 
 import { HttpMessage } from 'constants/';

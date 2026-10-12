@@ -17,7 +17,7 @@ A React hook for managing boolean flag state with a built-in toggle function. Pr
 
 ```tsx
 import React from 'react';
-import { useFlag } from '@ur-apps/common-fe';
+import { useFlag } from '@urapps/common-fe';
 
 function BasicExample() {
   const [isOpen, setIsOpen, toggleIsOpen] = useFlag(); // default value is false
@@ -37,7 +37,7 @@ function BasicExample() {
 
 ```tsx
 import React from 'react';
-import { useFlag } from '@ur-apps/common-fe';
+import { useFlag } from '@urapps/common-fe';
 
 function ModalExample() {
   const [isOpen, setIsOpen, toggle] = useFlag(false);
@@ -65,7 +65,7 @@ function ModalExample() {
 
 ```tsx
 import React, { useEffect } from 'react';
-import { useFlag } from '@ur-apps/common-fe';
+import { useFlag } from '@urapps/common-fe';
 
 function LoadingExample() {
   const [isLoading, setIsLoading] = useFlag(false);
@@ -99,7 +99,7 @@ function LoadingExample() {
 
 ```tsx
 import React from 'react';
-import { useFlag } from '@ur-apps/common-fe';
+import { useFlag } from '@urapps/common-fe';
 
 function LazyInitExample() {
   // Initialize from localStorage with lazy initialization

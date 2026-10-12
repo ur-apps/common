@@ -1,13 +1,13 @@
 {
   /* Visit https://aka.ms/tsconfig to read more about this file */
   /*
-   * Shared base for React projects, published as `@ur-apps/common-fe/tsconfig`.
+   * Shared base for React projects, published as `@urapps/common-fe/tsconfig`.
    * It sets the language level, DOM libs and JSX, and emits nothing. A consuming project adds on its own side:
    * - `types`: global type packages it relies on (e.g. `["vite/client"]`, `["node"]`); TypeScript 6 defaults to none;
    * - `declaration`, `outDir` and `noEmit: false`, if it emits;
    * - `paths`, if it uses path aliases.
    */
-  "extends": "@ur-apps/common/tsconfig",
+  "extends": "@urapps/common/tsconfig",
   "compilerOptions": {
     // Language and Environment
     "lib": ["ES2022", "DOM", "DOM.Iterable"],

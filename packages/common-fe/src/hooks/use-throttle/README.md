@@ -1,10 +1,10 @@
 # useThrottle Hook
 
-A React hook that creates a throttled version of a callback function using the `throttle` utility from the `@ur-apps/common` package.
+A React hook that creates a throttled version of a callback function using the `throttle` utility from the `@urapps/common` package.
 
 ## Features
 
-- 🚀 Uses the robust `throttle` function from `@ur-apps/common`
+- 🚀 Uses the robust `throttle` function from `@urapps/common`
 - 🔄 Automatically uses the latest callback without recreating the throttled function
 - 🧹 Automatically cancels pending calls on unmount
 - 📝 Full TypeScript support
@@ -16,7 +16,7 @@ A React hook that creates a throttled version of a callback function using the `
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useThrottle } from '@ur-apps/common-fe';
+import { useThrottle } from '@urapps/common-fe';
 
 function ScrollComponent() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -46,7 +46,7 @@ function ScrollComponent() {
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useThrottle } from '@ur-apps/common-fe';
+import { useThrottle } from '@urapps/common-fe';
 
 function ResponsiveComponent() {
   const [windowSize, setWindowSize] = useState({
@@ -78,7 +78,7 @@ function ResponsiveComponent() {
 
 ```tsx
 import React, { useEffect, useState } from 'react';
-import { useThrottle } from '@ur-apps/common-fe';
+import { useThrottle } from '@urapps/common-fe';
 
 function MouseTrackerComponent() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -120,7 +120,7 @@ function MouseTrackerComponent() {
 
 ```tsx
 import React, { useState } from 'react';
-import { useThrottle } from '@ur-apps/common-fe';
+import { useThrottle } from '@urapps/common-fe';
 
 function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -217,7 +217,7 @@ The hook internally uses:
 - `useMemo` to create a stable throttled function
 - `useLatest` to ensure the callback always uses the most recent version
 - `useEffect` cleanup to cancel pending calls on unmount
-- The `throttle` function from `@ur-apps/common` for the core throttling logic
+- The `throttle` function from `@urapps/common` for the core throttling logic
 
 ## Performance Considerations
 
