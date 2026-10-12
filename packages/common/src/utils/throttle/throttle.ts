@@ -1,8 +1,7 @@
-import { AnyFn } from 'types';
+import { AnyFn } from '../../types/index.ts';
+import { debounce } from '../debounce/index.ts';
 
-import { debounce } from '../debounce';
-
-import { ThrottledFn, ThrottleOptions } from './types';
+import { ThrottledFn, ThrottleOptions } from './types.ts';
 
 /**
  * Creates a throttled function that only invokes func at most once per every wait milliseconds.

@@ -1,0 +1,38 @@
+name: Feature request
+description: A new utility, hook, building block or config option
+labels:
+  - enhancement
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - '@urapps/common'
+        - '@urapps/react'
+        - '@urapps/nest'
+        - '@urapps/eslint-config'
+        - '@urapps/prettier-config'
+        - '@urapps/tsconfig'
+        - New package
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you are trying to do and what gets in the way.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: The API or behaviour you have in mind, with a usage example if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Workarounds or other options you considered.

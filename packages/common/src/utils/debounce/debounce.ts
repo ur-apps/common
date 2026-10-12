@@ -1,8 +1,7 @@
-import { AnyFn } from 'types';
+import { AnyFn } from '../../types/index.ts';
+import { isNullish } from '../get-type/index.ts';
 
-import { isNullish } from '../get-type';
-
-import { DebouncedFn, DebounceOptions } from './types';
+import { DebouncedFn, DebounceOptions } from './types.ts';
 
 /**
  * Creates a debounced version of the provided function.
@@ -20,7 +19,7 @@ export function debounce<F extends AnyFn>(fn: F, wait: number, options: Debounce
   let lastArgs: Parameters<F> | null = null;
   let lastResult: ReturnType<F>;
 
-  let timeoutId: NodeJS.Timeout | undefined;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
   let lastCallTime: number | null = null;
   let lastInvokeTime: number | null = null;
 

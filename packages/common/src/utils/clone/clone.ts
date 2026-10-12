@@ -1,4 +1,4 @@
-import { isArray, isDate, isObject } from '../get-type';
+import { isArray, isDate, isObject } from '../get-type/index.ts';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function cloneObject<T extends Record<string, any>>(obj: T, clonedMap = new WeakMap<object, any>()): T {

@@ -1,27 +1,31 @@
-### 🤔 What kind of change does this PR introduce?
+## What and why
+
+<!-- What this pull request changes and why. Link the issue it resolves: Closes #… -->
+
+## Packages
+
+- [ ] `@urapps/common`
+- [ ] `@urapps/react`
+- [ ] `@urapps/nest`
+- [ ] `@urapps/eslint-config`
+- [ ] `@urapps/prettier-config`
+- [ ] `@urapps/tsconfig`
+- [ ] Repository: CI, tooling, docs
+
+## Type of change
+
 - [ ] Feature
-- [ ] Bugfix
-- [ ] Refactors
-- [ ] Optimization
+- [ ] Bug fix
+- [ ] Refactoring
+- [ ] Build, CI or tooling
 - [ ] Documentation
-- [ ] Other
 
-### 📝 Description
-<!-- Provide a detailed summary of your PR. -->
+## Breaking changes
 
-### 🔗 Related issue link
-- closes #TASK_NUMBER
+<!-- What consumers have to change after upgrading, or "None". -->
 
-### 📋 Changelog
-<!-- Describe changes from the user side, and list all potential break changes or other risks. --->
+## Checklist
 
-### ✅ Checklist
-- Tested on
-  - [ ] **Chrome**
-  - [ ] **Firefox**
-  - [ ] **Safari**
-  - [ ] **Mobile**
-- [ ] Added appropriate **tests**
-- [ ] Added necessary comments
-- [ ] Removed dead code
-- [ ] Performed a self-review of my own code
+- [ ] Tests cover the change
+- [ ] Package READMEs are updated if the public API changed
+- [ ] `npm run build && npm run typecheck && npm run lint && npm run format && npm test` passes

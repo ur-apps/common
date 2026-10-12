@@ -1,0 +1,44 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  /*
+   * Shared base for TypeScript projects, published as `@urapps/tsconfig` (`@urapps/tsconfig/base`).
+   * It sets the language level and type checking rules, and emits nothing. A consuming project adds on its own side:
+   * - `lib` beyond ES2022 (e.g. `DOM`) and `types`: global type packages it relies on; TypeScript 6 defaults to none;
+   * - `declaration`, `outDir` and `noEmit: false`, if it emits;
+   * - `paths`, if it uses path aliases.
+   */
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "moduleDetection": "auto",
+    "useDefineForClassFields": true,
+
+    // JavaScript Support
+    "allowJs": true,
+
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "noUncheckedSideEffectImports": true,
+
+    // Emit
+    "noEmit": true,
+
+    // Type Checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    // Completeness
+    "skipLibCheck": true
+  }
+}

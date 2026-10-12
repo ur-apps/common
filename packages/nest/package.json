@@ -1,0 +1,63 @@
+{
+  "name": "@urapps/nest",
+  "version": "1.0.0-rc.0",
+  "description": "UR Apps NestJS utilities",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "nest build",
+    "build:dev": "nest build --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:debug": "vitest --inspect-brk --no-file-parallelism",
+    "typecheck": "tsc -b --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "files": [
+    "lib"
+  ],
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "prettier": "@urapps/prettier-config/nest",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "ISC",
+  "author": "Garry Freeman <garryfreeman09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ur-apps/common.git",
+    "directory": "packages/nest"
+  },
+  "homepage": "https://github.com/ur-apps/common/tree/master/packages/nest#readme",
+  "bugs": {
+    "url": "https://github.com/ur-apps/common/issues"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "12.x",
+    "@nestjs/core": "12.x",
+    "@nestjs/microservices": "12.x",
+    "@nestjs/swagger": "12.x",
+    "@urapps/common": "^1.0.0-rc.0",
+    "class-transformer": "0.x",
+    "class-validator": "0.x",
+    "reflect-metadata": "0.x",
+    "rxjs": "7.x"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "12.x",
+    "@nestjs/schematics": "12.x",
+    "@nestjs/testing": "12.x",
+    "@types/express": "5.x",
+    "@urapps/eslint-config": "^1.0.0-rc.0",
+    "@urapps/prettier-config": "^1.0.0-rc.0",
+    "@urapps/tsconfig": "^1.0.0-rc.0"
+  }
+}

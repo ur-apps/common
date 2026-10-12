@@ -1,2 +1,2 @@
-export * from './throttle';
-export * from './types';
+export * from './throttle.ts';
+export * from './types.ts';

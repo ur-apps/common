@@ -1,33 +1,30 @@
 {
-  "name": "@ur-apps/common",
-  "version": "0.1.1",
-  "description": "",
+  "name": "@urapps/common",
+  "version": "1.0.0-rc.0",
+  "description": "UR Apps platform-agnostic utilities",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": false,
   "scripts": {
-    "build": "rollup -c",
+    "build": "vite build",
     "build:pack": "npm run build && npm pack",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -b",
     "lint": "eslint .",
-    "lint:fix": "eslint ./src --fix",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
   "files": [
-    "lib",
-    "eslint.config.mjs",
-    "prettier.config.mjs",
-    "tsconfig.json"
+    "lib"
   ],
   "exports": {
-    ".": "./lib/index.js",
-    "./eslint": "./eslint.config.mjs",
-    "./prettier": "./prettier.config.mjs",
-    "./tsconfig": "./tsconfig.json"
+    ".": "./lib/index.js"
   },
+  "prettier": "@urapps/prettier-config",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -36,43 +33,16 @@
   "author": "Garry Freeman <garryfreeman09@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ur-apps/common.git"
+    "url": "git+https://github.com/ur-apps/common.git",
+    "directory": "packages/common"
   },
-  "homepage": "https://github.com/ur-apps/common#readme",
+  "homepage": "https://github.com/ur-apps/common/tree/master/packages/common#readme",
   "bugs": {
     "url": "https://github.com/ur-apps/common/issues"
   },
-  "peerDependencies": {
-    "@eslint/js": "9.x",
-    "@ianvs/prettier-plugin-sort-imports": "4.x",
-    "typescript-eslint": "8.x"
-  },
-  "peerDependenciesMeta": {
-    "@eslint/js": {
-      "optional": true
-    },
-    "@ianvs/prettier-plugin-sort-imports": {
-      "optional": true
-    },
-    "typescript-eslint": {
-      "optional": true
-    }
-  },
   "devDependencies": {
-    "@rollup/plugin-alias": "6.x",
-    "@rollup/plugin-commonjs": "29.x",
-    "@rollup/plugin-node-resolve": "16.x",
-    "@rollup/plugin-typescript": "12.x",
-    "@types/jest": "30.x",
-    "eslint": "9.x",
-    "jest": "30.x",
-    "prettier": "3.x",
-    "rollup": "4.x",
-    "rollup-plugin-analyzer": "4.x",
-    "rollup-plugin-delete": "3.x",
-    "rollup-plugin-peer-deps-external": "2.x",
-    "rollup-plugin-tsc-alias": "1.x",
-    "ts-jest": "29.x",
-    "typescript": "5.x"
+    "@urapps/eslint-config": "^1.0.0-rc.0",
+    "@urapps/prettier-config": "^1.0.0-rc.0",
+    "@urapps/tsconfig": "^1.0.0-rc.0"
   }
 }

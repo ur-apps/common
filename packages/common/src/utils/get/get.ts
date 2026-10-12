@@ -1,4 +1,4 @@
-import { isNullish, isObject } from '../get-type';
+import { isNullish, isObject } from '../get-type/index.ts';
 
 /**
  * Safely gets a nested property value from an object using a path.

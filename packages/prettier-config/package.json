@@ -1,0 +1,46 @@
+{
+  "name": "@urapps/prettier-config",
+  "version": "1.0.0-rc.0",
+  "description": "UR Apps shared Prettier configs",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "files": [
+    "base.mjs",
+    "react.mjs",
+    "nest.mjs"
+  ],
+  "exports": {
+    ".": "./base.mjs",
+    "./base": "./base.mjs",
+    "./react": "./react.mjs",
+    "./nest": "./nest.mjs"
+  },
+  "prettier": "./base.mjs",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "ISC",
+  "author": "Garry Freeman <garryfreeman09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ur-apps/common.git",
+    "directory": "packages/prettier-config"
+  },
+  "homepage": "https://github.com/ur-apps/common/tree/master/packages/prettier-config#readme",
+  "bugs": {
+    "url": "https://github.com/ur-apps/common/issues"
+  },
+  "peerDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.x",
+    "prettier": "3.x"
+  },
+  "devDependencies": {
+    "@urapps/eslint-config": "^1.0.0-rc.0"
+  }
+}
