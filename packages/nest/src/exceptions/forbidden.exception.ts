@@ -5,7 +5,7 @@ import { HttpMessage } from 'constants/';
 import { ServiceException } from 'interfaces';
 
 export class RpcForbiddenException extends RpcException {
-  constructor(message = HttpMessage.FORBIDDEN) {
+  constructor(message: string = HttpMessage.FORBIDDEN) {
     super({
       status: HttpStatus.FORBIDDEN,
       message,

@@ -5,7 +5,7 @@ import { HttpMessage } from 'constants/';
 import { ServiceException } from 'interfaces';
 
 export class RpcNotFoundException extends RpcException {
-  constructor(message = HttpMessage.NOT_FOUND) {
+  constructor(message: string = HttpMessage.NOT_FOUND) {
     super({
       status: HttpStatus.NOT_FOUND,
       message,

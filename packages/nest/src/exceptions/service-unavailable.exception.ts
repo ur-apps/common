@@ -5,7 +5,7 @@ import { HttpMessage } from 'constants/';
 import { Errors, ServiceException } from 'interfaces';
 
 export class RpcServiceUnavailableException extends RpcException {
-  constructor(message = HttpMessage.SERVICE_UNAVAILABLE, errors?: Errors) {
+  constructor(message: string = HttpMessage.SERVICE_UNAVAILABLE, errors?: Errors) {
     super({
       status: HttpStatus.SERVICE_UNAVAILABLE,
       message,
