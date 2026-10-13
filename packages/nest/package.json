@@ -24,7 +24,6 @@
   "exports": {
     ".": "./lib/index.js"
   },
-  "prettier": "@urapps/prettier-config/nest",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"

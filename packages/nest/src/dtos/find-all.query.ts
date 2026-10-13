@@ -1,17 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
 export class FindAllQuery {
   @ApiProperty({ default: 100, required: false })
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Min(1)
+  @Max(10000)
   @Type(() => Number)
-  limit?: number;
+  limit = 100;
 
   @ApiProperty({ default: 0, required: false })
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Min(0)
   @Type(() => Number)
-  offset?: number;
+  offset = 0;
 }

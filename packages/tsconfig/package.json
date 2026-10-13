@@ -8,16 +8,15 @@
   },
   "files": [
     "tsconfig.base.json",
-    "tsconfig.react.json",
-    "tsconfig.nest.json"
+    "tsconfig.nest.json",
+    "tsconfig.react.json"
   ],
   "exports": {
     ".": "./tsconfig.base.json",
     "./base": "./tsconfig.base.json",
-    "./react": "./tsconfig.react.json",
-    "./nest": "./tsconfig.nest.json"
+    "./nest": "./tsconfig.nest.json",
+    "./react": "./tsconfig.react.json"
   },
-  "prettier": "@urapps/prettier-config",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
