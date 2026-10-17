@@ -5,6 +5,7 @@ import { Response } from 'express';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { isTransformSkipped } from 'decorators';
 import { SuccessResponseDTO } from 'dtos';
 
 /**
@@ -22,7 +23,7 @@ export interface TransformInterceptorOptions {
 
 /**
  * Transforms successful responses to standard format with { success: true, data: ... }
- * `StreamableFile` results and `@Sse()` streams are passed through as they are.
+ * `StreamableFile` results, `@Sse()` streams and routes marked with `@SkipTransform()` are passed through as they are.
  *
  * @example
  * // Global registration
@@ -45,7 +46,7 @@ export class TransformInterceptor implements NestInterceptor {
   constructor(@Optional() private options: TransformInterceptorOptions = {}) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<SuccessResponseDTO | unknown> {
-    if (this.reflector.get(SSE_METADATA, context.getHandler())) {
+    if (this.reflector.get(SSE_METADATA, context.getHandler()) || isTransformSkipped(this.reflector, context)) {
       return next.handle();
     }
 

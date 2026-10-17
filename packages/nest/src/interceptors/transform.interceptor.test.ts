@@ -7,6 +7,7 @@ import { Test } from '@nestjs/testing';
 import { defer, isObservable, lastValueFrom, of, toArray } from 'rxjs';
 import { describe, expect, it } from 'vitest';
 
+import { SkipTransform } from 'decorators';
 import { SuccessResponseDTO } from 'dtos';
 
 import { TransformInterceptor } from './transform.interceptor.ts';
@@ -56,6 +57,17 @@ class FilesController {
 
     return pdf;
   }
+
+  @Get('accel-redirect')
+  @SkipTransform()
+  accelRedirect() {}
+}
+
+@Controller('raw')
+@SkipTransform()
+class RawController {
+  @Get('empty')
+  empty() {}
 }
 
 @Controller('class-registered')
@@ -213,6 +225,36 @@ describe('Testing interceptor: TransformInterceptor', () => {
       const result = await lastValueFrom(intercept(interceptor, FilesController, 'pdf', { type: 'rpc' }));
 
       expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+    });
+  });
+
+  describe.each([
+    ['by instance', () => new TransformInterceptor()],
+    [
+      'by class',
+      async () => {
+        const moduleRef = await Test.createTestingModule({ controllers: [ClassRegisteredController] }).compile();
+
+        return moduleRef.get(TransformInterceptor);
+      },
+    ],
+  ])('@SkipTransform() with the interceptor registered %s', (_, createInterceptor) => {
+    it('passes an undefined result of a marked method through', async () => {
+      const result = await lastValueFrom(intercept(await createInterceptor(), FilesController, 'accelRedirect'));
+
+      expect(result).toBeUndefined();
+    });
+
+    it('passes an undefined result of a method on a marked controller through', async () => {
+      const result = await lastValueFrom(intercept(await createInterceptor(), RawController, 'empty'));
+
+      expect(result).toBeUndefined();
+    });
+
+    it('still turns an undefined result of an unmarked method into { success: true }', async () => {
+      const result = await lastValueFrom(intercept(await createInterceptor(), FilesController, 'empty'));
+
+      expect(JSON.stringify(result)).toBe('{"success":true}');
     });
   });
 });

@@ -39,18 +39,18 @@ HTTP responses then take one shape: `{ success: true, data }` on success and `{ 
 
 ## API
 
-| Group        | Exports                                                                                                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pipes        | `AppValidationPipe` (HTTP), `ServiceValidationPipe` (microservices) — validation with field-level `errors`                                                                      |
-| Filters      | `AppExceptionFilter` (HTTP), `ServiceExceptionFilter` (microservices)                                                                                                           |
-| Interceptors | `TransformInterceptor` — wraps successful responses in `SuccessResponseDTO`; `TransformInterceptorOptions`                                                                      |
-| Guards       | `RolesGuard` — works with `@Roles()` and `@Public()`                                                                                                                            |
-| Decorators   | `@Public()`, `@Roles()`, `@User()`, `ApiResponse.*` (Swagger response schemas); helpers `isPublic`, `getRoles`, `hasRequiredRoles`; keys `IS_PUBLIC_KEY`, `ROLES_KEY`           |
-| DTOs         | `SuccessResponseDTO`, `FailedResponseDTO`, `PaginatedDTO`, `FindAllQuery`                                                                                                       |
-| Exceptions   | `BadRequestException`, `ConflictException`; `RpcBadRequestException`, `RpcConflictException`, `RpcForbiddenException`, `RpcNotFoundException`, `RpcServiceUnavailableException` |
-| Helpers      | `mapClassValidatorErrors`                                                                                                                                                       |
-| Constants    | `HttpMessage`                                                                                                                                                                   |
-| Interfaces   | `Errors`, `ServiceException`                                                                                                                                                    |
+| Group        | Exports                                                                                                                                                                                                                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pipes        | `AppValidationPipe` (HTTP), `ServiceValidationPipe` (microservices) — validation with field-level `errors`                                                                                                                            |
+| Filters      | `AppExceptionFilter` (HTTP), `ServiceExceptionFilter` (microservices)                                                                                                                                                                 |
+| Interceptors | `TransformInterceptor` — wraps successful responses in `SuccessResponseDTO`; `TransformInterceptorOptions`                                                                                                                            |
+| Guards       | `RolesGuard` — works with `@Roles()` and `@Public()`                                                                                                                                                                                  |
+| Decorators   | `@Public()`, `@Roles()`, `@SkipTransform()`, `@User()`, `ApiResponse.*` (Swagger response schemas); helpers `isPublic`, `getRoles`, `hasRequiredRoles`, `isTransformSkipped`; keys `IS_PUBLIC_KEY`, `ROLES_KEY`, `SKIP_TRANSFORM_KEY` |
+| DTOs         | `SuccessResponseDTO`, `FailedResponseDTO`, `PaginatedDTO`, `FindAllQuery`                                                                                                                                                             |
+| Exceptions   | `BadRequestException`, `ConflictException`; `RpcBadRequestException`, `RpcConflictException`, `RpcForbiddenException`, `RpcNotFoundException`, `RpcServiceUnavailableException`                                                       |
+| Helpers      | `mapClassValidatorErrors`                                                                                                                                                                                                             |
+| Constants    | `HttpMessage`                                                                                                                                                                                                                         |
+| Interfaces   | `Errors`, `ServiceException`                                                                                                                                                                                                          |
 
 ## Related packages
 
