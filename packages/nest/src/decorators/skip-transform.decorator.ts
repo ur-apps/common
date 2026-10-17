@@ -5,7 +5,7 @@ import { Reflector } from '@nestjs/core';
  * Metadata key for routes excluded from TransformInterceptor.
  * Used to mark routes whose handler result is sent as it is, without the SuccessResponseDTO wrapper.
  */
-export const SKIP_TRANSFORM_KEY = Symbol.for('@urapps/nest:skip-transform');
+export const SKIP_TRANSFORM_KEY = '@urapps/nest:skip-transform';
 
 /**
  * Decorator to mark a controller or route as excluded from TransformInterceptor.

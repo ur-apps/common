@@ -22,7 +22,7 @@ class MixedController {
   privateRoute() {}
 
   @Get('foreign')
-  @SetMetadata(Symbol('isPublic'), true)
+  @SetMetadata('@urapps/nest:public', true)
   foreignPublicRoute() {}
 }
 
@@ -44,7 +44,7 @@ describe('Testing decorator: @Public()', () => {
     expect(isPublic(reflector, createContext(MixedController, 'privateRoute'))).toBe(false);
   });
 
-  it('does not see @Public() from another copy of the package', () => {
-    expect(isPublic(reflector, createContext(MixedController, 'foreignPublicRoute'))).toBe(false);
+  it('sees @Public() from another copy of the package', () => {
+    expect(isPublic(reflector, createContext(MixedController, 'foreignPublicRoute'))).toBe(true);
   });
 });

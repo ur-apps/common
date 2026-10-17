@@ -26,7 +26,7 @@ class OpenController {
   moderation() {}
 
   @Get('foreign')
-  @SetMetadata(Symbol('roles'), ['admin'])
+  @SetMetadata('@urapps/nest:roles', ['admin'])
   foreignRestrictedRoute() {}
 }
 
@@ -53,8 +53,8 @@ describe('Testing decorator: @Roles()', () => {
       expect(getRoles(reflector, createContext(OpenController, 'find'))).toEqual([]);
     });
 
-    it('does not see @Roles() from another copy of the package', () => {
-      expect(getRoles(reflector, createContext(OpenController, 'foreignRestrictedRoute'))).toEqual([]);
+    it('sees @Roles() from another copy of the package', () => {
+      expect(getRoles(reflector, createContext(OpenController, 'foreignRestrictedRoute'))).toEqual(['admin']);
     });
   });
 

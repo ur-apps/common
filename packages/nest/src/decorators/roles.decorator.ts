@@ -5,7 +5,7 @@ import { Reflector } from '@nestjs/core';
  * Metadata key for role-based access control.
  * Used to mark routes that should be accessible only to users with specific roles.
  */
-export const ROLES_KEY = Symbol('roles');
+export const ROLES_KEY = '@urapps/nest:roles';
 
 /**
  * Decorator to mark a controller or route as requiring specific user roles.

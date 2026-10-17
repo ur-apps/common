@@ -5,7 +5,7 @@ import { Reflector } from '@nestjs/core';
  * Metadata key for public endpoints.
  * Used to mark routes that should be accessible without authentication.
  */
-export const IS_PUBLIC_KEY = Symbol('isPublic');
+export const IS_PUBLIC_KEY = '@urapps/nest:public';
 
 /**
  * Decorator to mark a controller or route as public.
