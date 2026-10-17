@@ -1,4 +1,4 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor, Optional } from '@nestjs/common';
 import { Response } from 'express';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export interface TransformInterceptorOptions {
  */
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
-  constructor(private options: TransformInterceptorOptions = {}) {}
+  constructor(@Optional() private options: TransformInterceptorOptions = {}) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<SuccessResponseDTO | unknown> {
     // Skip transformation for binary responses or other specified content types

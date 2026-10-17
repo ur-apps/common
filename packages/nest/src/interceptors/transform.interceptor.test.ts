@@ -98,18 +98,21 @@ function intercept<T>(
 
 describe('Testing interceptor: TransformInterceptor', () => {
   describe('registration', () => {
-    it('fails to compile a module that registers it by class with @UseInterceptors()', async () => {
-      const compiling = Test.createTestingModule({ controllers: [ClassRegisteredController] }).compile();
+    it('is instantiated with default options when registered by class with @UseInterceptors()', async () => {
+      const moduleRef = await Test.createTestingModule({ controllers: [ClassRegisteredController] }).compile();
+      const interceptor = moduleRef.get(TransformInterceptor);
 
-      await expect(compiling).rejects.toThrow(/can't resolve dependencies of the TransformInterceptor/);
+      const result = await lastValueFrom(intercept(interceptor, FilesController, 'data'));
+
+      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
     });
 
-    it('fails to compile a module that registers it by class as APP_INTERCEPTOR', async () => {
+    it('compiles a module that registers it by class as APP_INTERCEPTOR', async () => {
       const compiling = Test.createTestingModule({
         providers: [{ provide: APP_INTERCEPTOR, useClass: TransformInterceptor }],
       }).compile();
 
-      await expect(compiling).rejects.toThrow(/can't resolve dependencies of the TransformInterceptor/);
+      await expect(compiling).resolves.toBeDefined();
     });
   });
 
