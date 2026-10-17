@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable, Logger } from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, Logger, Optional } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { HttpMessage } from 'constants/';
@@ -27,7 +27,7 @@ import { getRoles, hasRequiredRoles, isPublic } from 'decorators';
 export class RolesGuard implements CanActivate {
   private readonly logger = new Logger(RolesGuard.name);
 
-  constructor(private reflector: Reflector) {}
+  constructor(@Optional() private reflector: Reflector = new Reflector()) {}
 
   canActivate(context: ExecutionContext): boolean {
     // Check if route is marked as public

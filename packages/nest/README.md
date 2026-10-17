@@ -15,7 +15,7 @@ Peer dependencies: `@nestjs/common`, `@nestjs/core`, `@nestjs/microservices`, `@
 HTTP application:
 
 ```ts
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppExceptionFilter, AppValidationPipe, RolesGuard, TransformInterceptor } from '@urapps/nest';
 
 const app = await NestFactory.create(AppModule);
@@ -23,7 +23,7 @@ const app = await NestFactory.create(AppModule);
 app.useGlobalPipes(new AppValidationPipe());
 app.useGlobalFilters(new AppExceptionFilter());
 app.useGlobalInterceptors(new TransformInterceptor());
-app.useGlobalGuards(new RolesGuard(app.get(Reflector)));
+app.useGlobalGuards(new RolesGuard());
 ```
 
 Microservice:
