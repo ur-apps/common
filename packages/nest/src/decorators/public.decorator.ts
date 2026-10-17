@@ -29,5 +29,7 @@ export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
  * @returns true if the route is public
  */
 export const isPublic = (reflector: Reflector, context: ExecutionContext): boolean => {
-  return reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [context.getHandler(), context.getClass()]);
+  return (
+    reflector.getAllAndOverride<boolean | undefined>(IS_PUBLIC_KEY, [context.getHandler(), context.getClass()]) ?? false
+  );
 };

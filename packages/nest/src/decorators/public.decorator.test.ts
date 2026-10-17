@@ -40,11 +40,11 @@ describe('Testing decorator: @Public()', () => {
     expect(isPublic(reflector, createContext(PublicController, 'find'))).toBe(true);
   });
 
-  it('returns undefined for an unmarked route', () => {
-    expect(isPublic(reflector, createContext(MixedController, 'privateRoute'))).toBeUndefined();
+  it('returns false for an unmarked route', () => {
+    expect(isPublic(reflector, createContext(MixedController, 'privateRoute'))).toBe(false);
   });
 
   it('does not see @Public() from another copy of the package', () => {
-    expect(isPublic(reflector, createContext(MixedController, 'foreignPublicRoute'))).toBeUndefined();
+    expect(isPublic(reflector, createContext(MixedController, 'foreignPublicRoute'))).toBe(false);
   });
 });
