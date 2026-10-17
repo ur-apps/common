@@ -12,7 +12,9 @@ import { SuccessResponseDTO } from 'dtos';
  */
 export interface TransformInterceptorOptions {
   /**
-   * Content types to skip transformation for
+   * Content types to skip transformation for.
+   * Matched against the media type of the response `Content-Type` once the handler has run,
+   * ignoring parameters such as `charset` and letter case.
    * @example ['application/octet-stream', 'application/pdf']
    */
   skipContentTypes?: string[];
@@ -47,24 +49,34 @@ export class TransformInterceptor implements NestInterceptor {
       return next.handle();
     }
 
-    // Skip transformation for binary responses or other specified content types
-    if (context.getType() === 'http') {
-      const response = context.switchToHttp().getResponse<Response>();
-      const contentType = response.getHeader('Content-Type');
-
-      if (contentType && this.options.skipContentTypes?.includes(contentType as string)) {
-        return next.handle();
-      }
-    }
-
     return next.handle().pipe(
       map((data) => {
-        if (data instanceof SuccessResponseDTO || data instanceof StreamableFile) {
+        if (
+          data instanceof SuccessResponseDTO ||
+          data instanceof StreamableFile ||
+          this.hasSkippedContentType(context)
+        ) {
           return data;
         }
 
         return new SuccessResponseDTO(data);
       })
     );
+  }
+
+  private hasSkippedContentType(context: ExecutionContext): boolean {
+    if (context.getType() !== 'http' || !this.options.skipContentTypes) {
+      return false;
+    }
+
+    const contentType = context.switchToHttp().getResponse<Response>().getHeader('Content-Type');
+
+    if (typeof contentType !== 'string') {
+      return false;
+    }
+
+    const mediaType = contentType.split(';')[0].trim().toLowerCase();
+
+    return this.options.skipContentTypes.some((type) => type.toLowerCase() === mediaType);
   }
 }

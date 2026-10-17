@@ -15,7 +15,7 @@ type Handler = (response: ServerResponse) => unknown;
 
 interface InterceptOptions {
   type?: ContextType;
-  contentType?: string;
+  contentType?: string | string[];
 }
 
 const pdf = Buffer.from('%PDF-1.7');
@@ -169,16 +169,48 @@ describe('Testing interceptor: TransformInterceptor', () => {
       expect(result).toBe(pdf);
     });
 
-    it('wraps data when Content-Type set before the handler carries parameters', async () => {
+    it('passes data through when Content-Type carries parameters', async () => {
       const result = await lastValueFrom(
         intercept(interceptor, FilesController, 'pdf', { contentType: 'application/pdf; charset=binary' })
+      );
+
+      expect(result).toBe(pdf);
+    });
+
+    it('passes data through when the handler sets Content-Type itself', async () => {
+      const result = await lastValueFrom(intercept(interceptor, FilesController, 'generatedPdf'));
+
+      expect(result).toBe(pdf);
+    });
+
+    it('matches media types regardless of letter case', async () => {
+      const mixedCaseInterceptor = new TransformInterceptor({ skipContentTypes: ['Application/Pdf'] });
+
+      const result = await lastValueFrom(
+        intercept(mixedCaseInterceptor, FilesController, 'pdf', { contentType: 'APPLICATION/PDF' })
+      );
+
+      expect(result).toBe(pdf);
+    });
+
+    it('wraps data when Content-Type is not a listed type', async () => {
+      const result = await lastValueFrom(
+        intercept(interceptor, FilesController, 'pdf', { contentType: 'application/json; charset=utf-8' })
       );
 
       expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
     });
 
-    it('wraps data when the handler sets Content-Type itself', async () => {
-      const result = await lastValueFrom(intercept(interceptor, FilesController, 'generatedPdf'));
+    it('wraps data when Content-Type is not a string', async () => {
+      const result = await lastValueFrom(
+        intercept(interceptor, FilesController, 'pdf', { contentType: ['application/pdf'] })
+      );
+
+      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+    });
+
+    it('wraps data outside the HTTP context', async () => {
+      const result = await lastValueFrom(intercept(interceptor, FilesController, 'pdf', { type: 'rpc' }));
 
       expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
     });
