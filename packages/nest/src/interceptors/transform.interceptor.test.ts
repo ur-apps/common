@@ -135,22 +135,18 @@ describe('Testing interceptor: TransformInterceptor', () => {
       expect(JSON.stringify(result)).toBe('{"success":true}');
     });
 
-    it('wraps a StreamableFile in SuccessResponseDTO', async () => {
+    it('passes a StreamableFile through unchanged', async () => {
       const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'file'));
 
-      expect(result).toBeInstanceOf(SuccessResponseDTO);
-      expect(result).toMatchObject({ success: true, data: expect.any(StreamableFile) });
+      expect(result).toBeInstanceOf(StreamableFile);
     });
 
-    it('wraps every SSE event in SuccessResponseDTO', async () => {
+    it('passes SSE events through unchanged', async () => {
       const result = await lastValueFrom(
         intercept(new TransformInterceptor(), FilesController, 'events').pipe(toArray())
       );
 
-      expect(result).toStrictEqual([
-        new SuccessResponseDTO({ data: 'ping' }),
-        new SuccessResponseDTO({ data: 'pong' }),
-      ]);
+      expect(result).toStrictEqual([{ data: 'ping' }, { data: 'pong' }]);
     });
 
     it('wraps handler data outside the HTTP context', async () => {
