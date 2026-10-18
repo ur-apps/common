@@ -1,0 +1,260 @@
+import { IncomingMessage, ServerResponse } from 'node:http';
+import { Socket } from 'node:net';
+import { CallHandler, ContextType, Controller, Get, Sse, StreamableFile, Type, UseInterceptors } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ExecutionContextHost } from '@nestjs/core/internal';
+import { Test } from '@nestjs/testing';
+import { defer, isObservable, lastValueFrom, of, toArray } from 'rxjs';
+import { describe, expect, it } from 'vitest';
+
+import { SkipTransform } from 'decorators';
+import { SuccessResponseDTO } from 'dtos';
+
+import { TransformInterceptor } from './transform.interceptor.ts';
+
+type Handler = (response: ServerResponse) => unknown;
+
+interface InterceptOptions {
+  type?: ContextType;
+  contentType?: string | string[];
+}
+
+const pdf = Buffer.from('%PDF-1.7');
+
+@Controller('files')
+class FilesController {
+  @Get('data')
+  data() {
+    return { id: 1 };
+  }
+
+  @Get('dto')
+  dto() {
+    return new SuccessResponseDTO({ id: 1 });
+  }
+
+  @Get('empty')
+  empty() {}
+
+  @Get('file')
+  file() {
+    return new StreamableFile(Buffer.from('data'));
+  }
+
+  @Sse('events')
+  events() {
+    return of({ data: 'ping' }, { data: 'pong' });
+  }
+
+  @Get('pdf')
+  pdf() {
+    return pdf;
+  }
+
+  @Get('generated-pdf')
+  generatedPdf(response: ServerResponse) {
+    response.setHeader('Content-Type', 'application/pdf');
+
+    return pdf;
+  }
+
+  @Get('accel-redirect')
+  @SkipTransform()
+  accelRedirect() {}
+}
+
+@Controller('raw')
+@SkipTransform()
+class RawController {
+  @Get('empty')
+  empty() {}
+}
+
+@Controller('class-registered')
+@UseInterceptors(TransformInterceptor)
+class ClassRegisteredController {}
+
+/**
+ * Runs a controller method through the interceptor. The method is invoked only when the observable
+ * returned by `next.handle()` is subscribed to.
+ */
+function intercept<T>(
+  interceptor: TransformInterceptor,
+  controller: Type<T>,
+  method: keyof T,
+  { type = 'http', contentType }: InterceptOptions = {}
+) {
+  const request = new IncomingMessage(new Socket());
+  const response = new ServerResponse(request);
+
+  if (contentType) {
+    response.setHeader('Content-Type', contentType);
+  }
+
+  const instance = new controller();
+  const handler = instance[method] as Handler;
+  const context = new ExecutionContextHost(type === 'http' ? [request, response] : [{}, {}], controller, handler);
+  context.setType(type);
+
+  const next: CallHandler = {
+    handle: () =>
+      defer(() => {
+        const result = handler.call(instance, response);
+
+        return isObservable(result) ? result : of(result);
+      }),
+  };
+
+  return interceptor.intercept(context, next);
+}
+
+describe('Testing interceptor: TransformInterceptor', () => {
+  describe('registration', () => {
+    it('is instantiated with default options when registered by class with @UseInterceptors()', async () => {
+      const moduleRef = await Test.createTestingModule({ controllers: [ClassRegisteredController] }).compile();
+      const interceptor = moduleRef.get(TransformInterceptor);
+
+      const result = await lastValueFrom(intercept(interceptor, FilesController, 'data'));
+
+      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+    });
+
+    it('compiles a module that registers it by class as APP_INTERCEPTOR', async () => {
+      const compiling = Test.createTestingModule({
+        providers: [{ provide: APP_INTERCEPTOR, useClass: TransformInterceptor }],
+      }).compile();
+
+      await expect(compiling).resolves.toBeDefined();
+    });
+  });
+
+  describe('response wrapping', () => {
+    it('wraps handler data in SuccessResponseDTO', async () => {
+      const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'data'));
+
+      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+    });
+
+    it('passes a SuccessResponseDTO through unchanged', async () => {
+      const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'dto'));
+
+      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+    });
+
+    it('turns an undefined result into { success: true }', async () => {
+      const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'empty'));
+
+      expect(JSON.stringify(result)).toBe('{"success":true}');
+    });
+
+    it('passes a StreamableFile through unchanged', async () => {
+      const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'file'));
+
+      expect(result).toBeInstanceOf(StreamableFile);
+    });
+
+    it('passes SSE events through unchanged', async () => {
+      const result = await lastValueFrom(
+        intercept(new TransformInterceptor(), FilesController, 'events').pipe(toArray())
+      );
+
+      expect(result).toStrictEqual([{ data: 'ping' }, { data: 'pong' }]);
+    });
+
+    it('wraps handler data outside the HTTP context', async () => {
+      const result = await lastValueFrom(
+        intercept(new TransformInterceptor(), FilesController, 'data', { type: 'rpc' })
+      );
+
+      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+    });
+  });
+
+  describe('skipContentTypes', () => {
+    const interceptor = new TransformInterceptor({ skipContentTypes: ['application/pdf'] });
+
+    it('passes data through when Content-Type set before the handler equals a listed type', async () => {
+      const result = await lastValueFrom(
+        intercept(interceptor, FilesController, 'pdf', { contentType: 'application/pdf' })
+      );
+
+      expect(result).toBe(pdf);
+    });
+
+    it('passes data through when Content-Type carries parameters', async () => {
+      const result = await lastValueFrom(
+        intercept(interceptor, FilesController, 'pdf', { contentType: 'application/pdf; charset=binary' })
+      );
+
+      expect(result).toBe(pdf);
+    });
+
+    it('passes data through when the handler sets Content-Type itself', async () => {
+      const result = await lastValueFrom(intercept(interceptor, FilesController, 'generatedPdf'));
+
+      expect(result).toBe(pdf);
+    });
+
+    it('matches media types regardless of letter case', async () => {
+      const mixedCaseInterceptor = new TransformInterceptor({ skipContentTypes: ['Application/Pdf'] });
+
+      const result = await lastValueFrom(
+        intercept(mixedCaseInterceptor, FilesController, 'pdf', { contentType: 'APPLICATION/PDF' })
+      );
+
+      expect(result).toBe(pdf);
+    });
+
+    it('wraps data when Content-Type is not a listed type', async () => {
+      const result = await lastValueFrom(
+        intercept(interceptor, FilesController, 'pdf', { contentType: 'application/json; charset=utf-8' })
+      );
+
+      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+    });
+
+    it('wraps data when Content-Type is not a string', async () => {
+      const result = await lastValueFrom(
+        intercept(interceptor, FilesController, 'pdf', { contentType: ['application/pdf'] })
+      );
+
+      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+    });
+
+    it('wraps data outside the HTTP context', async () => {
+      const result = await lastValueFrom(intercept(interceptor, FilesController, 'pdf', { type: 'rpc' }));
+
+      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+    });
+  });
+
+  describe.each([
+    ['by instance', () => new TransformInterceptor()],
+    [
+      'by class',
+      async () => {
+        const moduleRef = await Test.createTestingModule({ controllers: [ClassRegisteredController] }).compile();
+
+        return moduleRef.get(TransformInterceptor);
+      },
+    ],
+  ])('@SkipTransform() with the interceptor registered %s', (_, createInterceptor) => {
+    it('passes an undefined result of a marked method through', async () => {
+      const result = await lastValueFrom(intercept(await createInterceptor(), FilesController, 'accelRedirect'));
+
+      expect(result).toBeUndefined();
+    });
+
+    it('passes an undefined result of a method on a marked controller through', async () => {
+      const result = await lastValueFrom(intercept(await createInterceptor(), RawController, 'empty'));
+
+      expect(result).toBeUndefined();
+    });
+
+    it('still turns an undefined result of an unmarked method into { success: true }', async () => {
+      const result = await lastValueFrom(intercept(await createInterceptor(), FilesController, 'empty'));
+
+      expect(JSON.stringify(result)).toBe('{"success":true}');
+    });
+  });
+});
