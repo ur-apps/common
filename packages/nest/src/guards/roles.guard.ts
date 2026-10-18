@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 
 import { HttpMessage } from 'constants/';
 import { getRoles, hasRequiredRoles, isPublic } from 'decorators';
+import { RpcForbiddenException } from 'exceptions';
 
 /**
  * Guard for role-based access control to routes
@@ -48,7 +49,7 @@ export class RolesGuard implements CanActivate {
 
     // If no user, deny access
     if (!user) {
-      throw new ForbiddenException(HttpMessage.FORBIDDEN);
+      return this.deny(context);
     }
 
     // Get user roles (with fallback to empty array)
@@ -60,7 +61,7 @@ export class RolesGuard implements CanActivate {
         `User ${user.id} is not allowed to access [${context.getClass().name}] (${context.getHandler().name})`
       );
 
-      throw new ForbiddenException(HttpMessage.FORBIDDEN);
+      return this.deny(context);
     }
 
     return true;
@@ -76,6 +77,21 @@ export class RolesGuard implements CanActivate {
         return context.switchToWs().getClient().user;
       default:
         return null;
+    }
+  }
+
+  /**
+   * Denies access in the way the current context expects: throws `RpcForbiddenException` in `rpc`,
+   * returns `false` in `ws` and leaves the denial to Nest, throws `ForbiddenException` elsewhere.
+   */
+  private deny(context: ExecutionContext): false {
+    switch (context.getType()) {
+      case 'rpc':
+        throw new RpcForbiddenException();
+      case 'ws':
+        return false;
+      default:
+        throw new ForbiddenException(HttpMessage.FORBIDDEN);
     }
   }
 }

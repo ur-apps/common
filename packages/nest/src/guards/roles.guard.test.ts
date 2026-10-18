@@ -5,6 +5,7 @@ import { Test } from '@nestjs/testing';
 import { describe, expect, it } from 'vitest';
 
 import { Public, Roles } from 'decorators';
+import { RpcForbiddenException } from 'exceptions';
 
 import { RolesGuard } from './roles.guard.ts';
 
@@ -85,14 +86,14 @@ describe('Testing guard: RolesGuard', () => {
       expect(guard.canActivate(createContext('dashboard', { id: 1, roles: ['admin'] }, 'rpc'))).toBe(true);
     });
 
-    it('throws the HTTP ForbiddenException for a user without a required role', () => {
+    it('throws RpcForbiddenException for a user without a required role', () => {
       expect(() => guard.canActivate(createContext('dashboard', { id: 1, roles: ['user'] }, 'rpc'))).toThrow(
-        ForbiddenException
+        RpcForbiddenException
       );
     });
 
-    it('throws the HTTP ForbiddenException without a user', () => {
-      expect(() => guard.canActivate(createContext('dashboard', undefined, 'rpc'))).toThrow(ForbiddenException);
+    it('throws RpcForbiddenException without a user', () => {
+      expect(() => guard.canActivate(createContext('dashboard', undefined, 'rpc'))).toThrow(RpcForbiddenException);
     });
   });
 
@@ -103,14 +104,12 @@ describe('Testing guard: RolesGuard', () => {
       expect(guard.canActivate(createContext('dashboard', { id: 1, roles: ['admin'] }, 'ws'))).toBe(true);
     });
 
-    it('throws the HTTP ForbiddenException for a user without a required role', () => {
-      expect(() => guard.canActivate(createContext('dashboard', { id: 1, roles: ['user'] }, 'ws'))).toThrow(
-        ForbiddenException
-      );
+    it('returns false for a user without a required role', () => {
+      expect(guard.canActivate(createContext('dashboard', { id: 1, roles: ['user'] }, 'ws'))).toBe(false);
     });
 
-    it('throws the HTTP ForbiddenException without a user', () => {
-      expect(() => guard.canActivate(createContext('dashboard', undefined, 'ws'))).toThrow(ForbiddenException);
+    it('returns false without a user', () => {
+      expect(guard.canActivate(createContext('dashboard', undefined, 'ws'))).toBe(false);
     });
   });
 });
