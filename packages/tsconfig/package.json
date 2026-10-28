@@ -1,6 +1,6 @@
 {
   "name": "@urapps/tsconfig",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "UR Apps shared TypeScript configs",
   "scripts": {
     "format": "prettier --check .",
