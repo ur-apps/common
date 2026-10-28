@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
 export class FindAllQuery {
-  @ApiProperty({ default: 100, required: false })
+  @ApiProperty({ type: 'number', default: 100, required: false })
   @IsOptional()
   @IsInt()
   @Min(1)
@@ -11,7 +11,7 @@ export class FindAllQuery {
   @Type(() => Number)
   limit = 100;
 
-  @ApiProperty({ default: 0, required: false })
+  @ApiProperty({ type: 'number', default: 0, required: false })
   @IsOptional()
   @IsInt()
   @Min(0)
