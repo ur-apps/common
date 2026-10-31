@@ -54,8 +54,8 @@ import { AccessLogMiddleware, RequestContextMiddleware } from '@urapps/nest';
 
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RequestContextMiddleware).forRoutes('*');
-    consumer.apply(AccessLogMiddleware).exclude('app/health').forRoutes('*');
+    consumer.apply(RequestContextMiddleware).forRoutes('{*path}');
+    consumer.apply(AccessLogMiddleware).exclude('app/health').forRoutes('{*path}');
   }
 }
 ```

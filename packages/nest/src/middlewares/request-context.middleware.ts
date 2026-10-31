@@ -23,7 +23,7 @@ const REQUEST_ID_PATTERN = /^[\w.-]{1,64}$/;
  * @example
  * export class AppModule implements NestModule {
  *   configure(consumer: MiddlewareConsumer) {
- *     consumer.apply(RequestContextMiddleware).forRoutes('*');
+ *     consumer.apply(RequestContextMiddleware).forRoutes('{*path}');
  *   }
  * }
  */
