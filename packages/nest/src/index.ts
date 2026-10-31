@@ -7,4 +7,6 @@ export * from './guards/index.ts';
 export * from './helpers/index.ts';
 export * from './interceptors/index.ts';
 export * from './interfaces/index.ts';
+export * from './loggers/index.ts';
+export * from './middlewares/index.ts';
 export * from './pipes/index.ts';
