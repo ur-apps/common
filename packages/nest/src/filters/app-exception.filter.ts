@@ -3,7 +3,7 @@ import { getErrorMessage } from '@urapps/common';
 import { Request, Response } from 'express';
 
 import { HttpMessage } from 'constants/';
-import { FailedResponseDTO } from 'dtos';
+import { FailedResponse } from 'dtos';
 import { Errors } from 'interfaces';
 
 @Catch()
@@ -16,17 +16,14 @@ export class AppExceptionFilter implements ExceptionFilter {
     const response = http.getResponse<Response>();
 
     let httpStatus: number;
-    let responseBody: FailedResponseDTO;
+    let responseBody: FailedResponse;
 
     if (exception instanceof HttpException) {
       httpStatus = exception.getStatus();
-      responseBody = new FailedResponseDTO(
-        exception.message,
-        (exception as HttpException & { errors?: Errors }).errors
-      );
+      responseBody = new FailedResponse(exception.message, (exception as HttpException & { errors?: Errors }).errors);
     } else {
       httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-      responseBody = new FailedResponseDTO(HttpMessage.INTERNAL_SERVER_ERROR);
+      responseBody = new FailedResponse(HttpMessage.INTERNAL_SERVER_ERROR);
     }
 
     if (httpStatus >= HttpStatus.INTERNAL_SERVER_ERROR) {

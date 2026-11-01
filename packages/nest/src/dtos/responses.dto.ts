@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { Errors } from 'interfaces';
 
-export class SuccessResponseDTO<T = undefined> {
+export class SuccessResponse<T = undefined> {
   @ApiProperty({ default: true })
   success: true;
 
@@ -34,7 +34,7 @@ export class PaginatedDTO<T> {
   }
 }
 
-export class FailedResponseDTO<T extends Errors = Errors> {
+export class FailedResponse<T extends Errors = Errors> {
   @ApiProperty({ default: false })
   success: false;
 

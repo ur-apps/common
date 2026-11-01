@@ -8,7 +8,7 @@ import { defer, isObservable, lastValueFrom, of, toArray } from 'rxjs';
 import { describe, expect, it } from 'vitest';
 
 import { SkipTransform } from 'decorators';
-import { SuccessResponseDTO } from 'dtos';
+import { SuccessResponse } from 'dtos';
 
 import { TransformInterceptor } from './transform.interceptor.ts';
 
@@ -30,7 +30,7 @@ class FilesController {
 
   @Get('dto')
   dto() {
-    return new SuccessResponseDTO({ id: 1 });
+    return new SuccessResponse({ id: 1 });
   }
 
   @Get('empty')
@@ -116,7 +116,7 @@ describe('Testing interceptor: TransformInterceptor', () => {
 
       const result = await lastValueFrom(intercept(interceptor, FilesController, 'data'));
 
-      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+      expect(result).toStrictEqual(new SuccessResponse({ id: 1 }));
     });
 
     it('compiles a module that registers it by class as APP_INTERCEPTOR', async () => {
@@ -129,16 +129,16 @@ describe('Testing interceptor: TransformInterceptor', () => {
   });
 
   describe('response wrapping', () => {
-    it('wraps handler data in SuccessResponseDTO', async () => {
+    it('wraps handler data in SuccessResponse', async () => {
       const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'data'));
 
-      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+      expect(result).toStrictEqual(new SuccessResponse({ id: 1 }));
     });
 
-    it('passes a SuccessResponseDTO through unchanged', async () => {
+    it('passes a SuccessResponse through unchanged', async () => {
       const result = await lastValueFrom(intercept(new TransformInterceptor(), FilesController, 'dto'));
 
-      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+      expect(result).toStrictEqual(new SuccessResponse({ id: 1 }));
     });
 
     it('turns an undefined result into { success: true }', async () => {
@@ -166,7 +166,7 @@ describe('Testing interceptor: TransformInterceptor', () => {
         intercept(new TransformInterceptor(), FilesController, 'data', { type: 'rpc' })
       );
 
-      expect(result).toStrictEqual(new SuccessResponseDTO({ id: 1 }));
+      expect(result).toStrictEqual(new SuccessResponse({ id: 1 }));
     });
   });
 
@@ -210,7 +210,7 @@ describe('Testing interceptor: TransformInterceptor', () => {
         intercept(interceptor, FilesController, 'pdf', { contentType: 'application/json; charset=utf-8' })
       );
 
-      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+      expect(result).toStrictEqual(new SuccessResponse(pdf));
     });
 
     it('wraps data when Content-Type is not a string', async () => {
@@ -218,13 +218,13 @@ describe('Testing interceptor: TransformInterceptor', () => {
         intercept(interceptor, FilesController, 'pdf', { contentType: ['application/pdf'] })
       );
 
-      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+      expect(result).toStrictEqual(new SuccessResponse(pdf));
     });
 
     it('wraps data outside the HTTP context', async () => {
       const result = await lastValueFrom(intercept(interceptor, FilesController, 'pdf', { type: 'rpc' }));
 
-      expect(result).toStrictEqual(new SuccessResponseDTO(pdf));
+      expect(result).toStrictEqual(new SuccessResponse(pdf));
     });
   });
 
