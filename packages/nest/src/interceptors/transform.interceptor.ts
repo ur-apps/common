@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { isTransformSkipped } from 'decorators';
-import { SuccessResponseDTO } from 'dtos';
+import { SuccessResponse } from 'dtos';
 
 /**
  * Options for TransformInterceptor
@@ -45,22 +45,18 @@ export class TransformInterceptor implements NestInterceptor {
 
   constructor(@Optional() private options: TransformInterceptorOptions = {}) {}
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<SuccessResponseDTO | unknown> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<SuccessResponse | unknown> {
     if (this.reflector.get(SSE_METADATA, context.getHandler()) || isTransformSkipped(this.reflector, context)) {
       return next.handle();
     }
 
     return next.handle().pipe(
       map((data) => {
-        if (
-          data instanceof SuccessResponseDTO ||
-          data instanceof StreamableFile ||
-          this.hasSkippedContentType(context)
-        ) {
+        if (data instanceof SuccessResponse || data instanceof StreamableFile || this.hasSkippedContentType(context)) {
           return data;
         }
 
-        return new SuccessResponseDTO(data);
+        return new SuccessResponse(data);
       })
     );
   }

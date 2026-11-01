@@ -20,7 +20,7 @@ import {
 } from '@nestjs/swagger';
 
 import { HttpMessage } from 'constants/';
-import { FailedResponseDTO, PaginatedDTO, SuccessResponseDTO } from 'dtos';
+import { FailedResponse, PaginatedDTO, SuccessResponse } from 'dtos';
 import { Errors } from 'interfaces';
 
 function successResponseBuilder<T extends Type<unknown>>(
@@ -28,7 +28,7 @@ function successResponseBuilder<T extends Type<unknown>>(
   model?: T,
   isArray?: boolean
 ) {
-  const schemas: (SchemaObject | ReferenceObject)[] = [{ $ref: getSchemaPath(SuccessResponseDTO) }];
+  const schemas: (SchemaObject | ReferenceObject)[] = [{ $ref: getSchemaPath(SuccessResponse) }];
 
   if (model) {
     schemas.push({
@@ -47,7 +47,7 @@ function paginatedResponseBuilder<T extends Type<unknown>>(model: T) {
     ApiOkResponse({
       schema: {
         allOf: [
-          { $ref: getSchemaPath(SuccessResponseDTO) },
+          { $ref: getSchemaPath(SuccessResponse) },
           {
             required: ['data'],
             properties: {
@@ -79,7 +79,7 @@ function failedResponseBuilder<T extends Type<Errors>>(
   errors?: T
 ) {
   const schemas: (SchemaObject | ReferenceObject)[] = [
-    { $ref: getSchemaPath(FailedResponseDTO) },
+    { $ref: getSchemaPath(FailedResponse) },
     {
       properties: { message: { type: 'string', default: message } },
       required: ['message'],
