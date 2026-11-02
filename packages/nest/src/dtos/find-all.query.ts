@@ -2,7 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
-export class FindAllQuery {
+import { PaginationDTO } from './pagination.dto.ts';
+
+export class FindAllQuery implements PaginationDTO {
   @ApiProperty({ type: 'number', default: 100, required: false })
   @IsOptional()
   @IsInt()
