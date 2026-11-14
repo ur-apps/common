@@ -5,4 +5,5 @@ export * from './use-hover/index.ts';
 export * from './use-isomorphic-layout-effect.ts';
 export * from './use-latest.ts';
 export * from './use-name/index.ts';
+export * from './use-scroll-lock/index.ts';
 export * from './use-throttle/index.ts';

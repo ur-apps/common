@@ -35,16 +35,17 @@ function SearchField({ onSearch }: { onSearch: (query: string) => void }) {
 
 ### Hooks
 
-| Export                      | Description                                                                                            | Docs                                                                                                    |
-| --------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `useDebounce`               | Debounced version of a callback that always calls its latest version; cancels pending calls on unmount | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-debounce/README.md) |
-| `useThrottle`               | Throttled version of a callback, same guarantees as `useDebounce`                                      | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-throttle/README.md) |
-| `useHover`                  | Hover state of the element behind a ref, with enter/leave delays and pointer type filtering            | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-hover/README.md)    |
-| `useFocus`                  | Focus state of the element behind a ref, optionally only for `:focus-visible`                          | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-focus/README.md)    |
-| `useFlag`                   | Boolean state with a stable `toggle`                                                                   | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-flag/README.md)     |
-| `useLatest`                 | Ref that always holds the latest value                                                                 |                                                                                                         |
-| `useName`                   | The provided name, or a stable unique fallback from `useId` when it is missing                         |                                                                                                         |
-| `useIsomorphicLayoutEffect` | `useLayoutEffect` in the browser, `useEffect` on the server                                            |                                                                                                         |
+| Export                      | Description                                                                                            | Docs                                                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `useDebounce`               | Debounced version of a callback that always calls its latest version; cancels pending calls on unmount | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-debounce/README.md)    |
+| `useThrottle`               | Throttled version of a callback, same guarantees as `useDebounce`                                      | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-throttle/README.md)    |
+| `useHover`                  | Hover state of the element behind a ref, with enter/leave delays and pointer type filtering            | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-hover/README.md)       |
+| `useFocus`                  | Focus state of the element behind a ref, optionally only for `:focus-visible`                          | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-focus/README.md)       |
+| `useFlag`                   | Boolean state with a stable `toggle`                                                                   | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-flag/README.md)        |
+| `useScrollLock`             | Locks the page scroll while enabled, counting nested locks and keeping the scrollbar space reserved    | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-scroll-lock/README.md) |
+| `useLatest`                 | Ref that always holds the latest value                                                                 |                                                                                                            |
+| `useName`                   | The provided name, or a stable unique fallback from `useId` when it is missing                         |                                                                                                            |
+| `useIsomorphicLayoutEffect` | `useLayoutEffect` in the browser, `useEffect` on the server                                            |                                                                                                            |
 
 ### Utilities
 
