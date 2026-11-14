@@ -43,6 +43,7 @@ function SearchField({ onSearch }: { onSearch: (query: string) => void }) {
 | `useFocus`                  | Focus state of the element behind a ref, optionally only for `:focus-visible`                          | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-focus/README.md)    |
 | `useFlag`                   | Boolean state with a stable `toggle`                                                                   | [README](https://github.com/ur-apps/common/blob/master/packages/react/src/hooks/use-flag/README.md)     |
 | `useLatest`                 | Ref that always holds the latest value                                                                 |                                                                                                         |
+| `useName`                   | The provided name, or a stable unique fallback from `useId` when it is missing                         |                                                                                                         |
 | `useIsomorphicLayoutEffect` | `useLayoutEffect` in the browser, `useEffect` on the server                                            |                                                                                                         |
 
 ### Utilities

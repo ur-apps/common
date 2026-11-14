@@ -4,4 +4,5 @@ export * from './use-focus/index.ts';
 export * from './use-hover/index.ts';
 export * from './use-isomorphic-layout-effect.ts';
 export * from './use-latest.ts';
+export * from './use-name/index.ts';
 export * from './use-throttle/index.ts';
